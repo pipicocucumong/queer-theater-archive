@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국 퀴어 연극 아카이브</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --orange: #FF6B00;
+            --purple: #7B2D8E;
+        }
+        
+        body {
+            font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
+            background: #fff;
+            color: #000;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .page { display: none; overflow-x: hidden; }
+        .page.active { display: block; }
+
+        /* =====================================================
+           홈 - 6컬럼 무지개 레이아웃
+           ===================================================== */
+        .home-rainbow {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+        }
+
+        .home-col {
+            padding: 40px 25px;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .home-col:nth-child(1) { background: #E40303; }
+        .home-col:nth-child(2) { background: #FF8C00; }
+        .home-col:nth-child(3) { background: #FFED00; color: #000; }
+        .home-col:nth-child(4) { background: #008026; }
+        .home-col:nth-child(5) { background: #24408E; }
+        .home-col:nth-child(6) { background: #732982; }
+
+        .home-logo-placeholder {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed rgba(255,255,255,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            opacity: 0.7;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .home-col-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .home-col-title {
+            font-size: clamp(28px, 4vw, 48px);
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+            margin-bottom: auto;
+        }
+
+        .home-col-content {
+            margin-top: auto;
+        }
+
+        .home-col-big {
+            font-size: clamp(48px, 8vw, 100px);
+            font-weight: 600;
+            line-height: 0.9;
+        }
+
+        .home-col-small {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .home-col a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            font-size: clamp(18px, 2.5vw, 28px);
+            font-weight: 600;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.15s;
+        }
+
+        .home-col:nth-child(3) a {
+            border-bottom-color: rgba(0,0,0,0.2);
+        }
+
+        .home-col a:first-of-type {
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .home-col:nth-child(3) a:first-of-type {
+            border-top-color: rgba(0,0,0,0.2);
+        }
+
+        .home-col a:hover {
+            padding-left: 15px;
+            opacity: 0.8;
+        }
+
+        .home-search-input {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-bottom: 2px solid currentColor;
+            background: transparent;
+            font-family: inherit;
+            font-size: 14px;
+            color: inherit;
+            opacity: 0.9;
+        }
+
+        .home-search-input::placeholder {
+            color: inherit;
+            opacity: 0.5;
+        }
+
+        .home-search-input:focus {
+            outline: none;
+            opacity: 1;
+        }
+
+        .home-tag-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .home-tag-item {
+            font-size: 12px;
+            padding: 8px 0;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.15s;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .home-col:nth-child(3) .home-tag-item {
+            border-bottom-color: rgba(0,0,0,0.15);
+        }
+
+        .home-tag-item:hover {
+            opacity: 1;
+            padding-left: 10px;
+        }
+
+        .home-footer-text {
+            font-size: 10px;
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: auto;
+        }
+
+        /* =====================================================
+           아카이브 - 주황/보라 반반
+           ===================================================== */
+        .archive-split {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+        }
+
+        .archive-sidebar {
+            background: var(--orange);
+            color: #fff;
+            padding: 40px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .archive-back {
+            font-size: 12px;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 36px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .archive-back:hover {
+            text-decoration: underline;
+        }
+
+        .archive-sidebar-title {
+            font-size: clamp(28px, 4.5vw, 52px);
+            font-weight: 600;
+            line-height: 1.15;
+            margin-bottom: 12px;
+            letter-spacing: 0.04em;
+        }
+
+        .archive-sidebar-count {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 32px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .archive-filters {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .archive-select {
+            padding: 12px 14px;
+            border: 2px solid #fff;
+            background: transparent;
+            color: #fff;
+            font-family: "Arial Black","Arial","맑은 고딕",system-ui,sans-serif;
+            font-size: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .archive-select option {
+            background: var(--orange);
+            color: #fff;
+            font-family: "Arial","맑은 고딕",system-ui,sans-serif;
+        }
+
+        .archive-input {
+            padding: 12px 14px;
+            border: 2px solid #fff;
+            background: transparent;
+            color: #fff;
+            font-family: "Arial Black","Arial","맑은 고딕",system-ui,sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+        }
+
+        .archive-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .archive-input:focus {
+            outline: none;
+            background: #fff;
+            color: var(--orange);
+        }
+
+        .archive-clear {
+            padding: 12px 14px;
+            border: 2px solid #fff;
+            background: #fff;
+            color: var(--orange);
+            font-family: "Arial Black","Arial","맑은 고딕",system-ui,sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .archive-clear:hover {
+            background: transparent;
+            color: #fff;
+        }
+
+        .archive-selected-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .archive-selected-tag {
+            padding: 8px 14px;
+            background: #fff;
+            color: var(--orange);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .archive-main {
+            background: var(--purple);
+            color: #fff;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .archive-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .archive-item {
+            display: grid;
+            grid-template-columns: 50px 1fr auto;
+            gap: 22px;
+            padding: 26px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.25);
+            cursor: pointer;
+            transition: all 0.15s;
+            align-items: baseline;
+        }
+
+        .archive-item:hover {
+            background: rgba(255,255,255,0.12);
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-left: -20px;
+            margin-right: -20px;
+        }
+
+        .archive-item-index {
+            font-size: 12px;
+            opacity: 0.6;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .archive-item-title {
+            font-size: clamp(20px, 3.2vw, 34px);
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: 0.03em;
+        }
+
+        .archive-item-meta {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 6px;
+        }
+
+        .archive-item-year {
+            font-size: clamp(28px, 4.8vw, 52px);
+            font-weight: 600;
+            opacity: 0.4;
+        }
+
+        /* =====================================================
+           상세 페이지 - 주황/보라
+           ===================================================== */
+        .detail-split {
+            min-height: 100vh;
+        }
+
+        .detail-header {
+            background: var(--orange);
+            color: #fff;
+            padding: 26px 40px;
+        }
+
+        .detail-back {
+            font-size: 12px;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .detail-back:hover {
+            text-decoration: underline;
+        }
+
+        .detail-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 70vh;
+        }
+
+        .detail-poster-area {
+            background: var(--orange);
+            padding: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-poster {
+            max-width: 280px;
+            border: none !important;
+        }
+
+        .detail-poster-empty {
+            width: 220px;
+            height: 300px;
+            border: 4px solid rgba(255,255,255,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .detail-info-area {
+            background: var(--purple);
+            color: #fff;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        .detail-title {
+            font-size: clamp(28px, 5vw, 56px);
+            font-weight: 600;
+            line-height: 1.15;
+            margin-bottom: 44px;
+            letter-spacing: 0.04em;
+        }
+
+        .detail-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px;
+        }
+
+        .detail-meta-item {
+            border-left: 3px solid #fff;
+            padding-left: 18px;
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        .detail-meta-label {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .detail-meta-value {
+            font-size: 15px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .detail-tag {
+            padding: 10px 18px;
+            border: 2px solid #fff;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .detail-tag:hover {
+            background: #fff;
+            color: var(--purple);
+        }
+
+        .detail-content {
+            background: #fff;
+            color: #000;
+            padding: 70px 80px;
+            max-width: 700px;
+        }
+
+        .detail-section {
+            margin-bottom: 0;
+        }
+
+        .detail-section h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #000;
+            letter-spacing: 0.02em;
+        }
+
+        .detail-section p {
+            font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.85;
+            word-break: keep-all;
+            text-align: left;
+        }
+
+        .detail-section p strong {
+            font-weight: 700;
+        }
+
+        .detail-text {
+            font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.9;
+            word-break: keep-all;
+            text-align: left;
+            color: #333;
+        }
+
+        .detail-text p {
+            margin-bottom: 1.5em;
+        }
+        
+        .detail-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-text strong {
+            font-weight: 700;
+            color: #000;
+            display: block;
+            margin-top: 0.3em;
+            margin-bottom: 0.3em;
+        }
+        
+        .detail-text p:first-child strong:first-child {
+            margin-top: 0;
+        }
+
+        .detail-text a {
+            color: var(--purple);
+            text-decoration: underline;
+        }
+
+        .detail-divider {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 40px 0;
+        }
+        
+        .detail-section-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #000;
+            letter-spacing: -0.02em;
+        }
+
+        .detail-source {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .detail-source a {
+            color: var(--purple);
+            text-decoration: underline;
+        }
+
+        .detail-reviews ul {
+            list-style: none;
+        }
+
+        .detail-reviews li {
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-reviews a {
+            color: var(--purple);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .detail-reviews a:hover {
+            text-decoration: underline;
+        }
+
+        /* =====================================================
+           주목 페이지 - 주황/보라 그리드
+           ===================================================== */
+        .featured-page {
+            min-height: 100vh;
+        }
+
+        .featured-header {
+            background: var(--orange);
+            color: #fff;
+            padding: 34px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .featured-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        }
+
+        .featured-item {
+            padding: 44px 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            min-height: 320px;
+        }
+
+        .featured-item:nth-child(odd) {
+            background: var(--orange);
+            color: #fff;
+        }
+
+        .featured-item:nth-child(even) {
+            background: var(--purple);
+            color: #fff;
+        }
+
+        .featured-item:hover {
+            filter: brightness(1.15);
+        }
+
+        .featured-item-num {
+            font-size: 72px;
+            font-weight: 600;
+            opacity: 0.35;
+            line-height: 1;
+            margin-bottom: 18px;
+        }
+
+        .featured-item-title {
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 18px;
+        }
+
+        .featured-item-desc {
+            font-size: 14px;
+            opacity: 0.8;
+            line-height: 1.7;
+            margin-bottom: auto;
+        }
+
+        .featured-item-meta {
+            font-size: 11px;
+            opacity: 0.6;
+            margin-top: 26px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        /* =====================================================
+           글 상세 - 주황/보라
+           ===================================================== */
+        .article-page {
+            min-height: 100vh;
+        }
+
+        .article-header {
+            background: var(--purple);
+            color: #fff;
+            padding: 34px 60px;
+        }
+
+        .article-hero {
+            background: var(--orange);
+            color: #fff;
+            padding: 90px 60px;
+        }
+
+        .article-hero-inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .article-title {
+            font-size: clamp(32px, 6.5vw, 68px);
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 18px;
+        }
+
+        .article-meta {
+            font-size: 13px;
+            opacity: 0.8;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .article-body {
+            background: #fff;
+            color: #000;
+            padding: 70px 60px;
+        }
+
+        .article-body-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 17px;
+            line-height: 2;
+        }
+
+        .article-body-inner p {
+            margin-bottom: 1.5em;
+        }
+
+        .article-body-inner h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 2em 0 1em;
+            color: var(--purple);
+        }
+
+        /* =====================================================
+           모바일 대응
+           ===================================================== */
+        @media (max-width: 900px) {
+            .home-rainbow {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, auto);
+            }
+
+            .home-col {
+                min-height: 50vh;
+                padding: 30px 20px;
+            }
+
+            .home-col-title {
+                font-size: clamp(24px, 8vw, 40px);
+            }
+
+            .home-col-big {
+                font-size: clamp(36px, 12vw, 60px);
+            }
+
+            .home-col a {
+                font-size: clamp(16px, 5vw, 24px);
+                padding: 12px 0;
+            }
+
+            .archive-split {
+                grid-template-columns: 1fr;
+            }
+
+            .archive-sidebar {
+                position: relative;
+                height: auto;
+                padding: 30px;
+            }
+
+            .archive-main {
+                padding: 30px;
+            }
+
+            .archive-item {
+                grid-template-columns: 40px 1fr;
+            }
+
+            .archive-item-year {
+                display: none;
+            }
+
+            .detail-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-poster-area, .detail-info-area {
+                padding: 40px 30px;
+            }
+
+            .detail-meta-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-content {
+                padding: 50px 30px;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-item {
+                padding: 40px 30px;
+                min-height: auto;
+            }
+
+            .article-hero {
+                padding: 70px 30px;
+            }
+
+            .article-body {
+                padding: 50px 30px;
+            }
+        }
+
+        /* 더 작은 모바일 (480px 이하) */
+        @media (max-width: 480px) {
+            .home-rainbow {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+
+            .home-col {
+                min-height: auto;
+                padding: 40px 25px;
+            }
+
+            .home-col:nth-child(5),
+            .home-col:nth-child(6) {
+                display: none;
+            }
+
+            .home-col-title {
+                font-size: 32px;
+            }
+
+            .home-col-big {
+                font-size: 48px;
+            }
+
+            .detail-poster-area, .detail-info-area {
+                padding: 30px 20px;
+                width: 100%;
+                max-width: 100vw;
+            }
+
+            .detail-title {
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+
+            .detail-meta-grid {
+                width: 100%;
+            }
+
+            .detail-meta-item {
+                width: 100%;
+                max-width: calc(100vw - 40px);
+            }
+
+            .detail-meta-value {
+                font-size: 13px;
+                word-break: break-all;
+                overflow-wrap: break-word;
+                white-space: normal;
+            }
+
+            .detail-content {
+                padding: 30px 20px;
+            }
+
+            .archive-sidebar {
+                padding: 20px;
+            }
+
+            .archive-main {
+                padding: 20px;
+            }
+
+            .archive-sidebar-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== 홈 - 6컬럼 무지개 ===== -->
+    <div id="home-page" class="page active">
+        <div class="home-rainbow">
+            <!-- 빨강 - 로고 + 타이틀 -->
+            <div class="home-col">
+                <div class="home-logo-placeholder">[KQTA 로고]</div>
+                <h1 class="home-col-title">퀴어<br>연극<br>아카이브</h1>
+                <div class="home-col-content">
+                    <p class="home-col-big" id="home-count">0</p>
+                    <p class="home-col-small">Performances</p>
+                </div>
+            </div>
+
+            <!-- 주황 - 메뉴 -->
+            <div class="home-col">
+                <span class="home-col-label">Menu</span>
+                <a href="#" onclick="goToPage('about'); return false;">소개</a>
+                <a href="#" onclick="goToPage('featured'); return false;">공지</a>
+                <a href="#" onclick="goToPage('archive'); return false;">작품목록</a>
+                <a href="https://drive.google.com" target="_blank">자료 ↗</a>
+                <a href="https://forms.google.com" target="_blank">제보 ↗</a>
+                <a href="#" onclick="showRandomPerformance(); return false;">랜덤</a>
+            </div>
+
+            <!-- 노랑 - 검색 -->
+            <div class="home-col">
+                <span class="home-col-label">Search</span>
+                <h1 class="home-col-title">검색</h1>
+                <div class="home-col-content">
+                    <input type="text" class="home-search-input" id="home-search" placeholder="작품명, 극단..." onkeyup="handleHomeSearch(event)" />
+                </div>
+            </div>
+
+            <!-- 초록 - 태그 -->
+            <div class="home-col">
+                <span class="home-col-label">Tags</span>
+                <div class="home-tag-list" id="home-tags"></div>
+            </div>
+
+            <!-- 파랑 - 정보 -->
+            <div class="home-col">
+                <span class="home-col-label">Archive</span>
+                <p class="home-col-small">Korean Queer</p>
+                <p class="home-col-small">Theatre Archive</p>
+                <p class="home-col-small">2010–2024</p>
+                <p class="home-footer-text">Seoul, Korea</p>
+            </div>
+
+            <!-- 보라 - About -->
+            <div class="home-col">
+                <span class="home-col-label">About</span>
+                <p class="home-col-small" style="margin-top: auto;">한국 퀴어 연극을<br>기록합니다</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===== 아카이브 - 주황/보라 ===== -->
+    <div id="archive-page" class="page">
+        <div class="archive-split">
+            <div class="archive-sidebar">
+                <a href="#" onclick="goToPage('home'); return false;" class="archive-back">← HOME</a>
+                
+                <h1 class="archive-sidebar-title">아카이브</h1>
+                <p class="archive-sidebar-count" id="archive-count">0개의 공연</p>
+
+                <div class="archive-filters">
+                    <select id="year-filter" class="archive-select" onchange="applyFilters()">
+                        <option value="">연도 전체</option>
+                    </select>
+                    <input type="text" id="archive-search" class="archive-input" placeholder="검색..." oninput="applyFilters()" />
+                    <button onclick="clearFilters()" class="archive-clear">초기화</button>
+                </div>
+
+                <div id="selected-tags" class="archive-selected-tags"></div>
+            </div>
+
+            <div class="archive-main">
+                <div class="archive-list" id="archive-list">
+                    <!-- JS로 채워짐 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 상세 페이지 ===== -->
+    <div id="detail-page" class="page">
+        <!-- JS로 채워짐 -->
+    </div>
+
+    <!-- ===== 소개 페이지 ===== -->
+    <div id="about-page" class="page">
+        <div class="featured-page">
+            <header class="featured-header">
+                <a href="#" onclick="goToPage('home'); return false;" class="detail-back">← HOME</a>
+                <span class="featured-title">ABOUT / 소개</span>
+            </header>
+
+            <div class="detail-content" style="max-width: 800px; margin: 0 auto;">
+                <div class="detail-section" id="about-content">
+                    <p>로딩 중...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 공지 페이지 ===== -->
+    <div id="featured-page" class="page">
+        <div class="featured-page">
+            <header class="featured-header">
+                <a href="#" onclick="goToPage('home'); return false;" class="detail-back">← HOME</a>
+                <span class="featured-title">NOTICE / 공지</span>
+            </header>
+
+            <div class="featured-grid">
+                <div class="featured-item" onclick="showArticle('article1')">
+                    <span class="featured-item-num">01</span>
+                    <h2 class="featured-item-title">한국 퀴어 연극의 15년</h2>
+                    <p class="featured-item-desc">2010-2024, 데이터로 보는 변화. 숫자 뒤에 숨겨진 이야기들.</p>
+                    <span class="featured-item-meta">아카이브 분석 · 2024</span>
+                </div>
+                <div class="featured-item" onclick="showArticle('article2')">
+                    <span class="featured-item-num">02</span>
+                    <h2 class="featured-item-title">퀴어 연극을 아카이빙한다는 것</h2>
+                    <p class="featured-item-desc">기록되지 않는 것들을 기록하기. 사라지는 것들에 대하여.</p>
+                    <span class="featured-item-meta">에세이 · 2024</span>
+                </div>
+                <div class="featured-item" onclick="showArticle('article3')">
+                    <span class="featured-item-num">03</span>
+                    <h2 class="featured-item-title">이 아카이브는 어떻게 만들어졌는가</h2>
+                    <p class="featured-item-desc">자원 모임에서 시작된 프로젝트. 우리가 걸어온 길.</p>
+                    <span class="featured-item-meta">프로젝트 소개 · 2024</span>
+                </div>
+                <div class="featured-item" onclick="showArticle('article4')">
+                    <span class="featured-item-num">04</span>
+                    <h2 class="featured-item-title">2024년 주목할 퀴어 연극</h2>
+                    <p class="featured-item-desc">올해 꼭 봐야 할 작품들. 편집자의 선택.</p>
+                    <span class="featured-item-meta">큐레이션 · 2024</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 글 상세 ===== -->
+    <div id="article-page" class="page">
+        <div class="article-page">
+            <header class="article-header">
+                <a href="#" onclick="goToPage('featured'); return false;" class="detail-back">← FEATURED</a>
+            </header>
+            <div class="article-hero">
+                <div class="article-hero-inner">
+                    <h1 class="article-title" id="article-title"></h1>
+                    <p class="article-meta" id="article-meta"></p>
+                </div>
+            </div>
+            <div class="article-body">
+                <div class="article-body-inner" id="article-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const WP_API_URL = 'https://queertheater.mycafe24.com/wp-json/wp/v2';
+        
+        let performances = [];
+        let selectedTags = [];
+        let allTags = [];
+
+        const articles = {
+            article1: { title: '한국 퀴어 연극의 15년', date: '2024.11', content: '<p>2010년, 한국 연극계에서 퀴어라는 단어는 낯설었다. 15년이 지난 지금, 상황은 달라졌다.</p><h3>숫자로 보는 변화</h3><p>2010년대 초반, 연간 퀴어 연극 편수는 한 자릿수에 불과했다. 2019년 이후로는 연간 30편 이상의 작품이 공연되고 있다.</p>' },
+            article2: { title: '퀴어 연극을 아카이빙한다는 것', date: '2024.10', content: '<p>아카이브는 단순한 기록의 모음이 아니다. 무엇을 기록하고 무엇을 기록하지 않을 것인가.</p><h3>기록의 정치학</h3><p>무엇이 퀴어 연극인가? 이 질문에 대한 답은 단순하지 않다.</p>' },
+            article3: { title: '이 아카이브는 어떻게 만들어졌는가', date: '2024.09', content: '<p>이 아카이브는 2024년, 몇 명의 연극 애호가들이 모여 시작되었다.</p>' },
+            article4: { title: '2024년 주목할 퀴어 연극', date: '2024.08', content: '<p>2024년은 퀴어 연극에 있어 풍성한 해였다.</p>' },
+        };
+
+        async function fetchPerformances() {
+            try {
+                const response = await fetch(`${WP_API_URL}/performance?per_page=100`);
+                const data = await response.json();
+                
+                performances = data.map(item => {
+                    const acf = item.acf || {};
+                    // 태그 파싱 - 쉼표(,) 또는 해시태그(#) 구분 지원
+                    let tags = [];
+                    if (acf.tags) {
+                        if (acf.tags.includes('#')) {
+                            // # 구분: "#태그1 #태그2" → ["태그1", "태그2"]
+                            tags = acf.tags.split('#').map(t => t.trim()).filter(t => t);
+                        } else {
+                            // 쉼표 구분: "태그1, 태그2" → ["태그1", "태그2"]
+                            tags = acf.tags.split(',').map(t => t.trim()).filter(t => t);
+                        }
+                    }
+                    let year = acf.date ? (acf.date.match(/\d{4}/) || ['2023'])[0] : '2023';
+                    let posterUrl = acf.poster ? (typeof acf.poster === 'object' ? acf.poster.url : acf.poster) : null;
+                    // 리뷰 파싱 - 여러 형식 지원
+                    // 형식1: 제목|URL
+                    // 형식2: 제목 (URL)
+                    // 형식3: 일반 텍스트 (줄바꿈으로 구분)
+                    let reviews = [];
+                    if (acf.reviews) {
+                        const lines = acf.reviews.split('\n').filter(l => l.trim());
+                        reviews = lines.map(line => {
+                            // 형식1: 제목|URL
+                            if (line.includes('|')) {
+                                const [title, url] = line.split('|');
+                                return { title: title.trim(), url: url ? url.trim() : '' };
+                            }
+                            // 형식2: URL이 포함된 경우
+                            const urlMatch = line.match(/(https?:\/\/[^\s\)]+)/);
+                            if (urlMatch) {
+                                const url = urlMatch[1];
+                                const title = line.replace(url, '').replace(/[\(\)]/g, '').trim() || url;
+                                return { title, url };
+                            }
+                            // 형식3: 일반 텍스트
+                            return { title: line.trim(), url: '' };
+                        });
+                    }
+                    
+                    return {
+                        id: item.id,
+                        title: item.title.rendered,
+                        date: acf.date || '',
+                        venue: acf.venue || '',
+                        production: acf.production || '',
+                        author: acf.author || '',
+                        director: acf.director || '',
+                        actors: acf.actors || '',
+                        staff: acf.staff || '',
+                        category: acf.category || '',
+                        description: acf.description || '',
+                        source: acf.source || '',
+                        archiver_comment: acf.archiver_comment || '',
+                        readings: acf.readings || '',
+                        similar: acf.similar || '',
+                        tags, year: parseInt(year), poster: posterUrl, reviews
+                    };
+                });
+
+                allTags = [...new Set(performances.flatMap(p => p.tags))];
+                
+                // 연도 필터 동적 생성
+                const years = [...new Set(performances.map(p => p.year))].sort((a, b) => b - a);
+                const yearFilter = document.getElementById('year-filter');
+                if (yearFilter) {
+                    years.forEach(y => {
+                        const option = document.createElement('option');
+                        option.value = y;
+                        option.textContent = y;
+                        yearFilter.appendChild(option);
+                    });
+                }
+                
+                return performances;
+            } catch (e) { console.error(e); return []; }
+        }
+
+        function goToPage(name) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(name + '-page').classList.add('active');
+            if (name === 'archive') renderArchive();
+            window.scrollTo(0, 0);
+        }
+
+        // 텍스트 포맷팅
+        // 클라이언트 작성 가이드:
+        // - **텍스트** → 볼드 (하위 항목 제목)
+        // - 빈 줄 → 단락 구분
+        // - URL → 자동 링크
+        // - <작품명> → ‹작품명›
+        // - 출처|URL 또는 출처:URL → "출처" 링크
+        function formatText(text) {
+            if (!text) return '';
+            
+            // <>를 ‹›로 변환
+            let result = text
+                .replace(/<(?![a-z\/])/g, '‹')
+                .replace(/(?<![a-z"])>/g, '›');
+            
+            // **텍스트** → <strong>텍스트</strong>
+            result = result.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            
+            // ● 불렛 → 볼드
+            result = result.replace(/^[●•]\s*(.+?)$/gm, '<strong>$1</strong>');
+            
+            // 출처|URL 형식 → "출처" 링크
+            result = result.replace(/출처\|(https?:\/\/[^\s<›\n]+)/g, '<a href="$1" target="_blank">출처</a>');
+            
+            // 출처:URL 형식 → "출처" 링크
+            result = result.replace(/출처:(https?:\/\/[^\s<›\n]+)/g, '<a href="$1" target="_blank">출처</a>');
+            
+            // (출처: URL) → (출처) 링크
+            result = result.replace(/\(출처:\s*(https?:\/\/[^\s\)]+)\)/g, '(<a href="$1" target="_blank">출처</a>)');
+            
+            // 일반 URL → 링크 (위에서 처리 안 된 것들)
+            result = result.replace(/(?<!href=")(https?:\/\/[^\s<›\)]+)/g, '<a href="$1" target="_blank">$1</a>');
+            
+            // 빈 줄(2개 이상 줄바꿈) → 단락 구분
+            const paragraphs = result.split(/\n\n+/);
+            result = paragraphs.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+            
+            return result;
+        }
+
+        function initHomePage() {
+            document.getElementById('home-count').textContent = performances.length;
+            
+            const tagsEl = document.getElementById('home-tags');
+            if (tagsEl && allTags.length) {
+                tagsEl.innerHTML = allTags.slice(0, 8).map(t => 
+                    `<span class="home-tag-item" onclick="filterByTag('${t}')">${t}</span>`
+                ).join('');
+            }
+        }
+
+        function showRandomPerformance() {
+            if (performances.length) showDetail(performances[Math.floor(Math.random() * performances.length)].id);
+        }
+
+        function filterByTag(tag) {
+            selectedTags = [tag];
+            goToPage('archive');
+        }
+
+        function handleHomeSearch(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('archive-search').value = e.target.value;
+                goToPage('archive');
+            }
+        }
+
+        function renderArchive() {
+            const search = document.getElementById('archive-search').value.toLowerCase();
+            const year = document.getElementById('year-filter').value;
+
+            const filtered = performances.filter(p => {
+                const matchSearch = !search || p.title.toLowerCase().includes(search) || (p.production && p.production.toLowerCase().includes(search));
+                const matchTags = !selectedTags.length || selectedTags.every(t => p.tags.includes(t));
+                const matchYear = !year || p.year.toString() === year;
+                return matchSearch && matchTags && matchYear;
+            });
+
+            document.getElementById('archive-count').textContent = `${filtered.length}개의 공연`;
+
+            const tagsEl = document.getElementById('selected-tags');
+            tagsEl.innerHTML = selectedTags.map(t => 
+                `<span class="archive-selected-tag" onclick="removeTag('${t}')">#${t} ✕</span>`
+            ).join('');
+
+            const list = document.getElementById('archive-list');
+            list.innerHTML = filtered.map((p, i) => `
+                <div class="archive-item" onclick="showDetail(${p.id})">
+                    <span class="archive-item-index">${String(i + 1).padStart(3, '0')}</span>
+                    <div>
+                        <div class="archive-item-title">${p.title}</div>
+                        <div class="archive-item-meta">${p.production || ''} ${p.venue ? '· ' + p.venue : ''}</div>
+                    </div>
+                    <span class="archive-item-year">${p.year}</span>
+                </div>
+            `).join('');
+        }
+
+        function applyFilters() { renderArchive(); }
+        function clearFilters() {
+            document.getElementById('archive-search').value = '';
+            document.getElementById('year-filter').value = '';
+            selectedTags = [];
+            renderArchive();
+        }
+        function removeTag(tag) {
+            selectedTags = selectedTags.filter(t => t !== tag);
+            renderArchive();
+        }
+
+        function showDetail(id) {
+            const p = performances.find(x => x.id === id);
+            if (!p) return;
+
+            document.getElementById('detail-page').innerHTML = `
+                <div class="detail-split">
+                    <header class="detail-header">
+                        <a href="#" onclick="goToPage('archive'); return false;" class="detail-back">← ARCHIVE</a>
+                    </header>
+                    
+                    <div class="detail-hero">
+                        <div class="detail-poster-area">
+                            ${p.poster 
+                                ? `<img src="${p.poster}" alt="${p.title}" class="detail-poster">` 
+                                : `<div class="detail-poster-empty">NO POSTER</div>`}
+                        </div>
+                        <div class="detail-info-area">
+                            <h1 class="detail-title">${p.title}</h1>
+                            <div class="detail-meta-grid">
+                                <div class="detail-meta-item">
+                                    <p class="detail-meta-label">일시</p>
+                                    <p class="detail-meta-value">${p.date || '—'}</p>
+                                </div>
+                                <div class="detail-meta-item">
+                                    <p class="detail-meta-label">장소</p>
+                                    <p class="detail-meta-value">${p.venue || '—'}</p>
+                                </div>
+                                <div class="detail-meta-item">
+                                    <p class="detail-meta-label">제작</p>
+                                    <p class="detail-meta-value">${p.production || '—'}</p>
+                                </div>
+                                ${p.director ? `
+                                <div class="detail-meta-item">
+                                    <p class="detail-meta-label">참고</p>
+                                    <p class="detail-meta-value">${p.director}</p>
+                                </div>
+                                ` : ''}
+                                ${p.actors ? `
+                                <div class="detail-meta-item">
+                                    <p class="detail-meta-label">배우</p>
+                                    <p class="detail-meta-value">${p.actors}</p>
+                                </div>
+                                ` : ''}
+                                ${p.staff ? `
+                                <div class="detail-meta-item">
+                                    <p class="detail-meta-label">스태프</p>
+                                    <p class="detail-meta-value">${p.staff}</p>
+                                </div>
+                                ` : ''}
+                            </div>
+                            ${p.tags.length ? `
+                                <div class="detail-tags">
+                                    ${p.tags.map(t => `<span class="detail-tag" onclick="filterByTag('${t}')">#${t}</span>`).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="detail-content">
+                        ${p.description ? `
+                            <div class="detail-section">
+                                <p class="detail-section-title">공식 소개</p>
+                                <div class="detail-text">${formatText(p.description)}</div>
+                                ${p.source ? `<p class="detail-source"><a href="${p.source}" target="_blank">출처</a></p>` : ''}
+                            </div>
+                        ` : ''}
+                        ${p.archiver_comment ? `
+                            <hr class="detail-divider">
+                            <div class="detail-section">
+                                <p class="detail-section-title">아카이버 한 마디</p>
+                                <div class="detail-text">${formatText(p.archiver_comment)}</div>
+                            </div>
+                        ` : ''}
+                        ${p.readings ? `
+                            <hr class="detail-divider">
+                            <div class="detail-section">
+                                <p class="detail-section-title">읽을거리</p>
+                                <div class="detail-text">${formatText(p.readings)}</div>
+                            </div>
+                        ` : ''}
+                        ${p.reviews && p.reviews.length ? `
+                            <hr class="detail-divider">
+                            <div class="detail-section detail-reviews">
+                                <p class="detail-section-title">읽을거리</p>
+                                <ul>
+                                    ${p.reviews.map(r => r.url 
+                                        ? `<li><a href="${r.url}" target="_blank">→ ${r.title}</a></li>`
+                                        : `<li>${r.title}</li>`
+                                    ).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                        ${p.similar ? `
+                            <hr class="detail-divider">
+                            <div class="detail-section">
+                                <p class="detail-section-title">비슷한 공연</p>
+                                <div class="detail-text">${formatText(p.similar)}</div>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            goToPage('detail');
+        }
+
+        function showArticle(id) {
+            const a = articles[id];
+            if (!a) return;
+            document.getElementById('article-title').textContent = a.title;
+            document.getElementById('article-meta').textContent = a.date;
+            document.getElementById('article-body').innerHTML = a.content;
+            goToPage('article');
+        }
+
+        // 소개 페이지 로드
+        async function loadAboutPage() {
+            try {
+                const res = await fetch(`${WP_API_URL}/pages?slug=소개&_=${Date.now()}`);
+                const pages = await res.json();
+                if (pages.length > 0) {
+                    const content = pages[0].content.rendered;
+                    document.getElementById('about-content').innerHTML = content;
+                } else {
+                    document.getElementById('about-content').innerHTML = '<p>소개 페이지를 찾을 수 없습니다.</p>';
+                }
+            } catch (e) {
+                console.error('소개 페이지 로드 실패:', e);
+                document.getElementById('about-content').innerHTML = '<p>소개 페이지를 불러올 수 없습니다.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await fetchPerformances();
+            initHomePage();
+            loadAboutPage();
+        });
+    </script>
+</body>
+</html>
