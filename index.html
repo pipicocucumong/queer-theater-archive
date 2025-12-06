@@ -312,6 +312,28 @@
             letter-spacing: 0.08em;
         }
 
+        .archive-pagination {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .archive-pagination button {
+            padding: 8px 16px;
+            background: #fff;
+            color: var(--orange);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .archive-pagination button:hover {
+            background: #f0f0f0;
+        }
+
         .archive-main {
             background: var(--purple);
             color: #fff;
@@ -833,26 +855,21 @@
         /* 더 작은 모바일 (480px 이하) */
         @media (max-width: 480px) {
             .home-rainbow {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, auto);
             }
 
             .home-col {
                 min-height: auto;
-                padding: 40px 25px;
-            }
-
-            .home-col:nth-child(5),
-            .home-col:nth-child(6) {
-                display: none;
+                padding: 30px 20px;
             }
 
             .home-col-title {
-                font-size: 32px;
+                font-size: 24px;
             }
 
             .home-col-big {
-                font-size: 48px;
+                font-size: 36px;
             }
 
             .detail-poster-area, .detail-info-area {
@@ -904,9 +921,8 @@
     <!-- ===== 홈 - 6컬럼 무지개 ===== -->
     <div id="home-page" class="page active">
         <div class="home-rainbow">
-            <!-- 빨강 - 로고 + 타이틀 -->
+            <!-- 빨강 - 타이틀 -->
             <div class="home-col">
-                <div class="home-logo-placeholder">[KQTA 로고]</div>
                 <h1 class="home-col-title">퀴어<br>연극<br>아카이브</h1>
                 <div class="home-col-content">
                     <p class="home-col-big" id="home-count">0</p>
@@ -943,16 +959,20 @@
             <!-- 파랑 - 정보 -->
             <div class="home-col">
                 <span class="home-col-label">Archive</span>
-                <p class="home-col-small">Korean Queer</p>
-                <p class="home-col-small">Theatre Archive</p>
-                <p class="home-col-small">2010–2024</p>
+                <p class="home-col-small">Korea Queer</p>
+                <p class="home-col-small">Theater Archive</p>
+                <p class="home-col-small">2010–2025</p>
                 <p class="home-footer-text">Seoul, Korea</p>
             </div>
 
             <!-- 보라 - About -->
             <div class="home-col">
                 <span class="home-col-label">About</span>
-                <p class="home-col-small" style="margin-top: auto;">한국 퀴어 연극을<br>기록합니다</p>
+                <p class="home-col-small" style="margin-top: auto;">
+                    queertheater.kr@gmail.com<br>
+                    <a href="https://x.com/QueertheaterKr" target="_blank" style="color: inherit;">@QueertheaterKr</a><br><br>
+                    © 2025 한국퀴어연극아카이브.<br>All rights reserved.
+                </p>
             </div>
         </div>
     </div>
@@ -964,18 +984,25 @@
             <div class="archive-sidebar">
                 <a href="#" onclick="goToPage('home'); return false;" class="archive-back">← HOME</a>
                 
-                <h1 class="archive-sidebar-title">아카이브</h1>
+                <h1 class="archive-sidebar-title">작품목록</h1>
                 <p class="archive-sidebar-count" id="archive-count">0개의 공연</p>
 
                 <div class="archive-filters">
                     <select id="year-filter" class="archive-select" onchange="applyFilters()">
                         <option value="">연도 전체</option>
                     </select>
+                    <select id="sort-filter" class="archive-select" onchange="applyFilters()">
+                        <option value="random">랜덤</option>
+                        <option value="newest">최신작순</option>
+                        <option value="oldest">과거작순</option>
+                        <option value="title">가나다순</option>
+                    </select>
                     <input type="text" id="archive-search" class="archive-input" placeholder="검색..." oninput="applyFilters()" />
                     <button onclick="clearFilters()" class="archive-clear">초기화</button>
                 </div>
 
                 <div id="selected-tags" class="archive-selected-tags"></div>
+                <div id="pagination" class="archive-pagination"></div>
             </div>
 
             <div class="archive-main">
@@ -1159,12 +1186,28 @@
             } catch (e) { console.error(e); return []; }
         }
 
-        function goToPage(name) {
+        let pageHistory = ['home'];
+
+        function goToPage(name, addToHistory = true) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(name + '-page').classList.add('active');
             if (name === 'archive') renderArchive();
             window.scrollTo(0, 0);
+            
+            if (addToHistory && pageHistory[pageHistory.length - 1] !== name) {
+                pageHistory.push(name);
+                history.pushState({ page: name }, '', `#${name}`);
+            }
         }
+
+        // 브라우저 뒤로가기 지원
+        window.addEventListener('popstate', (e) => {
+            if (e.state && e.state.page) {
+                goToPage(e.state.page, false);
+            } else {
+                goToPage('home', false);
+            }
+        });
 
         // 텍스트 포맷팅
         // 클라이언트 작성 가이드:
@@ -1211,10 +1254,14 @@
             
             const tagsEl = document.getElementById('home-tags');
             if (tagsEl && allTags.length) {
-                tagsEl.innerHTML = allTags.slice(0, 8).map(t => 
+                // 태그 랜덤 셔플
+                const shuffledTags = shuffleArray(allTags);
+                tagsEl.innerHTML = shuffledTags.slice(0, 12).map(t => 
                     `<span class="home-tag-item" onclick="filterByTag('${t}')">${t}</span>`
                 ).join('');
             }
+            // 작품목록용 랜덤 셔플
+            shuffledPerformances = shuffleArray(performances);
         }
 
         function showRandomPerformance() {
@@ -1233,16 +1280,51 @@
             }
         }
 
+        let currentPage = 1;
+        const perPage = 25;
+        let shuffledPerformances = [];
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
         function renderArchive() {
             const search = document.getElementById('archive-search').value.toLowerCase();
             const year = document.getElementById('year-filter').value;
+            const sort = document.getElementById('sort-filter').value;
 
-            const filtered = performances.filter(p => {
+            let filtered = performances.filter(p => {
                 const matchSearch = !search || p.title.toLowerCase().includes(search) || (p.production && p.production.toLowerCase().includes(search));
                 const matchTags = !selectedTags.length || selectedTags.every(t => p.tags.includes(t));
                 const matchYear = !year || p.year.toString() === year;
                 return matchSearch && matchTags && matchYear;
             });
+
+            // 정렬
+            if (sort === 'newest') {
+                filtered.sort((a, b) => b.year - a.year);
+            } else if (sort === 'oldest') {
+                filtered.sort((a, b) => a.year - b.year);
+            } else if (sort === 'title') {
+                filtered.sort((a, b) => a.title.localeCompare(b.title, 'ko'));
+            } else {
+                // 랜덤 - 처음 로드하거나 필터 변경 시 셔플
+                if (shuffledPerformances.length !== performances.length) {
+                    shuffledPerformances = shuffleArray(performances);
+                }
+                filtered = shuffledPerformances.filter(p => filtered.some(f => f.id === p.id));
+            }
+
+            const totalPages = Math.ceil(filtered.length / perPage);
+            if (currentPage > totalPages) currentPage = 1;
+            
+            const startIdx = (currentPage - 1) * perPage;
+            const paginated = filtered.slice(startIdx, startIdx + perPage);
 
             document.getElementById('archive-count').textContent = `${filtered.length}개의 공연`;
 
@@ -1252,9 +1334,9 @@
             ).join('');
 
             const list = document.getElementById('archive-list');
-            list.innerHTML = filtered.map((p, i) => `
+            list.innerHTML = paginated.map((p, i) => `
                 <div class="archive-item" onclick="showDetail(${p.id})">
-                    <span class="archive-item-index">${String(i + 1).padStart(3, '0')}</span>
+                    <span class="archive-item-index">${String(startIdx + i + 1).padStart(3, '0')}</span>
                     <div>
                         <div class="archive-item-title">${p.title}</div>
                         <div class="archive-item-meta">${p.production || ''} ${p.venue ? '· ' + p.venue : ''}</div>
@@ -1262,13 +1344,34 @@
                     <span class="archive-item-year">${p.year}</span>
                 </div>
             `).join('');
+
+            // 페이지네이션
+            const paginationEl = document.getElementById('pagination');
+            if (totalPages > 1) {
+                let paginationHTML = '';
+                if (currentPage > 1) paginationHTML += `<button onclick="goPage(${currentPage - 1})">←</button>`;
+                paginationHTML += `<span>${currentPage} / ${totalPages}</span>`;
+                if (currentPage < totalPages) paginationHTML += `<button onclick="goPage(${currentPage + 1})">→</button>`;
+                paginationEl.innerHTML = paginationHTML;
+            } else {
+                paginationEl.innerHTML = '';
+            }
         }
 
-        function applyFilters() { renderArchive(); }
+        function goPage(page) {
+            currentPage = page;
+            renderArchive();
+            document.querySelector('.archive-main').scrollTo(0, 0);
+        }
+
+        function applyFilters() { currentPage = 1; renderArchive(); }
         function clearFilters() {
             document.getElementById('archive-search').value = '';
             document.getElementById('year-filter').value = '';
+            document.getElementById('sort-filter').value = 'random';
             selectedTags = [];
+            currentPage = 1;
+            shuffledPerformances = shuffleArray(performances);
             renderArchive();
         }
         function removeTag(tag) {
@@ -1283,7 +1386,7 @@
             document.getElementById('detail-page').innerHTML = `
                 <div class="detail-split">
                     <header class="detail-header">
-                        <a href="#" onclick="goToPage('archive'); return false;" class="detail-back">← ARCHIVE</a>
+                        <a href="#" onclick="goToPage('archive'); return false;" class="detail-back">← 작품목록</a>
                     </header>
                     
                     <div class="detail-hero">
