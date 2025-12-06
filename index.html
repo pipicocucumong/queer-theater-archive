@@ -658,6 +658,92 @@
         }
 
         /* =====================================================
+           소개 페이지
+           ===================================================== */
+        .about-page-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, 
+                #E40303 0%, #E40303 16.66%,
+                #FF8C00 16.66%, #FF8C00 33.33%,
+                #FFED00 33.33%, #FFED00 50%,
+                #008026 50%, #008026 66.66%,
+                #24408E 66.66%, #24408E 83.33%,
+                #732982 83.33%, #732982 100%
+            );
+        }
+
+        .about-header {
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            padding: 34px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .about-content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .about-logo-area {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .about-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-text-area {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+            color: #333;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .about-text-area h1, .about-text-area h2, .about-text-area h3 {
+            color: #7B2D8E;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .about-text-area h1:first-child, .about-text-area h2:first-child, .about-text-area h3:first-child {
+            margin-top: 0;
+        }
+
+        .about-text-area p {
+            margin-bottom: 15px;
+        }
+
+        .about-text-area a {
+            color: #24408E;
+        }
+
+        @media (max-width: 600px) {
+            .about-content-wrapper {
+                padding: 30px 20px;
+            }
+            .about-text-area {
+                padding: 30px 25px;
+            }
+            .about-logo {
+                width: 100px;
+                height: 100px;
+            }
+            .about-header {
+                padding: 20px 25px;
+            }
+        }
+
+        /* =====================================================
            주목 페이지 - 주황/보라 그리드
            ===================================================== */
         .featured-page {
@@ -994,7 +1080,6 @@
                 <p class="home-col-small">Korea Queer</p>
                 <p class="home-col-small">Theater Archive</p>
                 <p class="home-col-small">2010–2025</p>
-                <p class="home-footer-text">Seoul, Korea</p>
             </div>
 
             <!-- 보라 - About -->
@@ -1052,14 +1137,17 @@
 
     <!-- ===== 소개 페이지 ===== -->
     <div id="about-page" class="page">
-        <div class="featured-page">
-            <header class="featured-header">
+        <div class="about-page-container">
+            <header class="about-header">
                 <a href="#" onclick="goToPage('home'); return false;" class="detail-back">← HOME</a>
                 <span class="featured-title">ABOUT / 소개</span>
             </header>
 
-            <div class="detail-content" style="max-width: 800px; margin: 0 auto;">
-                <div class="detail-section" id="about-content">
+            <div class="about-content-wrapper">
+                <div class="about-logo-area">
+                    <img src="logo.png" alt="한국 퀴어 연극 아카이브" class="about-logo">
+                </div>
+                <div class="about-text-area" id="about-content">
                     <p>로딩 중...</p>
                 </div>
             </div>
