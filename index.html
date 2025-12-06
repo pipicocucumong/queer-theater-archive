@@ -1086,7 +1086,7 @@
             <div class="home-col">
                 <span class="home-col-label">About</span>
                 <p class="home-col-small" style="margin-top: auto;">
-                    queertheater.kr@gmail.com<br>
+                    <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bccdc9d9d9cec8d4d9ddc8d9ce92d7cefcdbd1ddd5d092dfd3d1">[email&#160;protected]</a><br>
                     <a href="https://x.com/QueertheaterKr" target="_blank" style="color: inherit; font-size: 0.85em;">@queertheaterkr</a><br><br>
                     © 2025 한국퀴어연극아카이브.<br>all rights reserved.
                 </p>
@@ -1162,31 +1162,8 @@
                 <span class="featured-title">NOTICE / 공지</span>
             </header>
 
-            <div class="featured-grid">
-                <div class="featured-item" onclick="showArticle('article1')">
-                    <span class="featured-item-num">01</span>
-                    <h2 class="featured-item-title">한국 퀴어 연극의 15년</h2>
-                    <p class="featured-item-desc">2010-2024, 데이터로 보는 변화. 숫자 뒤에 숨겨진 이야기들.</p>
-                    <span class="featured-item-meta">아카이브 분석 · 2024</span>
-                </div>
-                <div class="featured-item" onclick="showArticle('article2')">
-                    <span class="featured-item-num">02</span>
-                    <h2 class="featured-item-title">퀴어 연극을 아카이빙한다는 것</h2>
-                    <p class="featured-item-desc">기록되지 않는 것들을 기록하기. 사라지는 것들에 대하여.</p>
-                    <span class="featured-item-meta">에세이 · 2024</span>
-                </div>
-                <div class="featured-item" onclick="showArticle('article3')">
-                    <span class="featured-item-num">03</span>
-                    <h2 class="featured-item-title">이 아카이브는 어떻게 만들어졌는가</h2>
-                    <p class="featured-item-desc">자원 모임에서 시작된 프로젝트. 우리가 걸어온 길.</p>
-                    <span class="featured-item-meta">프로젝트 소개 · 2024</span>
-                </div>
-                <div class="featured-item" onclick="showArticle('article4')">
-                    <span class="featured-item-num">04</span>
-                    <h2 class="featured-item-title">2024년 주목할 퀴어 연극</h2>
-                    <p class="featured-item-desc">올해 꼭 봐야 할 작품들. 편집자의 선택.</p>
-                    <span class="featured-item-meta">큐레이션 · 2024</span>
-                </div>
+            <div class="featured-grid" id="featured-grid">
+                <p style="padding: 40px; color: #fff;">로딩 중...</p>
             </div>
         </div>
     </div>
@@ -1209,19 +1186,86 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const WP_API_URL = 'https://queertheater.mycafe24.com/wp-json/wp/v2';
         
         let performances = [];
         let selectedTags = [];
         let allTags = [];
 
-        const articles = {
-            article1: { title: '한국 퀴어 연극의 15년', date: '2024.11', content: '<p>2010년, 한국 연극계에서 퀴어라는 단어는 낯설었다. 15년이 지난 지금, 상황은 달라졌다.</p><h3>숫자로 보는 변화</h3><p>2010년대 초반, 연간 퀴어 연극 편수는 한 자릿수에 불과했다. 2019년 이후로는 연간 30편 이상의 작품이 공연되고 있다.</p>' },
-            article2: { title: '퀴어 연극을 아카이빙한다는 것', date: '2024.10', content: '<p>아카이브는 단순한 기록의 모음이 아니다. 무엇을 기록하고 무엇을 기록하지 않을 것인가.</p><h3>기록의 정치학</h3><p>무엇이 퀴어 연극인가? 이 질문에 대한 답은 단순하지 않다.</p>' },
-            article3: { title: '이 아카이브는 어떻게 만들어졌는가', date: '2024.09', content: '<p>이 아카이브는 2024년, 몇 명의 연극 애호가들이 모여 시작되었다.</p>' },
-            article4: { title: '2024년 주목할 퀴어 연극', date: '2024.08', content: '<p>2024년은 퀴어 연극에 있어 풍성한 해였다.</p>' },
-        };
+        // ========== 공지(Featured) CMS 연동 ==========
+        let noticeArticles = [];
+
+        async function loadNotices() {
+            try {
+                // 'notice' 카테고리의 ID 가져오기
+                const catRes = await fetch(`${WP_API_URL}/categories?slug=notice&_=${Date.now()}`);
+                const categories = await catRes.json();
+                
+                if (categories.length === 0) {
+                    document.getElementById('featured-grid').innerHTML = 
+                        '<p style="padding: 40px; color: #fff;">공지 카테고리가 없습니다.</p>';
+                    return;
+                }
+                
+                const categoryId = categories[0].id;
+                
+                // 해당 카테고리의 글 가져오기
+                const res = await fetch(`${WP_API_URL}/posts?categories=${categoryId}&per_page=20&_=${Date.now()}`);
+                const posts = await res.json();
+                
+                if (posts.length === 0) {
+                    document.getElementById('featured-grid').innerHTML = 
+                        '<p style="padding: 40px; color: #fff;">등록된 공지가 없습니다.</p>';
+                    return;
+                }
+                
+                // 공지 데이터 저장
+                noticeArticles = posts.map(post => ({
+                    id: post.id,
+                    title: post.title.rendered,
+                    excerpt: post.excerpt.rendered.replace(/<[^>]*>/g, '').trim().slice(0, 80) + (post.excerpt.rendered.length > 80 ? '...' : ''),
+                    content: post.content.rendered,
+                    date: new Date(post.date).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long' })
+                }));
+                
+                // Featured 그리드 렌더링
+                renderFeaturedGrid();
+                
+            } catch (e) {
+                console.error('공지 로드 실패:', e);
+                document.getElementById('featured-grid').innerHTML = 
+                    '<p style="padding: 40px; color: #fff;">공지를 불러올 수 없습니다.</p>';
+            }
+        }
+
+        function renderFeaturedGrid() {
+            const grid = document.getElementById('featured-grid');
+            
+            if (noticeArticles.length === 0) {
+                grid.innerHTML = '<p style="padding: 40px; color: #fff;">등록된 공지가 없습니다.</p>';
+                return;
+            }
+            
+            grid.innerHTML = noticeArticles.map((article, index) => `
+                <div class="featured-item" onclick="showNoticeArticle(${article.id})">
+                    <span class="featured-item-num">${String(index + 1).padStart(2, '0')}</span>
+                    <h2 class="featured-item-title">${article.title}</h2>
+                    <p class="featured-item-desc">${article.excerpt}</p>
+                    <span class="featured-item-meta">공지 · ${article.date}</span>
+                </div>
+            `).join('');
+        }
+
+        function showNoticeArticle(id) {
+            const article = noticeArticles.find(a => a.id === id);
+            if (!article) return;
+            
+            document.getElementById('article-title').textContent = article.title;
+            document.getElementById('article-meta').textContent = article.date;
+            document.getElementById('article-body').innerHTML = article.content;
+            goToPage('article');
+        }
 
         async function fetchPerformances() {
             try {
@@ -1621,16 +1665,9 @@
             goToPage('detail');
         }
 
-        function showArticle(id) {
-            const a = articles[id];
-            if (!a) return;
-            document.getElementById('article-title').textContent = a.title;
-            document.getElementById('article-meta').textContent = a.date;
-            document.getElementById('article-body').innerHTML = a.content;
-            goToPage('article');
-        }
+        // showArticle 함수는 showNoticeArticle로 대체됨
 
-        // 소개 페이지 로드
+</        // 소개 페이지 로드
         async function loadAboutPage() {
             try {
                 const res = await fetch(`${WP_API_URL}/pages?slug=소개&_=${Date.now()}`);
@@ -1647,11 +1684,20 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {
+        // 초기화
+        async function init() {
             await fetchPerformances();
-            initHomePage();
             loadAboutPage();
-        });
+            loadNotices();
+            
+            // URL 해시에 따라 페이지 이동
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById(hash + '-page')) {
+                goToPage(hash, false);
+            }
+        }
+
+        init();
     </script>
 </body>
 </html>
