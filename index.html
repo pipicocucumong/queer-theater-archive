@@ -1086,7 +1086,7 @@
             <div class="home-col">
                 <span class="home-col-label">About</span>
                 <p class="home-col-small" style="margin-top: auto;">
-                    <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bccdc9d9d9cec8d4d9ddc8d9ce92d7cefcdbd1ddd5d092dfd3d1">[email&#160;protected]</a><br>
+                    <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d6c6878786f6975787c69786f33766f5d7a707c7471337e7270">[email&#160;protected]</a><br>
                     <a href="https://x.com/QueertheaterKr" target="_blank" style="color: inherit; font-size: 0.85em;">@queertheaterkr</a><br><br>
                     © 2025 한국퀴어연극아카이브.<br>all rights reserved.
                 </p>
@@ -1192,80 +1192,6 @@
         let performances = [];
         let selectedTags = [];
         let allTags = [];
-
-        // ========== 공지(Featured) CMS 연동 ==========
-        let noticeArticles = [];
-
-        async function loadNotices() {
-            try {
-                // 'notice' 카테고리의 ID 가져오기
-                const catRes = await fetch(`${WP_API_URL}/categories?slug=notice&_=${Date.now()}`);
-                const categories = await catRes.json();
-                
-                if (categories.length === 0) {
-                    document.getElementById('featured-grid').innerHTML = 
-                        '<p style="padding: 40px; color: #fff;">공지 카테고리가 없습니다.</p>';
-                    return;
-                }
-                
-                const categoryId = categories[0].id;
-                
-                // 해당 카테고리의 글 가져오기
-                const res = await fetch(`${WP_API_URL}/posts?categories=${categoryId}&per_page=20&_=${Date.now()}`);
-                const posts = await res.json();
-                
-                if (posts.length === 0) {
-                    document.getElementById('featured-grid').innerHTML = 
-                        '<p style="padding: 40px; color: #fff;">등록된 공지가 없습니다.</p>';
-                    return;
-                }
-                
-                // 공지 데이터 저장
-                noticeArticles = posts.map(post => ({
-                    id: post.id,
-                    title: post.title.rendered,
-                    excerpt: post.excerpt.rendered.replace(/<[^>]*>/g, '').trim().slice(0, 80) + (post.excerpt.rendered.length > 80 ? '...' : ''),
-                    content: post.content.rendered,
-                    date: new Date(post.date).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long' })
-                }));
-                
-                // Featured 그리드 렌더링
-                renderFeaturedGrid();
-                
-            } catch (e) {
-                console.error('공지 로드 실패:', e);
-                document.getElementById('featured-grid').innerHTML = 
-                    '<p style="padding: 40px; color: #fff;">공지를 불러올 수 없습니다.</p>';
-            }
-        }
-
-        function renderFeaturedGrid() {
-            const grid = document.getElementById('featured-grid');
-            
-            if (noticeArticles.length === 0) {
-                grid.innerHTML = '<p style="padding: 40px; color: #fff;">등록된 공지가 없습니다.</p>';
-                return;
-            }
-            
-            grid.innerHTML = noticeArticles.map((article, index) => `
-                <div class="featured-item" onclick="showNoticeArticle(${article.id})">
-                    <span class="featured-item-num">${String(index + 1).padStart(2, '0')}</span>
-                    <h2 class="featured-item-title">${article.title}</h2>
-                    <p class="featured-item-desc">${article.excerpt}</p>
-                    <span class="featured-item-meta">공지 · ${article.date}</span>
-                </div>
-            `).join('');
-        }
-
-        function showNoticeArticle(id) {
-            const article = noticeArticles.find(a => a.id === id);
-            if (!article) return;
-            
-            document.getElementById('article-title').textContent = article.title;
-            document.getElementById('article-meta').textContent = article.date;
-            document.getElementById('article-body').innerHTML = article.content;
-            goToPage('article');
-        }
 
         async function fetchPerformances() {
             try {
@@ -1665,9 +1591,72 @@
             goToPage('detail');
         }
 
-        // showArticle 함수는 showNoticeArticle로 대체됨
+        // ========== 공지(Featured) CMS 연동 ==========
+        let noticeArticles = [];
 
-</        // 소개 페이지 로드
+        async function loadNotices() {
+            try {
+                const catRes = await fetch(`${WP_API_URL}/categories?slug=notice&_=${Date.now()}`);
+                const categories = await catRes.json();
+                
+                if (categories.length === 0) {
+                    document.getElementById('featured-grid').innerHTML = 
+                        '<p style="padding: 40px; color: #fff;">공지 카테고리가 없습니다.</p>';
+                    return;
+                }
+                
+                const categoryId = categories[0].id;
+                const res = await fetch(`${WP_API_URL}/posts?categories=${categoryId}&per_page=20&_=${Date.now()}`);
+                const posts = await res.json();
+                
+                if (posts.length === 0) {
+                    document.getElementById('featured-grid').innerHTML = 
+                        '<p style="padding: 40px; color: #fff;">등록된 공지가 없습니다.</p>';
+                    return;
+                }
+                
+                noticeArticles = posts.map(post => ({
+                    id: post.id,
+                    title: post.title.rendered,
+                    excerpt: post.excerpt.rendered.replace(/<[^>]*>/g, '').trim().slice(0, 80) + '...',
+                    content: post.content.rendered,
+                    date: new Date(post.date).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long' })
+                }));
+                
+                renderFeaturedGrid();
+            } catch (e) {
+                console.error('공지 로드 실패:', e);
+                document.getElementById('featured-grid').innerHTML = 
+                    '<p style="padding: 40px; color: #fff;">공지를 불러올 수 없습니다.</p>';
+            }
+        }
+
+        function renderFeaturedGrid() {
+            const grid = document.getElementById('featured-grid');
+            if (noticeArticles.length === 0) {
+                grid.innerHTML = '<p style="padding: 40px; color: #fff;">등록된 공지가 없습니다.</p>';
+                return;
+            }
+            grid.innerHTML = noticeArticles.map((article, index) => `
+                <div class="featured-item" onclick="showNoticeArticle(${article.id})">
+                    <span class="featured-item-num">${String(index + 1).padStart(2, '0')}</span>
+                    <h2 class="featured-item-title">${article.title}</h2>
+                    <p class="featured-item-desc">${article.excerpt}</p>
+                    <span class="featured-item-meta">공지 · ${article.date}</span>
+                </div>
+            `).join('');
+        }
+
+        function showNoticeArticle(id) {
+            const article = noticeArticles.find(a => a.id === id);
+            if (!article) return;
+            document.getElementById('article-title').textContent = article.title;
+            document.getElementById('article-meta').textContent = article.date;
+            document.getElementById('article-body').innerHTML = article.content;
+            goToPage('article');
+        }
+
+        // 소개 페이지 로드
         async function loadAboutPage() {
             try {
                 const res = await fetch(`${WP_API_URL}/pages?slug=소개&_=${Date.now()}`);
@@ -1685,9 +1674,8 @@
         }
 
         // 초기화
-        async function init() {
-            await fetchPerformances();
-            initHomePage();  // 홈 페이지 UI 업데이트 추가
+        fetchPerformances().then(() => {
+            initHomePage();
             loadAboutPage();
             loadNotices();
             
@@ -1696,9 +1684,7 @@
             if (hash && document.getElementById(hash + '-page')) {
                 goToPage(hash, false);
             }
-        }
-
-        init();
+        });
     </script>
 </body>
 </html>
