@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>한국 퀴어 연극 아카이브</title>
+    
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    
+    <!-- OG 메타태그 (링크 공유 미리보기) -->
+    <meta property="og:title" content="한국 퀴어 연극 아카이브">
+    <meta property="og:description" content="2010년부터 현재까지 한국에서 공연된 퀴어 연극을 기록하고 보존하는 프로젝트">
+    <meta property="og:image" content="https://pipicocucumong.github.io/queer-theater-archive/og-image.png">
+    <meta property="og:url" content="https://pipicocucumong.github.io/queer-theater-archive/">
+    <meta property="og:type" content="website">
+    
+    <!-- 트위터 카드 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="한국 퀴어 연극 아카이브">
+    <meta name="twitter:description" content="2010년부터 현재까지 한국에서 공연된 퀴어 연극을 기록하고 보존하는 프로젝트">
+    <meta name="twitter:image" content="https://pipicocucumong.github.io/queer-theater-archive/og-image.png">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -315,23 +333,29 @@
         .archive-pagination {
             display: flex;
             align-items: center;
-            gap: 15px;
+            flex-wrap: wrap;
+            gap: 8px;
             margin-top: 20px;
-            color: #fff;
-            font-size: 14px;
         }
 
         .archive-pagination button {
-            padding: 8px 16px;
-            background: #fff;
-            color: var(--orange);
-            border: none;
+            padding: 8px 14px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 14px;
         }
 
         .archive-pagination button:hover {
-            background: #f0f0f0;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .archive-pagination button.active {
+            background: #fff;
+            color: var(--orange);
+            font-weight: 700;
         }
 
         .archive-main {
@@ -1349,9 +1373,26 @@
             const paginationEl = document.getElementById('pagination');
             if (totalPages > 1) {
                 let paginationHTML = '';
-                if (currentPage > 1) paginationHTML += `<button onclick="goPage(${currentPage - 1})">←</button>`;
-                paginationHTML += `<span>${currentPage} / ${totalPages}</span>`;
-                if (currentPage < totalPages) paginationHTML += `<button onclick="goPage(${currentPage + 1})">→</button>`;
+                
+                // 이전 버튼
+                if (currentPage > 1) {
+                    paginationHTML += `<button onclick="goPage(${currentPage - 1})">←</button>`;
+                }
+                
+                // 숫자 버튼
+                for (let i = 1; i <= totalPages; i++) {
+                    if (i === currentPage) {
+                        paginationHTML += `<button class="active">${i}</button>`;
+                    } else {
+                        paginationHTML += `<button onclick="goPage(${i})">${i}</button>`;
+                    }
+                }
+                
+                // 다음 버튼
+                if (currentPage < totalPages) {
+                    paginationHTML += `<button onclick="goPage(${currentPage + 1})">→</button>`;
+                }
+                
                 paginationEl.innerHTML = paginationHTML;
             } else {
                 paginationEl.innerHTML = '';
