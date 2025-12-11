@@ -1307,9 +1307,22 @@
         // 브라우저 뒤로가기 지원
         window.addEventListener('popstate', (e) => {
             if (e.state && e.state.page) {
-                goToPage(e.state.page, false);
+                if (e.state.page === 'detail' && e.state.id) {
+                    showDetail(e.state.id);
+                } else {
+                    goToPage(e.state.page, false);
+                }
             } else {
-                goToPage('home', false);
+                // 해시에서 페이지 확인
+                const hash = window.location.hash.replace('#', '');
+                if (hash.startsWith('detail/')) {
+                    const id = parseInt(hash.split('/')[1]);
+                    if (id) showDetail(id);
+                } else if (hash && document.getElementById(hash + '-page')) {
+                    goToPage(hash, false);
+                } else {
+                    goToPage('home', false);
+                }
             }
         });
 
@@ -1621,6 +1634,7 @@
                 </div>
             `;
             goToPage('detail');
+            history.replaceState({ page: 'detail', id: id }, '', `#detail/${id}`);
         }
 
         // ========== 공지(Featured) CMS 연동 ==========
@@ -1713,8 +1727,18 @@
             
             // URL 해시에 따라 페이지 이동
             const hash = window.location.hash.replace('#', '');
-            if (hash && document.getElementById(hash + '-page')) {
-                goToPage(hash, false);
+            if (hash) {
+                // detail/123 형태인지 확인
+                if (hash.startsWith('detail/')) {
+                    const id = parseInt(hash.split('/')[1]);
+                    if (id && performances.find(p => p.id === id)) {
+                        showDetail(id);
+                    } else {
+                        goToPage('home', false);
+                    }
+                } else if (document.getElementById(hash + '-page')) {
+                    goToPage(hash, false);
+                }
             }
         });
     </script>
