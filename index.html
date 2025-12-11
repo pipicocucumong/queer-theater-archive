@@ -1086,7 +1086,7 @@
             <div class="home-col">
                 <span class="home-col-label">About</span>
                 <p class="home-col-small" style="margin-top: auto;">
-                    queertheater.kr@gmail.com<br>
+                    <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1c6d6979796e6874797d68796e32776e5c7b717d7570327f7371">[email&#160;protected]</a><br>
                     <a href="https://x.com/QueertheaterKr" target="_blank" style="color: inherit; font-size: 0.85em;">@QueertheaterKr</a><br><br>
                     © 2025 한국퀴어연극아카이브.<br>All rights reserved.
                 </p>
@@ -1186,7 +1186,7 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const WP_API_URL = 'https://queertheater.mycafe24.com/wp-json/wp/v2';
         
         let performances = [];
@@ -1238,12 +1238,26 @@
                         });
                     }
                     
+                    // 정렬용 날짜 파싱 (2021.03.04 형식에서 숫자 추출)
+                    let sortDate = 0;
+                    if (acf.date) {
+                        const dateMatch = acf.date.match(/(\d{4})\.(\d{2})\.(\d{2})/);
+                        if (dateMatch) {
+                            sortDate = parseInt(dateMatch[1]) * 10000 + parseInt(dateMatch[2]) * 100 + parseInt(dateMatch[3]);
+                        } else {
+                            sortDate = parseInt(year) * 10000;
+                        }
+                    }
+                    
                     return {
                         id: item.id,
                         title: item.title.rendered,
                         date: acf.date || '',
                         venue: acf.venue || '',
                         production: acf.production || '',
+                        host: acf.주최 || '',
+                        planning: acf.기획 || '',
+                        organizer: acf.주관 || '',
                         author: acf.author || '',
                         director: acf.director || '',
                         actors: acf.actors || '',
@@ -1254,7 +1268,7 @@
                         archiver_comment: acf.archiver_comment || '',
                         readings: acf.readings || '',
                         similar: acf.similar || '',
-                        tags, year: parseInt(year), poster: posterUrl, reviews
+                        tags, year: parseInt(year), sortDate, poster: posterUrl, reviews
                     };
                 });
 
@@ -1397,9 +1411,9 @@
 
             // 정렬
             if (sort === 'newest') {
-                filtered.sort((a, b) => b.year - a.year);
+                filtered.sort((a, b) => b.sortDate - a.sortDate);
             } else if (sort === 'oldest') {
-                filtered.sort((a, b) => a.year - b.year);
+                filtered.sort((a, b) => a.sortDate - b.sortDate);
             } else if (sort === 'title') {
                 filtered.sort((a, b) => a.title.localeCompare(b.title, 'ko'));
             } else {
@@ -1517,6 +1531,24 @@
                                     <p class="detail-meta-label">제작</p>
                                     <p class="detail-meta-value">${p.production || '—'}</p>
                                 </div>
+                                ${p.host ? `
+                                <div class="detail-meta-item">
+                                    <p class="detail-meta-label">주최</p>
+                                    <p class="detail-meta-value">${p.host}</p>
+                                </div>
+                                ` : ''}
+                                ${p.planning ? `
+                                <div class="detail-meta-item">
+                                    <p class="detail-meta-label">기획</p>
+                                    <p class="detail-meta-value">${p.planning}</p>
+                                </div>
+                                ` : ''}
+                                ${p.organizer ? `
+                                <div class="detail-meta-item">
+                                    <p class="detail-meta-label">주관</p>
+                                    <p class="detail-meta-value">${p.organizer}</p>
+                                </div>
+                                ` : ''}
                                 ${p.director ? `
                                 <div class="detail-meta-item">
                                     <p class="detail-meta-label">참고</p>
@@ -1679,12 +1711,4 @@
             loadAboutPage();
             loadNotices();
             
-            // URL 해시에 따라 페이지 이동
-            const hash = window.location.hash.replace('#', '');
-            if (hash && document.getElementById(hash + '-page')) {
-                goToPage(hash, false);
-            }
-        });
-    </script>
-</body>
-</html>
+            // URL 해시에 따라 페이�
