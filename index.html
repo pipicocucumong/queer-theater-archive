@@ -1734,8 +1734,11 @@
                     if (id && performances.find(p => p.id === id)) {
                         showDetail(id);
                     } else {
-                        goToPage('home', false);
+                        goToPage('archive', false);
                     }
+                } else if (hash === 'detail') {
+                    // #detail만 있으면 작품목록으로
+                    goToPage('archive', false);
                 } else if (document.getElementById(hash + '-page')) {
                     goToPage(hash, false);
                 }
