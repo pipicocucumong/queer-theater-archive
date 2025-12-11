@@ -1711,4 +1711,12 @@
             loadAboutPage();
             loadNotices();
             
-            // URL 해시에 따라 페이�
+            // URL 해시에 따라 페이지 이동
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById(hash + '-page')) {
+                goToPage(hash, false);
+            }
+        });
+    </script>
+</body>
+</html>
