@@ -659,9 +659,13 @@
         }
 
         .detail-meta-value {
-            font-size: 15px;
+            font-size: 17px;
             word-wrap: break-word;
             overflow-wrap: break-word;
+            text-align: left;
+            white-space: normal;
+            word-break: keep-all;
+            line-height: 1.6;
         }
 
         .detail-tags {
@@ -707,7 +711,7 @@
 
         .detail-section p {
             font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 400;
             line-height: 1.85;
             word-break: keep-all;
@@ -720,7 +724,7 @@
 
         .detail-text {
             font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 400;
             line-height: 1.9;
             word-break: keep-all;
@@ -760,7 +764,7 @@
         }
         
         .detail-section-title {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 800 !important;
             margin-bottom: 16px;
             color: #000;
@@ -1311,8 +1315,8 @@
             }
 
             .detail-meta-value {
-                font-size: 13px;
-                word-break: break-all;
+                font-size: 15px;
+                word-break: keep-all;
                 overflow-wrap: break-word;
                 white-space: normal;
             }
@@ -1381,7 +1385,7 @@
             <!-- 빨강 - 타이틀 -->
             <div class="home-col">
                 <img src="logo.png" alt="한국 퀴어 연극 아카이브" class="home-logo">
-                <h1 class="home-col-title">퀴어<br>연극<br>아카이브</h1>
+                <h1 class="home-col-title">한국<br>퀴어연극<br>아카이브</h1>
                 <div class="home-col-content">
                     <p class="home-col-big" id="home-count">0</p>
                     <p class="home-col-small">Performances</p>
@@ -1402,10 +1406,8 @@
             <!-- 노랑 - 검색 -->
             <div class="home-col">
                 <span class="home-col-label">Search</span>
-                <h1 class="home-col-title">검색</h1>
-                <div class="home-col-content">
-                    <input type="text" class="home-search-input" id="home-search" placeholder="작품명, 극단..." onkeyup="handleHomeSearch(event)" />
-                </div>
+                <input type="text" class="home-search-input" id="home-search" placeholder="작품명, 극단..." onkeyup="handleHomeSearch(event)" style="margin-bottom: 15px;" />
+                <p class="home-col-small" style="opacity: 0.6; margin-top: 0;">Enter 키를 눌러 검색</p>
             </div>
 
             <!-- 초록 - 태그 -->
@@ -1419,17 +1421,24 @@
                 <span class="home-col-label">Archive</span>
                 <p class="home-col-small">Korea Queer</p>
                 <p class="home-col-small">Theater Archive</p>
-                <p class="home-col-small">2010–2025</p>
             </div>
 
             <!-- 보라 - About -->
             <div class="home-col">
-                <span class="home-col-label">About</span>
-                <p class="home-col-small" style="margin-top: auto;">
-                    이메일 queertheater.kr@gmail.com<br>
-                    X(구: 트위터) <a href="https://x.com/QueertheaterKr" target="_blank" style="color: inherit;">@QueertheaterKr</a><br><br>
-                    Copyright © 2025 한국퀴어연극아카이브.<br>All rights reserved.
-                </p>
+                <span class="home-col-label">Contact</span>
+                <div class="home-col-content" style="margin-top: auto;">
+                    <p class="home-col-small" style="margin-bottom: 12px; line-height: 1.6;">
+                        이메일<br>
+                        <span style="opacity: 1;">queertheater.kr@gmail.com</span>
+                    </p>
+                    <p class="home-col-small" style="margin-bottom: 12px; line-height: 1.6;">
+                        X(구: 트위터)<br>
+                        <a href="https://x.com/QueertheaterKr" target="_blank" style="color: inherit; opacity: 1; font-size: 11px;">@QueertheaterKr</a>
+                    </p>
+                    <p class="home-col-small" style="margin-top: 20px; font-size: 9px; opacity: 0.6;">
+                        © 2025 한국퀴어연극아카이브
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -1555,7 +1564,7 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         const WP_API_URL = 'https://queertheater.mycafe24.com/wp-json/wp/v2';
         
         let performances = [];
@@ -1565,8 +1574,27 @@
 
         async function fetchPerformances() {
             try {
-                const response = await fetch(`${WP_API_URL}/performance?per_page=100`);
-                const data = await response.json();
+                // 모든 데이터를 가져오기 위한 페이지네이션
+                let allData = [];
+                let page = 1;
+                let hasMore = true;
+                
+                while (hasMore) {
+                    const response = await fetch(`${WP_API_URL}/performance?per_page=100&page=${page}`);
+                    const data = await response.json();
+                    
+                    if (data.length > 0) {
+                        allData = allData.concat(data);
+                        page++;
+                    } else {
+                        hasMore = false;
+                    }
+                    
+                    // 안전장치: 최대 10페이지(1000개)까지만
+                    if (page > 10) hasMore = false;
+                }
+                
+                const data = allData;
                 
                 performances = data.map(item => {
                     const acf = item.acf || {};
@@ -1767,6 +1795,7 @@
 
         function handleHomeSearch(e) {
             if (e.key === 'Enter') {
+                e.target.blur(); // 모바일 키보드 닫기
                 document.getElementById('archive-search').value = e.target.value;
                 goToPage('archive');
             }
@@ -1834,7 +1863,7 @@
                     <span class="archive-item-index">${String(startIdx + i + 1).padStart(3, '0')}</span>
                     <div class="archive-item-info" onclick="showDetail(${p.id})">
                         <div class="archive-item-title">${p.title}</div>
-                        <div class="archive-item-meta">${p.production || ''} ${p.venue ? '· ' + p.venue : ''}</div>
+                        <div class="archive-item-meta">${p.production && p.venue ? p.production + ' · ' + p.venue : (p.venue || p.production || '')}</div>
                     </div>
                     <span class="archive-item-year">${p.year}</span>
                 </div>
@@ -2021,10 +2050,12 @@
                                     <p class="detail-meta-label">장소</p>
                                     <p class="detail-meta-value">${p.venue || '—'}</p>
                                 </div>
+                                ${p.production ? `
                                 <div class="detail-meta-item">
                                     <p class="detail-meta-label">제작</p>
-                                    <p class="detail-meta-value">${p.production || '—'}</p>
+                                    <p class="detail-meta-value">${p.production}</p>
                                 </div>
+                                ` : ''}
                                 ${p.host ? `
                                 <div class="detail-meta-item">
                                     <p class="detail-meta-label">주최</p>
