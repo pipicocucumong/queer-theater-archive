@@ -866,7 +866,49 @@
         .about-text-area a {
             color: #24408E;
         }
+/* 연혁 타임라인 스타일 */
+.timeline {
+    position: relative;
+    padding-left: 30px;
+    margin: 20px 0;
+}
 
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: #24408E;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    background: #24408E;
+    border-radius: 50%;
+}
+
+.timeline-date {
+    font-weight: 700;
+    color: #24408E;
+    margin-bottom: 5px;
+}
+
+.timeline-content {
+    color: #333;
+    line-height: 1.6;
+}
         @media (max-width: 600px) {
             .about-content-wrapper {
                 padding: 30px 20px;
