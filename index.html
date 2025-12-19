@@ -690,11 +690,11 @@
             color: var(--purple);
         }
 
-        .detail-content {
+      .detail-content {
             background: #fff;
-            color: #000;
+            color: #333;
             padding: 70px 80px;
-            max-width: 700px;
+            max-width: 680px;
         }
 
         .detail-section {
@@ -711,29 +711,32 @@
 
         .detail-section p {
             font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 400;
-            line-height: 1.85;
+            line-height: 2.1;
+            letter-spacing: 0.01em;
             word-break: keep-all;
             text-align: left;
+            color: #333;
         }
 
         .detail-section p strong {
             font-weight: 700;
         }
 
-        .detail-text {
+      .detail-text {
             font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
             font-size: 17px;
             font-weight: 400;
-            line-height: 1.9;
+            line-height: 2.1;
+            letter-spacing: 0.01em;
             word-break: keep-all;
-            text-align: left;
+            text-align: justify;
             color: #333;
         }
 
         .detail-text p {
-            margin-bottom: 1.5em;
+            margin-bottom: 1.8em;
         }
         
         .detail-text p:last-child {
@@ -842,14 +845,16 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .about-text-area {
+      .about-text-area {
             background: rgba(255, 255, 255, 0.95);
             padding: 50px;
             border-radius: 12px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
             color: #333;
-            line-height: 1.8;
+            line-height: 2.1;
+            letter-spacing: 0.01em;
             font-size: 16px;
+            word-break: keep-all;
         }
 
         .about-text-area h1, .about-text-area h2, .about-text-area h3 {
@@ -863,8 +868,9 @@
         }
 
         .about-text-area p {
-            margin-bottom: 15px;
-    text-align: justify;
+            margin-bottom: 1.8em;
+            text-align: justify;
+            word-break: keep-all;
         }
 
         .about-text-area a {
@@ -1152,15 +1158,18 @@
             padding: 70px 60px;
         }
 
-        .article-body-inner {
-            max-width: 700px;
+     .article-body-inner {
+            max-width: 650px;
             margin: 0 auto;
             font-size: 17px;
-            line-height: 2;
+            line-height: 2.2;
+            letter-spacing: 0.02em;
+            color: #333;
+            word-break: keep-all;
         }
 
         .article-body-inner p {
-            margin-bottom: 1.5em;
+            margin-bottom: 2em;
         }
 
         .article-body-inner h3 {
@@ -1745,11 +1754,15 @@
         // - URL → 자동 링크
         // - <작품명> → ‹작품명›
         // - 출처|URL 또는 출처:URL → "출처" 링크
-        function formatText(text) {
+       function formatText(text) {
             if (!text) return '';
             
+            // 굽은따옴표 변환 (유니코드 사용)
+            let result = text.replace(/"([^"]+)"/g, '\u201C$1\u201D');
+            result = result.replace(/'([^']+)'/g, '\u2018$1\u2019');
+            
             // <>를 ‹›로 변환
-            let result = text
+            result = result
                 .replace(/<(?![a-z\/])/g, '‹')
                 .replace(/(?<![a-z"])>/g, '›');
             
@@ -1807,9 +1820,10 @@
             applyFilters();
         }
 
-        function handleHomeSearch(e) {
+      function handleHomeSearch(e) {
             if (e.key === 'Enter') {
                 e.target.blur(); // 모바일 키보드 닫기
+                selectedTags = []; // 태그 초기화
                 document.getElementById('archive-search').value = e.target.value;
                 goToPage('archive');
             }
