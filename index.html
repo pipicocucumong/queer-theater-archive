@@ -1755,10 +1755,15 @@
         // - <작품명> → ‹작품명›
         // - 출처|URL 또는 출처:URL → "출처" 링크
        function formatText(text) {
-            if (!text) return '';
+        if (!text) return '';
+            
+            // HTML 엔티티 디코딩
+            let result = text.replace(/&quot;/g, '"');
+            result = result.replace(/&#039;/g, "'");
+            result = result.replace(/&amp;/g, '&');
             
             // 굽은따옴표 변환 (유니코드 사용)
-            let result = text.replace(/"([^"]+)"/g, '\u201C$1\u201D');
+            result = result.replace(/"([^"]+)"/g, '\u201C$1\u201D');
             result = result.replace(/'([^']+)'/g, '\u2018$1\u2019');
             
             // <>를 ‹›로 변환
@@ -1790,6 +1795,8 @@
             
             return result;
         }
+
+
 
         function initHomePage() {
             document.getElementById('home-count').textContent = performances.length;
