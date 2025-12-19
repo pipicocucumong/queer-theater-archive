@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>한국퀴어연극아카이브</title>
+    <title>한국 퀴어 연극 아카이브</title>
     
     <!-- 파비콘 -->
     <link rel="icon" type="image/png" href="logo.png">
@@ -27,6 +27,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* 접근성: 포커스 스타일 */
+        a:focus, button:focus, input:focus, select:focus, [tabindex]:focus {
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
+        
+        /* 접근성: 최소 터치 영역 */
+        button, a, input[type="checkbox"] {
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        /* 접근성: 텍스트 크기 조정 허용 */
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
         
         :root {
             --orange: #FF6B00;
@@ -337,6 +354,101 @@
             letter-spacing: 0.08em;
         }
 
+        /* 장바구니 스타일 */
+        .cart-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .cart-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .cart-clear-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .cart-clear-btn:hover {
+            color: #fff;
+        }
+
+        .cart-list {
+            max-height: 150px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 13px;
+            color: #fff;
+        }
+
+        .cart-item-title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-right: 10px;
+        }
+
+        .cart-item-remove {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0 5px;
+        }
+
+        .cart-item-remove:hover {
+            color: #ff6b6b;
+        }
+
+        .cart-print-btn {
+            width: 100%;
+            padding: 10px;
+            background: #fff;
+            color: var(--orange);
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .cart-print-btn:hover {
+            background: rgba(255,255,255,0.9);
+        }
+
+        /* 아카이브 아이템에 체크박스 추가 */
+        .archive-item-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--orange);
+            flex-shrink: 0;
+        }
+
         .archive-pagination {
             display: flex;
             align-items: center;
@@ -379,13 +491,13 @@
 
         .archive-item {
             display: grid;
-            grid-template-columns: 50px 1fr auto;
-            gap: 22px;
+            grid-template-columns: 24px 50px 1fr auto;
+            gap: 15px;
             padding: 26px 0;
             border-bottom: 1px solid rgba(255,255,255,0.25);
             cursor: pointer;
             transition: all 0.15s;
-            align-items: baseline;
+            align-items: center;
         }
 
         .archive-item:hover {
@@ -404,20 +516,24 @@
         }
 
         .archive-item-title {
-            font-size: clamp(20px, 3.2vw, 34px);
+            font-size: clamp(18px, 2.5vw, 28px);
             font-weight: 600;
-            line-height: 1.15;
-            letter-spacing: 0.03em;
+            line-height: 1.2;
+            letter-spacing: 0.02em;
         }
 
         .archive-item-meta {
             font-size: 12px;
             opacity: 0.7;
-            margin-top: 6px;
+            margin-top: 4px;
+        }
+
+        .archive-item-info {
+            cursor: pointer;
         }
 
         .archive-item-year {
-            font-size: clamp(28px, 4.8vw, 52px);
+            font-size: clamp(24px, 3.5vw, 40px);
             font-weight: 600;
             opacity: 0.4;
         }
@@ -767,10 +883,108 @@
         }
 
         .featured-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            display: flex;
+            flex-direction: column;
+            background: #1a1a1a;
         }
 
+        /* 게시판 스타일 */
+        .notice-board {
+            width: 100%;
+            background: #fff;
+            color: #333;
+        }
+
+        .notice-header {
+            display: grid;
+            grid-template-columns: 60px 1fr 100px;
+            padding: 15px 20px;
+            background: #f5f5f5;
+            border-bottom: 2px solid #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .notice-list {
+            width: 100%;
+        }
+
+        .notice-item {
+            display: grid;
+            grid-template-columns: 60px 1fr 100px;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: background 0.2s;
+            color: #333;
+            background: #fff;
+        }
+
+        .notice-item:hover {
+            background: #f9f9f9;
+        }
+
+        .notice-item-num {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+
+        .notice-item-title {
+            font-size: 15px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 20px;
+        }
+
+        .notice-item-date {
+            font-size: 13px;
+            color: #888;
+            text-align: right;
+        }
+
+        .notice-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            padding: 20px;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .notice-pagination button {
+            min-width: 32px;
+            height: 32px;
+            padding: 0 10px;
+            border: 1px solid #ddd;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        .notice-pagination button:hover {
+            background: #f0f0f0;
+        }
+
+        .notice-pagination button.active {
+            background: var(--purple);
+            color: #fff;
+            border-color: var(--purple);
+        }
+
+        .notice-empty {
+            padding: 60px 20px;
+            text-align: center;
+            color: #888;
+            background: #fff;
+        }
+
+        /* 기존 카드 스타일 유지 (다른 곳에서 사용할 수 있으므로) */
         .featured-item {
             padding: 44px 50px;
             cursor: pointer;
@@ -928,7 +1142,8 @@
             }
 
             .archive-item {
-                grid-template-columns: 40px 1fr;
+                grid-template-columns: 20px 35px 1fr;
+                gap: 10px;
             }
 
             .archive-item-year {
@@ -958,6 +1173,26 @@
             .featured-item {
                 padding: 40px 30px;
                 min-height: auto;
+            }
+
+            /* 공지 게시판 모바일 */
+            .notice-header {
+                grid-template-columns: 50px 1fr 80px;
+                padding: 12px 15px;
+                font-size: 13px;
+            }
+
+            .notice-item {
+                grid-template-columns: 50px 1fr 80px;
+                padding: 12px 15px;
+            }
+
+            .notice-item-title {
+                font-size: 14px;
+            }
+
+            .notice-item-date {
+                font-size: 12px;
             }
 
             .article-hero {
@@ -1031,6 +1266,45 @@
             .archive-sidebar-title {
                 font-size: 24px;
             }
+
+            /* 공지 게시판 작은 모바일 */
+            .notice-header {
+                grid-template-columns: 40px 1fr;
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+
+            .notice-header span:last-child {
+                display: none;
+            }
+
+            .notice-item {
+                grid-template-columns: 40px 1fr;
+                padding: 12px;
+            }
+
+            .notice-item-num {
+                font-size: 12px;
+            }
+
+            .notice-item-title {
+                font-size: 13px;
+            }
+
+            .notice-item-date {
+                display: none;
+            }
+
+            .notice-pagination {
+                padding: 15px;
+                gap: 3px;
+            }
+
+            .notice-pagination button {
+                min-width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -1055,7 +1329,7 @@
                 <a href="#" onclick="goToPage('featured'); return false;">공지</a>
                 <a href="#" onclick="goToPage('archive'); return false;">작품목록</a>
                 <a href="https://drive.google.com" target="_blank">자료 ↗</a>
-                <a href="https://forms.google.com" target="_blank">제보 ↗</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfZO86fkhsnNi3vAnQp8jyZyjWQaIm9np3QWkkT8WnWxlTYOw/viewform" target="_blank">제보 ↗</a>
                 <a href="#" onclick="showRandomPerformance(); return false;">랜덤</a>
             </div>
 
@@ -1086,9 +1360,9 @@
             <div class="home-col">
                 <span class="home-col-label">About</span>
                 <p class="home-col-small" style="margin-top: auto;">
-                    <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1c6d6979796e6874797d68796e32776e5c7b717d7570327f7371">[email&#160;protected]</a><br>
-                    <a href="https://x.com/QueertheaterKr" target="_blank" style="color: inherit; font-size: 0.85em;">@QueertheaterKr</a><br><br>
-                    © 2025 한국퀴어연극아카이브.<br>All rights reserved.
+                    이메일 queertheater.kr@gmail.com<br>
+                    X(구: 트위터) <a href="https://x.com/QueertheaterKr" target="_blank" style="color: inherit;">@QueertheaterKr</a><br><br>
+                    Copyright © 2025 한국퀴어연극아카이브.<br>All rights reserved.
                 </p>
             </div>
         </div>
@@ -1119,6 +1393,17 @@
                 </div>
 
                 <div id="selected-tags" class="archive-selected-tags"></div>
+                
+                <!-- 장바구니 섹션 -->
+                <div id="cart-section" class="cart-section" style="display: none;">
+                    <div class="cart-header">
+                        <span class="cart-title">📋 선택 목록 (<span id="cart-count">0</span>)</span>
+                        <button onclick="clearCart()" class="cart-clear-btn">비우기</button>
+                    </div>
+                    <div id="cart-list" class="cart-list"></div>
+                    <button onclick="printCart()" class="cart-print-btn">🖨️ 인쇄하기</button>
+                </div>
+                
                 <div id="pagination" class="archive-pagination"></div>
             </div>
 
@@ -1186,12 +1471,13 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const WP_API_URL = 'https://queertheater.mycafe24.com/wp-json/wp/v2';
         
         let performances = [];
         let selectedTags = [];
         let allTags = [];
+        let cart = []; // 장바구니
 
         async function fetchPerformances() {
             try {
@@ -1386,8 +1672,13 @@
         }
 
         function filterByTag(tag) {
+            // 다른 필터 초기화 후 태그만 설정
+            document.getElementById('archive-search').value = '';
+            document.getElementById('year-filter').value = '';
             selectedTags = [tag];
+            currentPage = 1;
             goToPage('archive');
+            applyFilters();
         }
 
         function handleHomeSearch(e) {
@@ -1452,9 +1743,12 @@
 
             const list = document.getElementById('archive-list');
             list.innerHTML = paginated.map((p, i) => `
-                <div class="archive-item" onclick="showDetail(${p.id})">
+                <div class="archive-item">
+                    <input type="checkbox" class="archive-item-checkbox" 
+                           ${cart.some(c => c.id === p.id) ? 'checked' : ''} 
+                           onclick="event.stopPropagation(); toggleCart(${p.id})" />
                     <span class="archive-item-index">${String(startIdx + i + 1).padStart(3, '0')}</span>
-                    <div>
+                    <div class="archive-item-info" onclick="showDetail(${p.id})">
                         <div class="archive-item-title">${p.title}</div>
                         <div class="archive-item-meta">${p.production || ''} ${p.venue ? '· ' + p.venue : ''}</div>
                     </div>
@@ -1511,6 +1805,109 @@
         function removeTag(tag) {
             selectedTags = selectedTags.filter(t => t !== tag);
             renderArchive();
+        }
+
+        // ========== 장바구니 기능 ==========
+        function toggleCart(id) {
+            const p = performances.find(x => x.id === id);
+            if (!p) return;
+            
+            const idx = cart.findIndex(c => c.id === id);
+            if (idx > -1) {
+                cart.splice(idx, 1);
+            } else {
+                cart.push({ id: p.id, title: p.title, year: p.year, production: p.production, venue: p.venue, date: p.date });
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const section = document.getElementById('cart-section');
+            const countEl = document.getElementById('cart-count');
+            const listEl = document.getElementById('cart-list');
+            
+            if (cart.length === 0) {
+                section.style.display = 'none';
+            } else {
+                section.style.display = 'block';
+                countEl.textContent = cart.length;
+                listEl.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <span class="cart-item-title">${item.title} (${item.year})</span>
+                        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(c => c.id !== id);
+            updateCartUI();
+            renderArchive(); // 체크박스 상태 업데이트
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+            renderArchive();
+        }
+
+        function printCart() {
+            if (cart.length === 0) {
+                alert('선택된 공연이 없습니다.');
+                return;
+            }
+            
+            const printContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>한국 퀴어 연극 아카이브 - 선택 목록</title>
+                    <style>
+                        body { font-family: "Noto Sans KR", sans-serif; padding: 40px; }
+                        h1 { font-size: 24px; margin-bottom: 10px; }
+                        .subtitle { color: #666; margin-bottom: 30px; }
+                        table { width: 100%; border-collapse: collapse; }
+                        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+                        th { background: #f5f5f5; font-weight: 600; }
+                        .footer { margin-top: 40px; font-size: 12px; color: #999; }
+                    </style>
+                </head>
+                <body>
+                    <h1>한국 퀴어 연극 아카이브</h1>
+                    <p class="subtitle">선택한 공연 목록 (${cart.length}개)</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>작품명</th>
+                                <th>연도</th>
+                                <th>제작</th>
+                                <th>장소</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${cart.map((item, i) => `
+                                <tr>
+                                    <td>${i + 1}</td>
+                                    <td>${item.title}</td>
+                                    <td>${item.year}</td>
+                                    <td>${item.production || '-'}</td>
+                                    <td>${item.venue || '-'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <p class="footer">출력일: ${new Date().toLocaleDateString('ko-KR')} | https://pipicocucumong.github.io/queer-theater-archive/</p>
+                </body>
+                </html>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.print();
         }
 
         function showDetail(id) {
@@ -1639,6 +2036,8 @@
 
         // ========== 공지(Featured) CMS 연동 ==========
         let noticeArticles = [];
+        let noticeCurrentPage = 1;
+        const noticePerPage = 10;
 
         async function loadNotices() {
             try {
@@ -1647,17 +2046,17 @@
                 
                 if (categories.length === 0) {
                     document.getElementById('featured-grid').innerHTML = 
-                        '<p style="padding: 40px; color: #fff;">공지 카테고리가 없습니다.</p>';
+                        '<div class="notice-empty">공지 카테고리가 없습니다.</div>';
                     return;
                 }
                 
                 const categoryId = categories[0].id;
-                const res = await fetch(`${WP_API_URL}/posts?categories=${categoryId}&per_page=20&_=${Date.now()}`);
+                const res = await fetch(`${WP_API_URL}/posts?categories=${categoryId}&per_page=100&_=${Date.now()}`);
                 const posts = await res.json();
                 
                 if (posts.length === 0) {
                     document.getElementById('featured-grid').innerHTML = 
-                        '<p style="padding: 40px; color: #fff;">등록된 공지가 없습니다.</p>';
+                        '<div class="notice-empty">등록된 공지가 없습니다.</div>';
                     return;
                 }
                 
@@ -1666,31 +2065,72 @@
                     title: post.title.rendered,
                     excerpt: post.excerpt.rendered.replace(/<[^>]*>/g, '').trim().slice(0, 80) + '...',
                     content: post.content.rendered,
-                    date: new Date(post.date).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long' })
+                    date: new Date(post.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. /g, '.').replace('.', '')
                 }));
                 
                 renderFeaturedGrid();
             } catch (e) {
                 console.error('공지 로드 실패:', e);
                 document.getElementById('featured-grid').innerHTML = 
-                    '<p style="padding: 40px; color: #fff;">공지를 불러올 수 없습니다.</p>';
+                    '<div class="notice-empty">공지를 불러올 수 없습니다.</div>';
             }
         }
 
         function renderFeaturedGrid() {
             const grid = document.getElementById('featured-grid');
             if (noticeArticles.length === 0) {
-                grid.innerHTML = '<p style="padding: 40px; color: #fff;">등록된 공지가 없습니다.</p>';
+                grid.innerHTML = '<div class="notice-empty">등록된 공지가 없습니다.</div>';
                 return;
             }
-            grid.innerHTML = noticeArticles.map((article, index) => `
-                <div class="featured-item" onclick="showNoticeArticle(${article.id})">
-                    <span class="featured-item-num">${String(index + 1).padStart(2, '0')}</span>
-                    <h2 class="featured-item-title">${article.title}</h2>
-                    <p class="featured-item-desc">${article.excerpt}</p>
-                    <span class="featured-item-meta">공지 · ${article.date}</span>
+
+            const totalPages = Math.ceil(noticeArticles.length / noticePerPage);
+            if (noticeCurrentPage > totalPages) noticeCurrentPage = 1;
+            
+            const startIdx = (noticeCurrentPage - 1) * noticePerPage;
+            const paginated = noticeArticles.slice(startIdx, startIdx + noticePerPage);
+            const totalCount = noticeArticles.length;
+
+            let paginationHTML = '';
+            if (totalPages > 1) {
+                // 이전 버튼
+                if (noticeCurrentPage > 1) {
+                    paginationHTML += `<button onclick="goNoticePage(${noticeCurrentPage - 1})">‹</button>`;
+                }
+                // 페이지 번호
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationHTML += `<button class="${i === noticeCurrentPage ? 'active' : ''}" onclick="goNoticePage(${i})">${i}</button>`;
+                }
+                // 다음 버튼
+                if (noticeCurrentPage < totalPages) {
+                    paginationHTML += `<button onclick="goNoticePage(${noticeCurrentPage + 1})">›</button>`;
+                }
+            }
+
+            grid.innerHTML = `
+                <div class="notice-board">
+                    <div class="notice-header">
+                        <span>번호</span>
+                        <span>제목</span>
+                        <span>날짜</span>
+                    </div>
+                    <div class="notice-list">
+                        ${paginated.map((article, index) => `
+                            <div class="notice-item" onclick="showNoticeArticle(${article.id})">
+                                <span class="notice-item-num">${totalCount - startIdx - index}</span>
+                                <span class="notice-item-title">${article.title}</span>
+                                <span class="notice-item-date">${article.date}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ${totalPages > 1 ? `<div class="notice-pagination">${paginationHTML}</div>` : ''}
                 </div>
-            `).join('');
+            `;
+        }
+
+        function goNoticePage(page) {
+            noticeCurrentPage = page;
+            renderFeaturedGrid();
+            document.getElementById('featured-grid').scrollIntoView({ behavior: 'smooth' });
         }
 
         function showNoticeArticle(id) {
