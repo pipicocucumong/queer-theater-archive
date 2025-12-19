@@ -1394,7 +1394,7 @@
                 <a href="#" onclick="goToPage('about'); return false;">소개</a>
                 <a href="#" onclick="goToPage('featured'); return false;">공지</a>
                 <a href="#" onclick="goToPage('archive'); return false;">작품목록</a>
-                <a href="https://drive.google.com" target="_blank">자료 ↗</a>
+                <a href="#" onclick="goToPage('resources'); return false;">자료 ↗</a>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfZO86fkhsnNi3vAnQp8jyZyjWQaIm9np3QWkkT8WnWxlTYOw/viewform" target="_blank">제보 ↗</a>
                 <a href="#" onclick="showRandomPerformance(); return false;">랜덤</a>
             </div>
@@ -1518,6 +1518,24 @@
             </div>
         </div>
     </div>
+
+    <!-- ===== 자료 페이지 ===== -->
+    <div id="resources-page" class="page">
+        <div class="featured-page" style="background: #1a1a1a;">
+            <header class="featured-header">
+                <a href="#" onclick="goToPage('home'); return false;" class="detail-back">← HOME</a>
+                <span class="featured-title">RESOURCES / 자료</span>
+            </header>
+
+            <div class="featured-grid" id="resources-grid">
+                <p style="padding: 40px; color: #fff;">로딩 중...</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
 
     <!-- ===== 글 상세 ===== -->
     <div id="article-page" class="page">
@@ -2199,6 +2217,116 @@
             document.getElementById('featured-grid').scrollIntoView({ behavior: 'smooth' });
         }
 
+        // ========== 자료(Resources) CMS 연동 ==========
+        let resourceArticles = [];
+        let resourceCurrentPage = 1;
+        const resourcePerPage = 10;
+
+        async function loadResources() {
+            try {
+                const catRes = await fetch(`${WP_API_URL}/categories?slug=resources&_=${Date.now()}`);
+                const categories = await catRes.json();
+                
+                if (categories.length === 0) {
+                    document.getElementById('resources-grid').innerHTML = 
+                        '<div class="notice-empty">자료 카테고리가 없습니다.</div>';
+                    return;
+                }
+                
+                const categoryId = categories[0].id;
+                const res = await fetch(`${WP_API_URL}/posts?categories=${categoryId}&per_page=100&_=${Date.now()}`);
+                const posts = await res.json();
+                
+                if (posts.length === 0) {
+                    document.getElementById('resources-grid').innerHTML = 
+                        '<div class="notice-empty">등록된 자료가 없습니다.</div>';
+                    return;
+                }
+                
+                resourceArticles = posts.map(post => {
+                    // ACF 또는 본문에서 파일 URL 추출
+                    const acf = post.acf || {};
+                    let fileUrl = acf.file_url || acf.file || '';
+                    
+                    // 본문에서 첫 번째 링크 추출 (ACF 없을 경우)
+                    if (!fileUrl) {
+                        const match = post.content.rendered.match(/href="([^"]+\.pdf)"/i);
+                        if (match) fileUrl = match[1];
+                    }
+                    
+                    return {
+                        id: post.id,
+                        title: post.title.rendered,
+                        content: post.content.rendered,
+                        fileUrl: fileUrl,
+                        date: new Date(post.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. /g, '.').replace('.', '')
+                    };
+                });
+                
+                renderResourcesGrid();
+            } catch (e) {
+                console.error('자료 로드 실패:', e);
+                document.getElementById('resources-grid').innerHTML = 
+                    '<div class="notice-empty">자료를 불러올 수 없습니다.</div>';
+            }
+        }
+
+        function renderResourcesGrid() {
+            const grid = document.getElementById('resources-grid');
+            if (resourceArticles.length === 0) {
+                grid.innerHTML = '<div class="notice-empty">등록된 자료가 없습니다.</div>';
+                return;
+            }
+
+            const totalPages = Math.ceil(resourceArticles.length / resourcePerPage);
+            if (resourceCurrentPage > totalPages) resourceCurrentPage = 1;
+            
+            const startIdx = (resourceCurrentPage - 1) * resourcePerPage;
+            const paginated = resourceArticles.slice(startIdx, startIdx + resourcePerPage);
+            const totalCount = resourceArticles.length;
+
+            let paginationHTML = '';
+            if (totalPages > 1) {
+                if (resourceCurrentPage > 1) {
+                    paginationHTML += `<button onclick="goResourcePage(${resourceCurrentPage - 1})">‹</button>`;
+                }
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationHTML += `<button class="${i === resourceCurrentPage ? 'active' : ''}" onclick="goResourcePage(${i})">${i}</button>`;
+                }
+                if (resourceCurrentPage < totalPages) {
+                    paginationHTML += `<button onclick="goResourcePage(${resourceCurrentPage + 1})">›</button>`;
+                }
+            }
+
+            grid.innerHTML = `
+                <div class="notice-board">
+                    <div class="notice-header">
+                        <span>번호</span>
+                        <span>제목</span>
+                        <span>다운로드</span>
+                    </div>
+                    <div class="notice-list">
+                        ${paginated.map((article, index) => `
+                            <div class="notice-item">
+                                <span class="notice-item-num">${totalCount - startIdx - index}</span>
+                                <span class="notice-item-title">${article.title}</span>
+                                <span class="notice-item-date">
+                                    ${article.fileUrl ? `<a href="${article.fileUrl}" target="_blank" style="color:#24408E;">📥 다운로드</a>` : '-'}
+                                </span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ${totalPages > 1 ? `<div class="notice-pagination">${paginationHTML}</div>` : ''}
+                </div>
+            `;
+        }
+
+        function goResourcePage(page) {
+            resourceCurrentPage = page;
+            renderResourcesGrid();
+            document.getElementById('resources-grid').scrollIntoView({ behavior: 'smooth' });
+        }
+
         function showNoticeArticle(id) {
             const article = noticeArticles.find(a => a.id === id);
             if (!article) return;
@@ -2230,6 +2358,7 @@
             initHomePage();
             loadAboutPage();
             loadNotices();
+            loadResources();
             
             // URL 해시에 따라 페이지 이동
             const hash = window.location.hash.replace('#', '');
