@@ -1892,7 +1892,20 @@
             const sort = document.getElementById('sort-filter').value;
 
             let filtered = performances.filter(p => {
-                const matchSearch = !search || p.title.toLowerCase().includes(search) || (p.production && p.production.toLowerCase().includes(search));
+                const searchTarget = [
+                    p.title,
+                    p.production,
+                    p.description,
+                    p.archiver_comment,
+                    p.venue,
+                    p.actors,
+                    p.staff,
+                    p.host,
+                    p.readings,
+                    p.tags.join(' ')
+                ].filter(Boolean).join(' ').toLowerCase();
+                
+                const matchSearch = !search || searchTarget.includes(search);
                 const matchTags = !selectedTags.length || selectedTags.every(t => p.tags.includes(t));
                 const matchYear = !year || p.year.toString() === year;
                 return matchSearch && matchTags && matchYear;
