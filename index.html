@@ -34,9 +34,9 @@
             outline-offset: 2px;
         }
         
-      /* 접근성: 최소 터치 영역 */
+        /* 접근성: 최소 터치 영역 */
         button, a {
-        min-height: 44px;
+            min-height: 44px;
         }
         
         /* 접근성: 텍스트 크기 조정 허용 */
@@ -83,19 +83,6 @@
         .home-col:nth-child(4) { background: #008026; }
         .home-col:nth-child(5) { background: #24408E; }
         .home-col:nth-child(6) { background: #732982; }
-
-        .home-logo-placeholder {
-            width: 80px;
-            height: 80px;
-            border: 2px dashed rgba(255,255,255,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            opacity: 0.7;
-            margin-bottom: 20px;
-            text-align: center;
-        }
 
         .home-col-label {
             font-size: 11px;
@@ -190,35 +177,52 @@
 
         .home-tag-list {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            flex-wrap: wrap;
+            gap: 6px;
             margin-top: 15px;
         }
 
         .home-tag-item {
-            font-size: 12px;
-            padding: 8px 0;
+            font-size: 13px;
+            padding: 6px 12px;
             cursor: pointer;
-            opacity: 0.8;
-            transition: all 0.15s;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.2s;
+            border-radius: 0;
+            font-weight: 500;
+            color: #fff;
+            animation: tagSparkle 3s ease-in-out infinite;
         }
 
-        .home-col:nth-child(3) .home-tag-item {
-            border-bottom-color: rgba(0,0,0,0.15);
+        /* special.fish 스타일 색상 */
+        .home-tag-item:nth-child(1) { background: #e74c3c; animation-delay: 0s; }
+        .home-tag-item:nth-child(2) { background: #9b59b6; animation-delay: 0.15s; }
+        .home-tag-item:nth-child(3) { background: #3498db; animation-delay: 0.3s; }
+        .home-tag-item:nth-child(4) { background: #1abc9c; animation-delay: 0.45s; }
+        .home-tag-item:nth-child(5) { background: #2ecc71; animation-delay: 0.6s; }
+        .home-tag-item:nth-child(6) { background: #f39c12; animation-delay: 0.75s; }
+        .home-tag-item:nth-child(7) { background: #e67e22; animation-delay: 0.9s; }
+        .home-tag-item:nth-child(8) { background: #34495e; animation-delay: 1.05s; }
+        .home-tag-item:nth-child(9) { background: #16a085; animation-delay: 1.2s; }
+        .home-tag-item:nth-child(10) { background: #8e44ad; animation-delay: 1.35s; }
+        .home-tag-item:nth-child(11) { background: #2980b9; animation-delay: 1.5s; }
+        .home-tag-item:nth-child(12) { background: #27ae60; animation-delay: 1.65s; }
+        .home-tag-item:nth-child(13) { background: #d35400; animation-delay: 1.8s; }
+        .home-tag-item:nth-child(14) { background: #c0392b; animation-delay: 1.95s; }
+        .home-tag-item:nth-child(15) { background: #7f8c8d; animation-delay: 2.1s; }
+        .home-tag-item:nth-child(16) { background: #f1c40f; color: #333; animation-delay: 2.25s; }
+        .home-tag-item:nth-child(17) { background: #95a5a6; animation-delay: 2.4s; }
+        .home-tag-item:nth-child(18) { background: #e91e63; animation-delay: 2.55s; }
+        .home-tag-item:nth-child(19) { background: #00bcd4; animation-delay: 2.7s; }
+        .home-tag-item:nth-child(20) { background: #673ab7; animation-delay: 2.85s; }
+
+        @keyframes tagSparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.65; }
         }
 
         .home-tag-item:hover {
-            opacity: 1;
-            padding-left: 10px;
-        }
-
-        .home-footer-text {
-            font-size: 10px;
-            opacity: 0.5;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-top: auto;
+            opacity: 1 !important;
+            filter: brightness(1.15);
         }
 
         /* =====================================================
@@ -441,36 +445,36 @@
 
         /* 아카이브 아이템에 체크박스 추가 */
         .archive-item-checkbox {
-             -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    min-width: 18px;
-    min-height: 18px;
-    border: 2px solid rgba(255,255,255,0.5);
-    border-radius: 3px;
-    background: transparent;
-    cursor: pointer;
-    flex-shrink: 0;
-    position: relative;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            min-height: 18px;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 3px;
+            background: transparent;
+            cursor: pointer;
+            flex-shrink: 0;
+            position: relative;
         }
 
         .archive-item-checkbox:checked {
-    background: var(--orange);
-    border-color: var(--orange);
-}
+            background: var(--orange);
+            border-color: var(--orange);
+        }
 
-.archive-item-checkbox:checked::after {
-    content: '✓';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: 12px;
-    font-weight: bold;
-}
+        .archive-item-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+        }
 
         .archive-pagination {
             display: flex;
@@ -562,245 +566,342 @@
         }
 
         /* =====================================================
-           상세 페이지 - 주황/보라
+           상세 페이지 - 양분할 레이아웃 (NEW!)
            ===================================================== */
-        .detail-split {
+        .detail-page {
+            display: flex;
             min-height: 100vh;
         }
 
-        .detail-header {
+        /* 왼쪽 패널 - 주황색 */
+        .detail-left {
+            width: 42%;
             background: var(--orange);
             color: #fff;
-            padding: 26px 40px;
+            position: relative;
+        }
+
+        .detail-left-inner {
+            position: sticky;
+            top: 0;
+            padding: 50px 45px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .detail-back {
-            font-size: 12px;
             color: #fff;
             text-decoration: none;
+            font-size: 12px;
+            margin-bottom: 40px;
+            display: inline-block;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            letter-spacing: 0.12em;
         }
 
         .detail-back:hover {
             text-decoration: underline;
         }
 
-        .detail-hero {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 70vh;
-        }
-
-        .detail-poster-area {
-            background: var(--orange);
-            padding: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         .detail-poster {
-            max-width: 280px;
-            border: none !important;
+            width: 100%;
+            max-width: 260px;
+            margin: 0 auto 35px;
+        }
+
+        .detail-poster img {
+            width: 100%;
+            height: auto;
+            display: block;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
         }
 
         .detail-poster-empty {
-            width: 220px;
-            height: 300px;
-            border: 4px solid rgba(255,255,255,0.5);
+            width: 200px;
+            height: 280px;
+            margin: 0 auto 35px;
+            border: 3px solid rgba(255,255,255,0.4);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
-            color: rgba(255,255,255,0.7);
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-        }
-
-        .detail-info-area {
-            background: var(--purple);
-            color: #fff;
-            padding: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow: hidden;
-            max-width: 100%;
+            font-size: 12px;
+            opacity: 0.6;
+            letter-spacing: 0.1em;
         }
 
         .detail-title {
-            font-size: clamp(28px, 5vw, 56px);
-            font-weight: 600;
-            line-height: 1.15;
-            margin-bottom: 44px;
-            letter-spacing: 0.04em;
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            margin-bottom: 35px;
+            letter-spacing: -0.01em;
+            line-height: 1.25;
+            animation: titleSparkle 2.5s ease-in-out infinite;
+        }
+
+        @keyframes titleSparkle {
+            0%, 100% { opacity: 1; text-shadow: 0 0 0 transparent; }
+            50% { opacity: 0.7; text-shadow: 0 0 20px rgba(255,255,255,0.5); }
         }
 
         .detail-meta-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 26px;
+            gap: 22px 30px;
+            margin-bottom: 30px;
         }
 
         .detail-meta-item {
-            border-left: 3px solid #fff;
-            padding-left: 18px;
-            overflow: hidden;
-            max-width: 100%;
+            border-left: 3px solid rgba(255,255,255,0.5);
+            padding-left: 14px;
         }
 
         .detail-meta-label {
-            font-size: 11px;
-            opacity: 0.7;
+            font-size: 12px;
+            opacity: 0.6;
             margin-bottom: 6px;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            letter-spacing: 0.12em;
         }
 
         .detail-meta-value {
             font-size: 17px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            text-align: left;
-            white-space: normal;
+            line-height: 1.5;
             word-break: keep-all;
-            line-height: 1.6;
+            font-weight: 500;
         }
 
         .detail-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 40px;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: 30px;
         }
 
         .detail-tag {
-            padding: 10px 18px;
-            border: 2px solid #fff;
-            font-size: 12px;
+            padding: 8px 16px;
+            border: 1px solid #fff;
+            font-size: 14px;
             cursor: pointer;
-            transition: all 0.15s;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+            transition: all 0.2s;
+            background: transparent;
+            color: #fff;
+            animation: sparkle 2s ease-in-out infinite;
         }
 
         .detail-tag:hover {
             background: #fff;
-            color: var(--purple);
+            color: var(--orange);
         }
 
-      .detail-content {
+        /* 태그 반짝임 애니메이션 - 더 강하게 */
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.15; }
+        }
+
+        .detail-tag:nth-child(1) { animation-delay: 0s; }
+        .detail-tag:nth-child(2) { animation-delay: 0.25s; }
+        .detail-tag:nth-child(3) { animation-delay: 0.5s; }
+        .detail-tag:nth-child(4) { animation-delay: 0.75s; }
+        .detail-tag:nth-child(5) { animation-delay: 1s; }
+        .detail-tag:nth-child(6) { animation-delay: 1.25s; }
+        .detail-tag:nth-child(7) { animation-delay: 1.5s; }
+        .detail-tag:nth-child(8) { animation-delay: 1.75s; }
+        .detail-tag:nth-child(9) { animation-delay: 2s; }
+        .detail-tag:nth-child(10) { animation-delay: 2.25s; }
+
+        /* 오른쪽 패널 - 상하 분할 */
+        .detail-right {
+            width: 58%;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 상단: 공식 소개 - 흰색 */
+        .detail-right-top {
+            flex: 1;
             background: #fff;
             color: #333;
-            padding: 70px 80px;
-            max-width: 680px;
+            padding: 50px 55px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 하단: 읽을거리 - 보라색 */
+        .detail-right-bottom {
+            flex: 1;
+            background: var(--purple);
+            color: #fff;
+            padding: 50px 55px;
+            display: flex;
+            flex-direction: column;
         }
 
         .detail-section {
             margin-bottom: 0;
         }
 
-        .detail-section h3 {
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #000;
-            letter-spacing: 0.02em;
+        .detail-section-title {
+            font-size: clamp(48px, 8vw, 80px);
+            font-weight: 900;
+            margin-bottom: 35px;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            animation: sparkle 4s ease-in-out infinite;
         }
 
-        .detail-section p {
+        .detail-right-top .detail-section-title {
+            color: #000;
+            opacity: 0.15;
+        }
+
+        .detail-right-bottom .detail-section-title {
+            color: #fff;
+            opacity: 0.2;
+        }
+        
+        /* 서브 섹션 제목 (아카이버 한 마디, 비슷한 공연) */
+        .detail-section-subtitle {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: 0.02em;
+            opacity: 0.5;
+        }
+
+        .detail-right-top .detail-section-subtitle {
+            color: #000;
+        }
+
+        .detail-right-bottom .detail-section-subtitle {
+            color: #fff;
+        }
+
+        /* 아카이버 한 마디 - 선 테두리 스타일 */
+        .detail-archiver-section {
+            margin-top: 40px;
+            padding-top: 35px;
+            border-top: 1px solid #ddd;
+        }
+
+        .detail-archiver-section .detail-section-subtitle {
+            font-size: 14px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 20px;
+            opacity: 0.4;
+        }
+
+        .detail-archiver-section .detail-text {
+            font-size: 19px;
+            color: #333;
+        }
+
+        .detail-text {
             font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
-            font-size: 17px;
+            font-size: 21px;
             font-weight: 400;
-            line-height: 2.1;
+            line-height: 1.85;
             letter-spacing: 0.01em;
             word-break: keep-all;
             text-align: left;
+        }
+
+        .detail-right-top .detail-text {
             color: #333;
         }
 
-        .detail-section p strong {
-            font-weight: 700;
-        }
-
-      .detail-text {
-            font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
-            font-size: 17px;
-            font-weight: 400;
-            line-height: 2.0;
-            letter-spacing: 0.02em;
-            word-break: keep-all;
-            text-align: left;
-            color: #333;
+        .detail-right-bottom .detail-text {
+            color: #fff;
+            opacity: 0.95;
         }
 
         .detail-text p {
-            margin-bottom: 1.8em;
+            margin-bottom: 1.5em;
         }
-        
+
         .detail-text p:last-child {
             margin-bottom: 0;
         }
 
         .detail-text strong {
             font-weight: 700;
-            color: #000;
             display: block;
             margin-top: 0.3em;
             margin-bottom: 0.3em;
         }
-        
+
+        .detail-right-top .detail-text strong {
+            color: #000;
+        }
+
+        .detail-right-bottom .detail-text strong {
+            color: #fff;
+        }
+
         .detail-text p:first-child strong:first-child {
             margin-top: 0;
         }
 
-        .detail-text a {
+        .detail-right-top .detail-text a {
             color: var(--purple);
             text-decoration: underline;
         }
 
-        .detail-divider {
-            border: none;
-            border-top: 1px solid #ddd;
-            margin: 40px 0;
-        }
-        
-        .detail-section-title {
-            font-size: 18px;
-            font-weight: 800 !important;
-            margin-bottom: 16px;
-            color: #000;
-            letter-spacing: -0.02em;
+        .detail-right-bottom .detail-text a {
+            color: #fff;
+            text-decoration: underline;
         }
 
         .detail-source {
             margin-top: 20px;
+        }
+
+        .detail-right-top .detail-source a {
+            color: var(--purple);
+            text-decoration: underline;
             font-size: 14px;
         }
 
-        .detail-source a {
-            color: var(--purple);
+        .detail-right-bottom .detail-source a {
+            color: #fff;
             text-decoration: underline;
+            font-size: 14px;
         }
 
-        .detail-reviews ul {
+        .detail-links {
             list-style: none;
         }
 
-        .detail-reviews li {
-            padding: 14px 0;
-            border-bottom: 1px solid #eee;
+        .detail-links li {
+            margin-bottom: 14px;
         }
 
-        .detail-reviews a {
-            color: var(--purple);
+        .detail-links a {
+            color: #fff;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.2s;
         }
 
-        .detail-reviews a:hover {
-            text-decoration: underline;
+        .detail-links a:hover {
+            opacity: 0.7;
+        }
+
+        .detail-links a::before {
+            content: '→';
+        }
+
+        /* 빈 상태 메시지 */
+        .detail-empty {
+            opacity: 0.5;
+            font-size: 14px;
         }
 
         /* =====================================================
@@ -845,16 +946,14 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
-      .about-text-area {
+        .about-text-area {
             background: rgba(255, 255, 255, 0.95);
             padding: 50px;
             border-radius: 12px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
             color: #333;
-            line-height: 2.1;
-            letter-spacing: 0.01em;
+            line-height: 1.8;
             font-size: 16px;
-            word-break: keep-all;
         }
 
         .about-text-area h1, .about-text-area h2, .about-text-area h3 {
@@ -868,75 +967,60 @@
         }
 
         .about-text-area p {
-            margin-bottom: 1.8em;
+            margin-bottom: 15px;
             text-align: justify;
-            word-break: keep-all;
         }
 
         .about-text-area a {
             color: #24408E;
         }
-/* 연혁 타임라인 스타일 */
-.timeline {
-    position: relative;
-    padding-left: 30px;
-    margin: 20px 0;
-}
 
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 6px;
-    top: 8px;
-    bottom: 8px;
-    width: 2px;
-    background: #24408E;
-}
+        /* 연혁 타임라인 스타일 */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
 
-.timeline-item {
-    position: relative;
-    margin-bottom: 25px;
-}
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: #24408E;
+        }
 
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -24px;
-    top: 8px;
-    width: 10px;
-    height: 10px;
-    background: #24408E;
-    border-radius: 50%;
-}
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
 
-.timeline-date {
-    font-weight: 700;
-    color: #24408E;
-    margin-bottom: 5px;
-}
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background: #24408E;
+            border-radius: 50%;
+        }
 
-.timeline-content {
-    color: #333;
-    line-height: 1.6;
-}
-        @media (max-width: 600px) {
-            .about-content-wrapper {
-                padding: 30px 20px;
-            }
-            .about-text-area {
-                padding: 30px 25px;
-            }
-            .about-logo {
-                width: 100px;
-                height: 100px;
-            }
-            .about-header {
-                padding: 20px 25px;
-            }
+        .timeline-date {
+            font-weight: 700;
+            color: #24408E;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content {
+            color: #333;
+            line-height: 1.6;
         }
 
         /* =====================================================
-           주목 페이지 - 주황/보라 그리드
+           공지/자료 페이지 - 게시판 스타일
            ===================================================== */
         .featured-page {
             min-height: 100vh;
@@ -1066,62 +1150,8 @@
             background: #fff;
         }
 
-        /* 기존 카드 스타일 유지 (다른 곳에서 사용할 수 있으므로) */
-        .featured-item {
-            padding: 44px 50px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            flex-direction: column;
-            min-height: 320px;
-        }
-
-        .featured-item:nth-child(odd) {
-            background: var(--orange);
-            color: #fff;
-        }
-
-        .featured-item:nth-child(even) {
-            background: var(--purple);
-            color: #fff;
-        }
-
-        .featured-item:hover {
-            filter: brightness(1.15);
-        }
-
-        .featured-item-num {
-            font-size: 72px;
-            font-weight: 600;
-            opacity: 0.35;
-            line-height: 1;
-            margin-bottom: 18px;
-        }
-
-        .featured-item-title {
-            font-size: 26px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-bottom: 18px;
-        }
-
-        .featured-item-desc {
-            font-size: 14px;
-            opacity: 0.8;
-            line-height: 1.7;
-            margin-bottom: auto;
-        }
-
-        .featured-item-meta {
-            font-size: 11px;
-            opacity: 0.6;
-            margin-top: 26px;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-        }
-
         /* =====================================================
-           글 상세 - 주황/보라
+           글 상세
            ===================================================== */
         .article-page {
             min-height: 100vh;
@@ -1164,18 +1194,15 @@
             padding: 70px 60px;
         }
 
-     .article-body-inner {
-            max-width: 650px;
+        .article-body-inner {
+            max-width: 700px;
             margin: 0 auto;
             font-size: 17px;
-            line-height: 2.2;
-            letter-spacing: 0.02em;
-            color: #333;
-            word-break: keep-all;
+            line-height: 2;
         }
 
         .article-body-inner p {
-            margin-bottom: 2em;
+            margin-bottom: 1.5em;
         }
 
         .article-body-inner h3 {
@@ -1235,32 +1262,65 @@
                 display: none;
             }
 
-            .detail-hero {
-                grid-template-columns: 1fr;
+            /* 상세 페이지 - 모바일 세로 배치 */
+            .detail-page {
+                flex-direction: column;
             }
 
-            .detail-poster-area, .detail-info-area {
-                padding: 40px 30px;
+            .detail-left {
+                width: 100%;
+                position: relative;
+            }
+
+            .detail-left-inner {
+                position: relative;
+                min-height: auto;
+                padding: 35px 25px;
+            }
+
+            .detail-poster {
+                max-width: 180px;
+                margin-bottom: 25px;
+            }
+
+            .detail-poster-empty {
+                width: 150px;
+                height: 210px;
+                margin-bottom: 25px;
+            }
+
+            .detail-title {
+                font-size: 24px;
+                margin-bottom: 25px;
             }
 
             .detail-meta-grid {
                 grid-template-columns: 1fr;
+                gap: 16px;
             }
 
-            .detail-content {
-                padding: 50px 30px;
+            .detail-meta-value {
+                font-size: 15px;
             }
 
-            .featured-grid {
-                grid-template-columns: 1fr;
+            .detail-archiver-section {
+                margin-top: 30px;
+                padding-top: 25px;
+            }
+            
+            .detail-text {
+                font-size: 18px;
             }
 
-            .featured-item {
-                padding: 40px 30px;
-                min-height: auto;
+            .detail-right {
+                width: 100%;
             }
 
-            /* 공지 게시판 모바일 */
+            .detail-right-top,
+            .detail-right-bottom {
+                padding: 35px 25px;
+            }
+
             .notice-header {
                 grid-template-columns: 50px 1fr 80px;
                 padding: 12px 15px;
@@ -1287,6 +1347,20 @@
             .article-body {
                 padding: 50px 30px;
             }
+
+            .about-content-wrapper {
+                padding: 30px 20px;
+            }
+            .about-text-area {
+                padding: 30px 25px;
+            }
+            .about-logo {
+                width: 100px;
+                height: 100px;
+            }
+            .about-header {
+                padding: 20px 25px;
+            }
         }
 
         /* 더 작은 모바일 (480px 이하) */
@@ -1309,35 +1383,21 @@
                 font-size: 36px;
             }
 
-            .detail-poster-area, .detail-info-area {
+            .detail-left-inner {
                 padding: 30px 20px;
-                width: 100%;
-                max-width: 100vw;
+            }
+
+            .detail-right-top,
+            .detail-right-bottom {
+                padding: 30px 20px;
             }
 
             .detail-title {
-                font-size: 24px;
-                margin-bottom: 30px;
-            }
-
-            .detail-meta-grid {
-                width: 100%;
-            }
-
-            .detail-meta-item {
-                width: 100%;
-                max-width: calc(100vw - 40px);
+                font-size: 22px;
             }
 
             .detail-meta-value {
-                font-size: 15px;
-                word-break: keep-all;
-                overflow-wrap: break-word;
-                white-space: normal;
-            }
-
-            .detail-content {
-                padding: 30px 20px;
+                font-size: 13px;
             }
 
             .archive-sidebar {
@@ -1458,7 +1518,7 @@
                 <div class="home-col-content" style="margin-top: auto;">
                     <p class="home-col-small" style="margin-bottom: 12px; line-height: 1.6;">
                         이메일<br>
-                        <span style="opacity: 1;">queertheater.kr@gmail.com</span>
+                        <span style="opacity: 1;">queertheaterarchive@gmail.com</span>
                     </p>
                     <p class="home-col-small" style="margin-bottom: 12px; line-height: 1.6;">
                         X(구: 트위터)<br>
@@ -1521,7 +1581,9 @@
 
     <!-- ===== 상세 페이지 ===== -->
     <div id="detail-page" class="page">
-        <!-- JS로 채워짐 -->
+        <div id="detail-container">
+            <!-- JS로 채워짐 -->
+        </div>
     </div>
 
     <!-- ===== 소개 페이지 ===== -->
@@ -1571,10 +1633,6 @@
         </div>
     </div>
 
-
-
-
-
     <!-- ===== 글 상세 ===== -->
     <div id="article-page" class="page">
         <div class="article-page">
@@ -1599,11 +1657,10 @@
         let performances = [];
         let selectedTags = [];
         let allTags = [];
-        let cart = []; // 장바구니
+        let cart = [];
 
         async function fetchPerformances() {
             try {
-                // 모든 데이터를 가져오기 위한 페이지네이션
                 let allData = [];
                 let page = 1;
                 let hasMore = true;
@@ -1619,7 +1676,6 @@
                         hasMore = false;
                     }
                     
-                    // 안전장치: 최대 10페이지(1000개)까지만
                     if (page > 10) hasMore = false;
                 }
                 
@@ -1627,45 +1683,35 @@
                 
                 performances = data.map(item => {
                     const acf = item.acf || {};
-                    // 태그 파싱 - 쉼표(,) 또는 해시태그(#) 구분 지원
                     let tags = [];
                     if (acf.tags) {
                         if (acf.tags.includes('#')) {
-                            // # 구분: "#태그1 #태그2" → ["태그1", "태그2"]
                             tags = acf.tags.split('#').map(t => t.trim()).filter(t => t);
                         } else {
-                            // 쉼표 구분: "태그1, 태그2" → ["태그1", "태그2"]
                             tags = acf.tags.split(',').map(t => t.trim()).filter(t => t);
                         }
                     }
                     let year = acf.date ? (acf.date.match(/\d{4}/) || ['2023'])[0] : '2023';
                     let posterUrl = acf.poster ? (typeof acf.poster === 'object' ? acf.poster.url : acf.poster) : null;
-                    // 리뷰 파싱 - 여러 형식 지원
-                    // 형식1: 제목|URL
-                    // 형식2: 제목 (URL)
-                    // 형식3: 일반 텍스트 (줄바꿈으로 구분)
+                    
                     let reviews = [];
                     if (acf.reviews) {
                         const lines = acf.reviews.split('\n').filter(l => l.trim());
                         reviews = lines.map(line => {
-                            // 형식1: 제목|URL
                             if (line.includes('|')) {
                                 const [title, url] = line.split('|');
                                 return { title: title.trim(), url: url ? url.trim() : '' };
                             }
-                            // 형식2: URL이 포함된 경우
                             const urlMatch = line.match(/(https?:\/\/[^\s\)]+)/);
                             if (urlMatch) {
                                 const url = urlMatch[1];
                                 const title = line.replace(url, '').replace(/[\(\)]/g, '').trim() || url;
                                 return { title, url };
                             }
-                            // 형식3: 일반 텍스트
                             return { title: line.trim(), url: '' };
                         });
                     }
                     
-                    // 정렬용 날짜 파싱 (2021.03.04 형식에서 숫자 추출)
                     let sortDate = 0;
                     if (acf.date) {
                         const dateMatch = acf.date.match(/(\d{4})\.(\d{2})\.(\d{2})/);
@@ -1701,7 +1747,6 @@
 
                 allTags = [...new Set(performances.flatMap(p => p.tags))];
                 
-                // 연도 필터 동적 생성
                 const years = [...new Set(performances.map(p => p.year))].sort((a, b) => b - a);
                 const yearFilter = document.getElementById('year-filter');
                 if (yearFilter) {
@@ -1731,7 +1776,6 @@
             }
         }
 
-        // 브라우저 뒤로가기 지원
         window.addEventListener('popstate', (e) => {
             if (e.state && e.state.page) {
                 if (e.state.page === 'detail' && e.state.id) {
@@ -1740,7 +1784,6 @@
                     goToPage(e.state.page, false);
                 }
             } else {
-                // 해시에서 페이지 확인
                 const hash = window.location.hash.replace('#', '');
                 if (hash.startsWith('detail/')) {
                     const id = parseInt(hash.split('/')[1]);
@@ -1753,15 +1796,8 @@
             }
         });
 
-        // 텍스트 포맷팅
-        // 클라이언트 작성 가이드:
-        // - **텍스트** → 볼드 (하위 항목 제목)
-        // - 빈 줄 → 단락 구분
-        // - URL → 자동 링크
-        // - <작품명> → ‹작품명›
-        // - 출처|URL 또는 출처:URL → "출처" 링크
-       function formatText(text) {
-        if (!text) return '';
+        function formatText(text) {
+            if (!text) return '';
             
             // HTML 엔티티 디코딩
             let result = text.replace(/&quot;/g, '"');
@@ -1792,30 +1828,26 @@
             // (출처: URL) → (출처) 링크
             result = result.replace(/\(출처:\s*(https?:\/\/[^\s\)]+)\)/g, '(<a href="$1" target="_blank">출처</a>)');
             
-            // 일반 URL → 링크 (위에서 처리 안 된 것들)
+            // 일반 URL → 링크
             result = result.replace(/(?<!href=")(https?:\/\/[^\s<›\)]+)/g, '<a href="$1" target="_blank">$1</a>');
             
-            // 빈 줄(2개 이상 줄바꿈) → 단락 구분
+            // 빈 줄 → 단락 구분
             const paragraphs = result.split(/\n\n+/);
             result = paragraphs.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
             
             return result;
         }
 
-
-
         function initHomePage() {
             document.getElementById('home-count').textContent = performances.length;
             
             const tagsEl = document.getElementById('home-tags');
             if (tagsEl && allTags.length) {
-                // 태그 랜덤 셔플
                 const shuffledTags = shuffleArray(allTags);
-                tagsEl.innerHTML = shuffledTags.slice(0, 12).map(t => 
+                tagsEl.innerHTML = shuffledTags.slice(0, 20).map(t => 
                     `<span class="home-tag-item" onclick="filterByTag('${t}')">${t}</span>`
                 ).join('');
             }
-            // 작품목록용 랜덤 셔플
             shuffledPerformances = shuffleArray(performances);
         }
 
@@ -1824,7 +1856,6 @@
         }
 
         function filterByTag(tag) {
-            // 다른 필터 초기화 후 태그만 설정
             document.getElementById('archive-search').value = '';
             document.getElementById('year-filter').value = '';
             selectedTags = [tag];
@@ -1833,10 +1864,10 @@
             applyFilters();
         }
 
-      function handleHomeSearch(e) {
+        function handleHomeSearch(e) {
             if (e.key === 'Enter') {
-                e.target.blur(); // 모바일 키보드 닫기
-                selectedTags = []; // 태그 초기화
+                e.target.blur();
+                selectedTags = [];
                 document.getElementById('archive-search').value = e.target.value;
                 goToPage('archive');
             }
@@ -1867,7 +1898,6 @@
                 return matchSearch && matchTags && matchYear;
             });
 
-            // 정렬
             if (sort === 'newest') {
                 filtered.sort((a, b) => b.sortDate - a.sortDate);
             } else if (sort === 'oldest') {
@@ -1875,7 +1905,6 @@
             } else if (sort === 'title') {
                 filtered.sort((a, b) => a.title.localeCompare(b.title, 'ko'));
             } else {
-                // 랜덤 - 처음 로드하거나 필터 변경 시 셔플
                 if (shuffledPerformances.length !== performances.length) {
                     shuffledPerformances = shuffleArray(performances);
                 }
@@ -1910,17 +1939,14 @@
                 </div>
             `).join('');
 
-            // 페이지네이션
             const paginationEl = document.getElementById('pagination');
             if (totalPages > 1) {
                 let paginationHTML = '';
                 
-                // 이전 버튼
                 if (currentPage > 1) {
                     paginationHTML += `<button onclick="goPage(${currentPage - 1})">←</button>`;
                 }
                 
-                // 숫자 버튼
                 for (let i = 1; i <= totalPages; i++) {
                     if (i === currentPage) {
                         paginationHTML += `<button class="active">${i}</button>`;
@@ -1929,7 +1955,6 @@
                     }
                 }
                 
-                // 다음 버튼
                 if (currentPage < totalPages) {
                     paginationHTML += `<button onclick="goPage(${currentPage + 1})">→</button>`;
                 }
@@ -1997,7 +2022,7 @@
         function removeFromCart(id) {
             cart = cart.filter(c => c.id !== id);
             updateCartUI();
-            renderArchive(); // 체크박스 상태 업데이트
+            renderArchive();
         }
 
         function clearCart() {
@@ -2064,128 +2089,99 @@
             printWindow.print();
         }
 
+        // ========== 상세 페이지 - 양분할 레이아웃 ==========
         function showDetail(id) {
             const p = performances.find(x => x.id === id);
             if (!p) return;
 
-            document.getElementById('detail-page').innerHTML = `
-                <div class="detail-split">
-                    <header class="detail-header">
-                        <a href="#" onclick="goToPage('archive'); return false;" class="detail-back">← 작품목록</a>
-                    </header>
-                    
-                    <div class="detail-hero">
-                        <div class="detail-poster-area">
-                            ${p.poster 
-                                ? `<img src="${p.poster}" alt="${p.title}" class="detail-poster">` 
-                                : `<div class="detail-poster-empty">NO POSTER</div>`}
-                        </div>
-                        <div class="detail-info-area">
-                            <h1 class="detail-title">${p.title}</h1>
-                            <div class="detail-meta-grid">
-                                <div class="detail-meta-item">
-                                    <p class="detail-meta-label">일시</p>
-                                    <p class="detail-meta-value">${p.date || '—'}</p>
-                                </div>
-                                <div class="detail-meta-item">
-                                    <p class="detail-meta-label">장소</p>
-                                    <p class="detail-meta-value">${p.venue || '—'}</p>
-                                </div>
-                                ${p.production ? `
-                                <div class="detail-meta-item">
-                                    <p class="detail-meta-label">제작</p>
-                                    <p class="detail-meta-value">${p.production}</p>
-                                </div>
-                                ` : ''}
-                                ${p.host ? `
-                                <div class="detail-meta-item">
-                                    <p class="detail-meta-label">주최</p>
-                                    <p class="detail-meta-value">${p.host}</p>
-                                </div>
-                                ` : ''}
-                                ${p.planning ? `
-                                <div class="detail-meta-item">
-                                    <p class="detail-meta-label">기획</p>
-                                    <p class="detail-meta-value">${p.planning}</p>
-                                </div>
-                                ` : ''}
-                                ${p.organizer ? `
-                                <div class="detail-meta-item">
-                                    <p class="detail-meta-label">주관</p>
-                                    <p class="detail-meta-value">${p.organizer}</p>
-                                </div>
-                                ` : ''}
-                                ${p.director ? `
-                                <div class="detail-meta-item">
-                                    <p class="detail-meta-label">참고</p>
-                                    <p class="detail-meta-value">${p.director}</p>
-                                </div>
-                                ` : ''}
-                                ${p.actors ? `
-                                <div class="detail-meta-item">
-                                    <p class="detail-meta-label">배우</p>
-                                    <p class="detail-meta-value">${p.actors}</p>
-                                </div>
-                                ` : ''}
-                                ${p.staff ? `
-                                <div class="detail-meta-item">
-                                    <p class="detail-meta-label">스태프</p>
-                                    <p class="detail-meta-value">${p.staff}</p>
-                                </div>
-                                ` : ''}
+            const tagsHtml = (p.tags || []).map(tag => 
+                `<span class="detail-tag" onclick="filterByTag('${tag}')">#${tag}</span>`
+            ).join('');
+
+            // 읽을거리 콘텐츠 합치기
+            let readingsContent = '';
+            if (p.readings) {
+                readingsContent += formatText(p.readings);
+            }
+            if (p.reviews && p.reviews.length) {
+                readingsContent += `<ul class="detail-links">
+                    ${p.reviews.map(r => r.url 
+                        ? `<li><a href="${r.url}" target="_blank">${r.title}</a></li>`
+                        : `<li style="opacity:0.8;">${r.title}</li>`
+                    ).join('')}
+                </ul>`;
+            }
+
+            const container = document.getElementById('detail-container');
+            container.innerHTML = `
+                <div class="detail-page">
+                    <div class="detail-left">
+                        <div class="detail-left-inner">
+                            <a href="#archive" class="detail-back" onclick="goToPage('archive'); return false;">← 작품목록</a>
+                            
+                            <div class="detail-poster">
+                                ${p.poster 
+                                    ? `<img src="${p.poster}" alt="${p.title}" onerror="this.parentElement.innerHTML='<div class=\\'detail-poster-empty\\'>NO POSTER</div>'">` 
+                                    : '<div class="detail-poster-empty">NO POSTER</div>'}
                             </div>
-                            ${p.tags.length ? `
-                                <div class="detail-tags">
-                                    ${p.tags.map(t => `<span class="detail-tag" onclick="filterByTag('${t}')">#${t}</span>`).join('')}
+                            
+                            <h1 class="detail-title">${p.title}</h1>
+                            
+                            <div class="detail-meta-grid">
+                                ${p.date ? `<div class="detail-meta-item"><div class="detail-meta-label">일시</div><div class="detail-meta-value">${p.date}</div></div>` : ''}
+                                ${p.venue ? `<div class="detail-meta-item"><div class="detail-meta-label">장소</div><div class="detail-meta-value">${p.venue}</div></div>` : ''}
+                                ${p.production ? `<div class="detail-meta-item"><div class="detail-meta-label">제작</div><div class="detail-meta-value">${p.production}</div></div>` : ''}
+                                ${p.host ? `<div class="detail-meta-item"><div class="detail-meta-label">주최</div><div class="detail-meta-value">${p.host}</div></div>` : ''}
+                                ${p.planning ? `<div class="detail-meta-item"><div class="detail-meta-label">기획</div><div class="detail-meta-value">${p.planning}</div></div>` : ''}
+                                ${p.organizer ? `<div class="detail-meta-item"><div class="detail-meta-label">주관</div><div class="detail-meta-value">${p.organizer}</div></div>` : ''}
+                                ${p.director ? `<div class="detail-meta-item"><div class="detail-meta-label">참고</div><div class="detail-meta-value">${p.director}</div></div>` : ''}
+                                ${p.actors ? `<div class="detail-meta-item"><div class="detail-meta-label">배우</div><div class="detail-meta-value">${p.actors}</div></div>` : ''}
+                                ${p.staff ? `<div class="detail-meta-item"><div class="detail-meta-label">스태프</div><div class="detail-meta-value">${p.staff}</div></div>` : ''}
+                            </div>
+                            
+                            <div class="detail-tags">
+                                ${tagsHtml}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-right">
+                        <!-- 상단: 공식 소개 (흰색) -->
+                        <div class="detail-right-top">
+                            <div class="detail-section">
+                                <h2 class="detail-section-title">공식 소개</h2>
+                                ${p.description 
+                                    ? `<div class="detail-text">${formatText(p.description)}</div>
+                                       ${p.source ? `<div class="detail-source"><a href="${p.source}" target="_blank">출처</a></div>` : ''}`
+                                    : '<p class="detail-empty">등록된 소개가 없습니다.</p>'}
+                            </div>
+                            ${p.archiver_comment ? `
+                                <div class="detail-archiver-section">
+                                    <h3 class="detail-section-subtitle">아카이버 한 마디</h3>
+                                    <div class="detail-text">${formatText(p.archiver_comment)}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <!-- 하단: 읽을거리 (보라색) -->
+                        <div class="detail-right-bottom">
+                            <div class="detail-section">
+                                <h2 class="detail-section-title">읽을거리</h2>
+                                ${readingsContent 
+                                    ? `<div class="detail-text">${readingsContent}</div>`
+                                    : '<p class="detail-empty">등록된 읽을거리가 없습니다.</p>'}
+                            </div>
+                            ${p.similar ? `
+                                <div class="detail-section" style="margin-top: 30px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.2);">
+                                    <h3 class="detail-section-subtitle">비슷한 공연</h3>
+                                    <div class="detail-text">${formatText(p.similar)}</div>
                                 </div>
                             ` : ''}
                         </div>
                     </div>
-                    
-                    <div class="detail-content">
-                        ${p.description ? `
-                            <div class="detail-section">
-                                <p class="detail-section-title">공식 소개</p>
-                                <div class="detail-text">${formatText(p.description)}</div>
-                                ${p.source ? `<p class="detail-source"><a href="${p.source}" target="_blank">출처</a></p>` : ''}
-                            </div>
-                        ` : ''}
-                        ${p.archiver_comment ? `
-                            <hr class="detail-divider">
-                            <div class="detail-section">
-                                <p class="detail-section-title">아카이버 한 마디</p>
-                                <div class="detail-text">${formatText(p.archiver_comment)}</div>
-                            </div>
-                        ` : ''}
-                        ${p.readings ? `
-                            <hr class="detail-divider">
-                            <div class="detail-section">
-                                <p class="detail-section-title">읽을거리</p>
-                                <div class="detail-text">${formatText(p.readings)}</div>
-                            </div>
-                        ` : ''}
-                        ${p.reviews && p.reviews.length ? `
-                            <hr class="detail-divider">
-                            <div class="detail-section detail-reviews">
-                                <p class="detail-section-title">읽을거리</p>
-                                <ul>
-                                    ${p.reviews.map(r => r.url 
-                                        ? `<li><a href="${r.url}" target="_blank">→ ${r.title}</a></li>`
-                                        : `<li>${r.title}</li>`
-                                    ).join('')}
-                                </ul>
-                            </div>
-                        ` : ''}
-                        ${p.similar ? `
-                            <hr class="detail-divider">
-                            <div class="detail-section">
-                                <p class="detail-section-title">비슷한 공연</p>
-                                <div class="detail-text">${formatText(p.similar)}</div>
-                            </div>
-                        ` : ''}
-                    </div>
                 </div>
             `;
+
             goToPage('detail');
             history.replaceState({ page: 'detail', id: id }, '', `#detail/${id}`);
         }
@@ -2248,15 +2244,12 @@
 
             let paginationHTML = '';
             if (totalPages > 1) {
-                // 이전 버튼
                 if (noticeCurrentPage > 1) {
                     paginationHTML += `<button onclick="goNoticePage(${noticeCurrentPage - 1})">‹</button>`;
                 }
-                // 페이지 번호
                 for (let i = 1; i <= totalPages; i++) {
                     paginationHTML += `<button class="${i === noticeCurrentPage ? 'active' : ''}" onclick="goNoticePage(${i})">${i}</button>`;
                 }
-                // 다음 버튼
                 if (noticeCurrentPage < totalPages) {
                     paginationHTML += `<button onclick="goNoticePage(${noticeCurrentPage + 1})">›</button>`;
                 }
@@ -2316,11 +2309,9 @@
                 }
                 
                 resourceArticles = posts.map(post => {
-                    // ACF 또는 본문에서 파일 URL 추출
                     const acf = post.acf || {};
                     let fileUrl = acf.file_url || acf.file || '';
                     
-                    // 본문에서 첫 번째 링크 추출 (ACF 없을 경우)
                     if (!fileUrl) {
                         const match = post.content.rendered.match(/href="([^"]+\.pdf)"/i);
                         if (match) fileUrl = match[1];
@@ -2432,10 +2423,8 @@
             loadNotices();
             loadResources();
             
-            // URL 해시에 따라 페이지 이동
             const hash = window.location.hash.replace('#', '');
             if (hash) {
-                // detail/123 형태인지 확인
                 if (hash.startsWith('detail/')) {
                     const id = parseInt(hash.split('/')[1]);
                     if (id && performances.find(p => p.id === id)) {
@@ -2444,7 +2433,6 @@
                         goToPage('archive', false);
                     }
                 } else if (hash === 'detail') {
-                    // #detail만 있으면 작품목록으로
                     goToPage('archive', false);
                 } else if (document.getElementById(hash + '-page')) {
                     goToPage(hash, false);
