@@ -710,6 +710,75 @@
         .detail-tag:nth-child(9) { animation-delay: 2s; }
         .detail-tag:nth-child(10) { animation-delay: 2.25s; }
 
+
+        /* 공유 버튼 스타일 */
+.share-section {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+}
+
+.share-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    margin-bottom: 12px;
+}
+
+.share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255,255,255,0.5);
+    background: transparent;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+.share-btn:hover {
+    background: #fff;
+    color: var(--orange);
+    border-color: #fff;
+}
+
+.share-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.share-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 9999;
+    animation: toastIn 0.3s ease;
+}
+
+@keyframes toastIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
         .detail-right {
             width: 58%;
             display: flex;
@@ -1930,6 +1999,23 @@
                                 ${p.staff ? `<div class="detail-meta-item"><div class="detail-meta-label">스태프</div><div class="detail-meta-value">${p.staff}</div></div>` : ''}
                             </div>
                             <div class="detail-tags">${tagsHtml}</div>
+<div class="share-section">
+    <div class="share-label">공유하기</div>
+    <div class="share-buttons">
+        <button class="share-btn" onclick="copyLink(${p.id}, '${p.title.replace(/'/g, "\\'")}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            링크 복사
+        </button>
+        <button class="share-btn" onclick="shareTwitter(${p.id}, '${p.title.replace(/'/g, "\\'")}')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X
+        </button>
+        <button class="share-btn" onclick="shareNative(${p.id}, '${p.title.replace(/'/g, "\\'")}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            더보기
+        </button>
+    </div>
+</div>
                         </div>
                     </div>
                     <div class="detail-right">
@@ -1953,6 +2039,77 @@
             goToPage('detail');
             history.replaceState({ page: 'detail', id: id }, '', `#detail/${id}`);
         }
+
+// ========== 공유 기능 ==========
+function getShareUrl(id) {
+    return `https://queertheater.kr/#detail/${id}`;
+}
+
+function showToast(message) {
+    const existing = document.querySelector('.share-toast');
+    if (existing) existing.remove();
+    
+    const toast = document.createElement('div');
+    toast.className = 'share-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => toast.remove(), 2500);
+}
+
+function copyLink(id, title) {
+    const url = getShareUrl(id);
+    
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+            showToast('🔗 링크가 복사되었습니다!');
+        }).catch(() => {
+            fallbackCopy(url);
+        });
+    } else {
+        fallbackCopy(url);
+    }
+}
+
+function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand('copy');
+        showToast('🔗 링크가 복사되었습니다!');
+    } catch (e) {
+        showToast('링크 복사에 실패했습니다.');
+    }
+    document.body.removeChild(textarea);
+}
+
+function shareTwitter(id, title) {
+    const url = getShareUrl(id);
+    const text = `${title} - 한국 퀴어 연극 아카이브`;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    window.open(twitterUrl, '_blank', 'width=550,height=420');
+}
+
+function shareNative(id, title) {
+    const url = getShareUrl(id);
+    const shareData = {
+        title: title,
+        text: `${title} - 한국 퀴어 연극 아카이브`,
+        url: url
+    };
+
+    if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+    } else {
+        copyLink(id, title);
+    }
+}
+
+
 
         // ========== 공지(Featured) ==========
         let noticeArticles = [];
