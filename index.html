@@ -566,14 +566,13 @@
         }
 
         /* =====================================================
-           상세 페이지 - 양분할 레이아웃 (NEW!)
+           상세 페이지 - 양분할 레이아웃
            ===================================================== */
         .detail-page {
             display: flex;
             min-height: 100vh;
         }
 
-        /* 왼쪽 패널 - 주황색 */
         .detail-left {
             width: 42%;
             background: var(--orange);
@@ -695,7 +694,6 @@
             color: var(--orange);
         }
 
-        /* 태그 반짝임 애니메이션 - 더 강하게 */
         @keyframes sparkle {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.15; }
@@ -712,7 +710,6 @@
         .detail-tag:nth-child(9) { animation-delay: 2s; }
         .detail-tag:nth-child(10) { animation-delay: 2.25s; }
 
-        /* 오른쪽 패널 - 상하 분할 */
         .detail-right {
             width: 58%;
             display: flex;
@@ -720,7 +717,6 @@
             min-height: 100vh;
         }
 
-        /* 상단: 공식 소개 - 흰색 */
         .detail-right-top {
             flex: 1;
             background: #fff;
@@ -730,7 +726,6 @@
             flex-direction: column;
         }
 
-        /* 하단: 읽을거리 - 보라색 */
         .detail-right-bottom {
             flex: 1;
             background: var(--purple);
@@ -762,8 +757,7 @@
             color: #fff;
             opacity: 0.2;
         }
-        
-        /* 서브 섹션 제목 (아카이버 한 마디, 비슷한 공연) */
+
         .detail-section-subtitle {
             font-size: 14px;
             font-weight: 700;
@@ -780,7 +774,6 @@
             color: #fff;
         }
 
-        /* 아카이버 한 마디 - 선 테두리 스타일 */
         .detail-archiver-section {
             margin-top: 40px;
             padding-top: 35px;
@@ -898,7 +891,6 @@
             content: '→';
         }
 
-        /* 빈 상태 메시지 */
         .detail-empty {
             opacity: 0.5;
             font-size: 14px;
@@ -997,6 +989,10 @@
             margin-bottom: 25px;
         }
 
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -1048,7 +1044,6 @@
             background: #f5f5f5;
         }
 
-        /* 게시판 스타일 */
         .notice-board {
             width: 100%;
             max-width: 900px;
@@ -1262,7 +1257,6 @@
                 display: none;
             }
 
-            /* 상세 페이지 - 모바일 세로 배치 */
             .detail-page {
                 flex-direction: column;
             }
@@ -1363,7 +1357,6 @@
             }
         }
 
-        /* 더 작은 모바일 (480px 이하) */
         @media (max-width: 480px) {
             .home-rainbow {
                 grid-template-columns: repeat(2, 1fr);
@@ -1412,7 +1405,6 @@
                 font-size: 24px;
             }
 
-            /* 공지 게시판 작은 모바일 */
             .notice-header {
                 grid-template-columns: 40px 1fr;
                 padding: 10px 12px;
@@ -1440,7 +1432,6 @@
                 display: none;
             }
 
-            /* 자료 페이지에서는 다운로드 버튼 표시 */
             #resources-grid .notice-item-date {
                 display: block;
                 font-size: 11px;
@@ -1471,7 +1462,6 @@
     <!-- ===== 홈 - 6컬럼 무지개 ===== -->
     <div id="home-page" class="page active">
         <div class="home-rainbow">
-            <!-- 빨강 - 타이틀 -->
             <div class="home-col">
                 <img src="logo.png" alt="한국 퀴어 연극 아카이브" class="home-logo">
                 <h1 class="home-col-title">한국<br>퀴어연극<br>아카이브</h1>
@@ -1481,7 +1471,6 @@
                 </div>
             </div>
 
-            <!-- 주황 - 메뉴 -->
             <div class="home-col">
                 <span class="home-col-label">Menu</span>
                 <a href="#" onclick="goToPage('about'); return false;">소개</a>
@@ -1492,27 +1481,23 @@
                 <a href="#" onclick="showRandomPerformance(); return false;">랜덤</a>
             </div>
 
-            <!-- 노랑 - 검색 -->
             <div class="home-col">
                 <span class="home-col-label">Search</span>
                 <input type="text" class="home-search-input" id="home-search" placeholder="작품명, 극단..." onkeyup="handleHomeSearch(event)" style="margin-bottom: 15px;" />
                 <p class="home-col-small" style="opacity: 0.6; margin-top: 0;">Enter 키를 눌러 검색</p>
             </div>
 
-            <!-- 초록 - 태그 -->
             <div class="home-col">
                 <span class="home-col-label">Tags</span>
                 <div class="home-tag-list" id="home-tags"></div>
             </div>
 
-            <!-- 파랑 - 정보 -->
             <div class="home-col">
                 <span class="home-col-label">Archive</span>
                 <p class="home-col-small">Korea Queer</p>
                 <p class="home-col-small">Theater Archive</p>
             </div>
 
-            <!-- 보라 - About -->
             <div class="home-col">
                 <span class="home-col-label">Contact</span>
                 <div class="home-col-content" style="margin-top: auto;">
@@ -1532,16 +1517,13 @@
         </div>
     </div>
 
-
-    <!-- ===== 아카이브 - 주황/보라 ===== -->
+    <!-- ===== 아카이브 ===== -->
     <div id="archive-page" class="page">
         <div class="archive-split">
             <div class="archive-sidebar">
                 <a href="#" onclick="goToPage('home'); return false;" class="archive-back">← HOME</a>
-                
                 <h1 class="archive-sidebar-title">작품목록</h1>
                 <p class="archive-sidebar-count" id="archive-count">0개의 공연</p>
-
                 <div class="archive-filters">
                     <select id="year-filter" class="archive-select" onchange="applyFilters()">
                         <option value="">연도 전체</option>
@@ -1555,10 +1537,7 @@
                     <input type="text" id="archive-search" class="archive-input" placeholder="검색..." oninput="applyFilters()" />
                     <button onclick="clearFilters()" class="archive-clear">초기화</button>
                 </div>
-
                 <div id="selected-tags" class="archive-selected-tags"></div>
-                
-                <!-- 장바구니 섹션 -->
                 <div id="cart-section" class="cart-section" style="display: none;">
                     <div class="cart-header">
                         <span class="cart-title">📋 선택 목록 (<span id="cart-count">0</span>)</span>
@@ -1567,23 +1546,17 @@
                     <div id="cart-list" class="cart-list"></div>
                     <button onclick="printCart()" class="cart-print-btn">🖨️ 인쇄하기</button>
                 </div>
-                
                 <div id="pagination" class="archive-pagination"></div>
             </div>
-
             <div class="archive-main">
-                <div class="archive-list" id="archive-list">
-                    <!-- JS로 채워짐 -->
-                </div>
+                <div class="archive-list" id="archive-list"></div>
             </div>
         </div>
     </div>
 
     <!-- ===== 상세 페이지 ===== -->
     <div id="detail-page" class="page">
-        <div id="detail-container">
-            <!-- JS로 채워짐 -->
-        </div>
+        <div id="detail-container"></div>
     </div>
 
     <!-- ===== 소개 페이지 ===== -->
@@ -1593,7 +1566,6 @@
                 <a href="#" onclick="goToPage('home'); return false;" class="detail-back">← HOME</a>
                 <span class="featured-title">ABOUT / 소개</span>
             </header>
-
             <div class="about-content-wrapper">
                 <div class="about-logo-area">
                     <img src="logo.png" alt="한국 퀴어 연극 아카이브" class="about-logo">
@@ -1612,7 +1584,6 @@
                 <a href="#" onclick="goToPage('home'); return false;" class="detail-back">← HOME</a>
                 <span class="featured-title">NOTICE / 공지</span>
             </header>
-
             <div class="featured-grid" id="featured-grid">
                 <p style="padding: 40px; color: #fff;">로딩 중...</p>
             </div>
@@ -1626,7 +1597,6 @@
                 <a href="#" onclick="goToPage('home'); return false;" class="detail-back">← HOME</a>
                 <span class="featured-title">RESOURCES / 자료</span>
             </header>
-
             <div class="featured-grid" id="resources-grid">
                 <p style="padding: 40px; color: #fff;">로딩 중...</p>
             </div>
@@ -1668,28 +1638,18 @@
                 while (hasMore) {
                     const response = await fetch(`${WP_API_URL}/performance?per_page=100&page=${page}`);
                     const data = await response.json();
-                    
-                    if (data.length > 0) {
-                        allData = allData.concat(data);
-                        page++;
-                    } else {
-                        hasMore = false;
-                    }
-                    
+                    if (data.length > 0) { allData = allData.concat(data); page++; } 
+                    else { hasMore = false; }
                     if (page > 10) hasMore = false;
                 }
                 
-                const data = allData;
-                
-                performances = data.map(item => {
+                performances = allData.map(item => {
                     const acf = item.acf || {};
                     let tags = [];
                     if (acf.tags) {
-                        if (acf.tags.includes('#')) {
-                            tags = acf.tags.split('#').map(t => t.trim()).filter(t => t);
-                        } else {
-                            tags = acf.tags.split(',').map(t => t.trim()).filter(t => t);
-                        }
+                        tags = acf.tags.includes('#') 
+                            ? acf.tags.split('#').map(t => t.trim()).filter(t => t)
+                            : acf.tags.split(',').map(t => t.trim()).filter(t => t);
                     }
                     let year = acf.date ? (acf.date.match(/\d{4}/) || ['2023'])[0] : '2023';
                     let posterUrl = acf.poster ? (typeof acf.poster === 'object' ? acf.poster.url : acf.poster) : null;
@@ -1715,32 +1675,19 @@
                     let sortDate = 0;
                     if (acf.date) {
                         const dateMatch = acf.date.match(/(\d{4})\.(\d{2})\.(\d{2})/);
-                        if (dateMatch) {
-                            sortDate = parseInt(dateMatch[1]) * 10000 + parseInt(dateMatch[2]) * 100 + parseInt(dateMatch[3]);
-                        } else {
-                            sortDate = parseInt(year) * 10000;
-                        }
+                        sortDate = dateMatch 
+                            ? parseInt(dateMatch[1]) * 10000 + parseInt(dateMatch[2]) * 100 + parseInt(dateMatch[3])
+                            : parseInt(year) * 10000;
                     }
                     
                     return {
-                        id: item.id,
-                        title: item.title.rendered,
-                        date: acf.date || '',
-                        venue: acf.venue || '',
-                        production: acf.production || '',
-                        host: acf.주최 || '',
-                        planning: acf.기획 || '',
-                        organizer: acf.주관 || '',
-                        author: acf.author || '',
-                        director: acf.director || '',
-                        actors: acf.actors || '',
-                        staff: acf.staff || '',
-                        category: acf.category || '',
-                        description: acf.description || '',
-                        source: acf.source || '',
-                        archiver_comment: acf.archiver_comment || '',
-                        readings: acf.readings || '',
-                        similar: acf.similar || '',
+                        id: item.id, title: item.title.rendered,
+                        date: acf.date || '', venue: acf.venue || '', production: acf.production || '',
+                        host: acf.주최 || '', planning: acf.기획 || '', organizer: acf.주관 || '',
+                        author: acf.author || '', director: acf.director || '', actors: acf.actors || '',
+                        staff: acf.staff || '', category: acf.category || '', description: acf.description || '',
+                        source: acf.source || '', archiver_comment: acf.archiver_comment || '',
+                        readings: acf.readings || '', similar: acf.similar || '',
                         tags, year: parseInt(year), sortDate, poster: posterUrl, reviews
                     };
                 });
@@ -1752,12 +1699,10 @@
                 if (yearFilter) {
                     years.forEach(y => {
                         const option = document.createElement('option');
-                        option.value = y;
-                        option.textContent = y;
+                        option.value = y; option.textContent = y;
                         yearFilter.appendChild(option);
                     });
                 }
-                
                 return performances;
             } catch (e) { console.error(e); return []; }
         }
@@ -1769,7 +1714,6 @@
             document.getElementById(name + '-page').classList.add('active');
             if (name === 'archive') renderArchive();
             window.scrollTo(0, 0);
-            
             if (addToHistory && pageHistory[pageHistory.length - 1] !== name) {
                 pageHistory.push(name);
                 history.pushState({ page: name }, '', `#${name}`);
@@ -1778,11 +1722,8 @@
 
         window.addEventListener('popstate', (e) => {
             if (e.state && e.state.page) {
-                if (e.state.page === 'detail' && e.state.id) {
-                    showDetail(e.state.id);
-                } else {
-                    goToPage(e.state.page, false);
-                }
+                if (e.state.page === 'detail' && e.state.id) showDetail(e.state.id);
+                else goToPage(e.state.page, false);
             } else {
                 const hash = window.location.hash.replace('#', '');
                 if (hash.startsWith('detail/')) {
@@ -1798,49 +1739,22 @@
 
         function formatText(text) {
             if (!text) return '';
-            
-            // HTML 엔티티 디코딩
-            let result = text.replace(/&quot;/g, '"');
-            result = result.replace(/&#039;/g, "'");
-            result = result.replace(/&amp;/g, '&');
-            
-            // 굽은따옴표 변환 (유니코드 사용)
-            result = result.replace(/"([^"]+)"/g, '\u201C$1\u201D');
-            result = result.replace(/'([^']+)'/g, '\u2018$1\u2019');
-            
-            // <>를 ‹›로 변환
-            result = result
-                .replace(/<(?![a-z\/])/g, '‹')
-                .replace(/(?<![a-z"])>/g, '›');
-            
-            // **텍스트** → <strong>텍스트</strong>
+            let result = text.replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&amp;/g, '&');
+            result = result.replace(/"([^"]+)"/g, '\u201C$1\u201D').replace(/'([^']+)'/g, '\u2018$1\u2019');
+            result = result.replace(/<(?![a-z\/])/g, '‹').replace(/(?<![a-z"])>/g, '›');
             result = result.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-            
-            // ● 불렛 → 볼드
             result = result.replace(/^[●•]\s*(.+?)$/gm, '<strong>$1</strong>');
-            
-            // 출처|URL 형식 → "출처" 링크
             result = result.replace(/출처\|(https?:\/\/[^\s<›\n]+)/g, '<a href="$1" target="_blank">출처</a>');
-            
-            // 출처:URL 형식 → "출처" 링크
             result = result.replace(/출처:(https?:\/\/[^\s<›\n]+)/g, '<a href="$1" target="_blank">출처</a>');
-            
-            // (출처: URL) → (출처) 링크
             result = result.replace(/\(출처:\s*(https?:\/\/[^\s\)]+)\)/g, '(<a href="$1" target="_blank">출처</a>)');
-            
-            // 일반 URL → 링크
             result = result.replace(/(?<!href=")(https?:\/\/[^\s<›\)]+)/g, '<a href="$1" target="_blank">$1</a>');
-            
-            // 빈 줄 → 단락 구분
             const paragraphs = result.split(/\n\n+/);
             result = paragraphs.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
-            
             return result;
         }
 
         function initHomePage() {
             document.getElementById('home-count').textContent = performances.length;
-            
             const tagsEl = document.getElementById('home-tags');
             if (tagsEl && allTags.length) {
                 const shuffledTags = shuffleArray(allTags);
@@ -1892,57 +1806,34 @@
             const sort = document.getElementById('sort-filter').value;
 
             let filtered = performances.filter(p => {
-                const searchTarget = [
-                    p.title,
-                    p.production,
-                    p.description,
-                    p.archiver_comment,
-                    p.venue,
-                    p.actors,
-                    p.staff,
-                    p.host,
-                    p.readings,
-                    p.tags.join(' ')
-                ].filter(Boolean).join(' ').toLowerCase();
-                
+                const searchTarget = [p.title, p.production, p.description, p.archiver_comment, p.venue, p.actors, p.staff, p.host, p.readings, p.tags.join(' ')].filter(Boolean).join(' ').toLowerCase();
                 const matchSearch = !search || searchTarget.includes(search);
                 const matchTags = !selectedTags.length || selectedTags.every(t => p.tags.includes(t));
                 const matchYear = !year || p.year.toString() === year;
                 return matchSearch && matchTags && matchYear;
             });
 
-            if (sort === 'newest') {
-                filtered.sort((a, b) => b.sortDate - a.sortDate);
-            } else if (sort === 'oldest') {
-                filtered.sort((a, b) => a.sortDate - b.sortDate);
-            } else if (sort === 'title') {
-                filtered.sort((a, b) => a.title.localeCompare(b.title, 'ko'));
-            } else {
-                if (shuffledPerformances.length !== performances.length) {
-                    shuffledPerformances = shuffleArray(performances);
-                }
+            if (sort === 'newest') filtered.sort((a, b) => b.sortDate - a.sortDate);
+            else if (sort === 'oldest') filtered.sort((a, b) => a.sortDate - b.sortDate);
+            else if (sort === 'title') filtered.sort((a, b) => a.title.localeCompare(b.title, 'ko'));
+            else {
+                if (shuffledPerformances.length !== performances.length) shuffledPerformances = shuffleArray(performances);
                 filtered = shuffledPerformances.filter(p => filtered.some(f => f.id === p.id));
             }
 
             const totalPages = Math.ceil(filtered.length / perPage);
             if (currentPage > totalPages) currentPage = 1;
-            
             const startIdx = (currentPage - 1) * perPage;
             const paginated = filtered.slice(startIdx, startIdx + perPage);
 
             document.getElementById('archive-count').textContent = `${filtered.length}개의 공연`;
-
-            const tagsEl = document.getElementById('selected-tags');
-            tagsEl.innerHTML = selectedTags.map(t => 
+            document.getElementById('selected-tags').innerHTML = selectedTags.map(t => 
                 `<span class="archive-selected-tag" onclick="removeTag('${t}')">#${t} ✕</span>`
             ).join('');
 
-            const list = document.getElementById('archive-list');
-            list.innerHTML = paginated.map((p, i) => `
+            document.getElementById('archive-list').innerHTML = paginated.map((p, i) => `
                 <div class="archive-item">
-                    <input type="checkbox" class="archive-item-checkbox" 
-                           ${cart.some(c => c.id === p.id) ? 'checked' : ''} 
-                           onclick="event.stopPropagation(); toggleCart(${p.id})" />
+                    <input type="checkbox" class="archive-item-checkbox" ${cart.some(c => c.id === p.id) ? 'checked' : ''} onclick="event.stopPropagation(); toggleCart(${p.id})" />
                     <span class="archive-item-index">${String(startIdx + i + 1).padStart(3, '0')}</span>
                     <div class="archive-item-info" onclick="showDetail(${p.id})">
                         <div class="archive-item-title">${p.title}</div>
@@ -1954,192 +1845,79 @@
 
             const paginationEl = document.getElementById('pagination');
             if (totalPages > 1) {
-                let paginationHTML = '';
-                
-                if (currentPage > 1) {
-                    paginationHTML += `<button onclick="goPage(${currentPage - 1})">←</button>`;
-                }
-                
-                for (let i = 1; i <= totalPages; i++) {
-                    if (i === currentPage) {
-                        paginationHTML += `<button class="active">${i}</button>`;
-                    } else {
-                        paginationHTML += `<button onclick="goPage(${i})">${i}</button>`;
-                    }
-                }
-                
-                if (currentPage < totalPages) {
-                    paginationHTML += `<button onclick="goPage(${currentPage + 1})">→</button>`;
-                }
-                
-                paginationEl.innerHTML = paginationHTML;
-            } else {
-                paginationEl.innerHTML = '';
-            }
+                let html = '';
+                if (currentPage > 1) html += `<button onclick="goPage(${currentPage - 1})">←</button>`;
+                for (let i = 1; i <= totalPages; i++) html += i === currentPage ? `<button class="active">${i}</button>` : `<button onclick="goPage(${i})">${i}</button>`;
+                if (currentPage < totalPages) html += `<button onclick="goPage(${currentPage + 1})">→</button>`;
+                paginationEl.innerHTML = html;
+            } else paginationEl.innerHTML = '';
         }
 
-        function goPage(page) {
-            currentPage = page;
-            renderArchive();
-            document.querySelector('.archive-main').scrollTo(0, 0);
-        }
-
+        function goPage(page) { currentPage = page; renderArchive(); document.querySelector('.archive-main').scrollTo(0, 0); }
         function applyFilters() { currentPage = 1; renderArchive(); }
         function clearFilters() {
             document.getElementById('archive-search').value = '';
             document.getElementById('year-filter').value = '';
             document.getElementById('sort-filter').value = 'random';
-            selectedTags = [];
-            currentPage = 1;
+            selectedTags = []; currentPage = 1;
             shuffledPerformances = shuffleArray(performances);
             renderArchive();
         }
-        function removeTag(tag) {
-            selectedTags = selectedTags.filter(t => t !== tag);
-            renderArchive();
-        }
+        function removeTag(tag) { selectedTags = selectedTags.filter(t => t !== tag); renderArchive(); }
 
-        // ========== 장바구니 기능 ==========
         function toggleCart(id) {
             const p = performances.find(x => x.id === id);
             if (!p) return;
-            
             const idx = cart.findIndex(c => c.id === id);
-            if (idx > -1) {
-                cart.splice(idx, 1);
-            } else {
-                cart.push({ id: p.id, title: p.title, year: p.year, production: p.production, venue: p.venue, date: p.date });
-            }
+            if (idx > -1) cart.splice(idx, 1);
+            else cart.push({ id: p.id, title: p.title, year: p.year, production: p.production, venue: p.venue, date: p.date });
             updateCartUI();
         }
 
         function updateCartUI() {
             const section = document.getElementById('cart-section');
-            const countEl = document.getElementById('cart-count');
-            const listEl = document.getElementById('cart-list');
-            
-            if (cart.length === 0) {
-                section.style.display = 'none';
-            } else {
-                section.style.display = 'block';
-                countEl.textContent = cart.length;
-                listEl.innerHTML = cart.map(item => `
-                    <div class="cart-item">
-                        <span class="cart-item-title">${item.title} (${item.year})</span>
-                        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
-                    </div>
-                `).join('');
-            }
+            if (cart.length === 0) { section.style.display = 'none'; return; }
+            section.style.display = 'block';
+            document.getElementById('cart-count').textContent = cart.length;
+            document.getElementById('cart-list').innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <span class="cart-item-title">${item.title} (${item.year})</span>
+                    <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
+                </div>
+            `).join('');
         }
 
-        function removeFromCart(id) {
-            cart = cart.filter(c => c.id !== id);
-            updateCartUI();
-            renderArchive();
-        }
-
-        function clearCart() {
-            cart = [];
-            updateCartUI();
-            renderArchive();
-        }
+        function removeFromCart(id) { cart = cart.filter(c => c.id !== id); updateCartUI(); renderArchive(); }
+        function clearCart() { cart = []; updateCartUI(); renderArchive(); }
 
         function printCart() {
-            if (cart.length === 0) {
-                alert('선택된 공연이 없습니다.');
-                return;
-            }
-            
-            const printContent = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <title>한국 퀴어 연극 아카이브 - 선택 목록</title>
-                    <style>
-                        body { font-family: "Noto Sans KR", sans-serif; padding: 40px; }
-                        h1 { font-size: 24px; margin-bottom: 10px; }
-                        .subtitle { color: #666; margin-bottom: 30px; }
-                        table { width: 100%; border-collapse: collapse; }
-                        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-                        th { background: #f5f5f5; font-weight: 600; }
-                        .footer { margin-top: 40px; font-size: 12px; color: #999; }
-                    </style>
-                </head>
-                <body>
-                    <h1>한국 퀴어 연극 아카이브</h1>
-                    <p class="subtitle">선택한 공연 목록 (${cart.length}개)</p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>작품명</th>
-                                <th>연도</th>
-                                <th>제작</th>
-                                <th>장소</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${cart.map((item, i) => `
-                                <tr>
-                                    <td>${i + 1}</td>
-                                    <td>${item.title}</td>
-                                    <td>${item.year}</td>
-                                    <td>${item.production || '-'}</td>
-                                    <td>${item.venue || '-'}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                    <p class="footer">출력일: ${new Date().toLocaleDateString('ko-KR')} | https://pipicocucumong.github.io/queer-theater-archive/</p>
-                </body>
-                </html>
-            `;
-            
+            if (cart.length === 0) { alert('선택된 공연이 없습니다.'); return; }
             const printWindow = window.open('', '_blank');
-            printWindow.document.write(printContent);
+            printWindow.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>한국 퀴어 연극 아카이브 - 선택 목록</title><style>body{font-family:"Noto Sans KR",sans-serif;padding:40px}h1{font-size:24px;margin-bottom:10px}.subtitle{color:#666;margin-bottom:30px}table{width:100%;border-collapse:collapse}th,td{padding:12px;text-align:left;border-bottom:1px solid #ddd}th{background:#f5f5f5;font-weight:600}.footer{margin-top:40px;font-size:12px;color:#999}</style></head><body><h1>한국 퀴어 연극 아카이브</h1><p class="subtitle">선택한 공연 목록 (${cart.length}개)</p><table><thead><tr><th>번호</th><th>작품명</th><th>연도</th><th>제작</th><th>장소</th></tr></thead><tbody>${cart.map((item, i) => `<tr><td>${i + 1}</td><td>${item.title}</td><td>${item.year}</td><td>${item.production || '-'}</td><td>${item.venue || '-'}</td></tr>`).join('')}</tbody></table><p class="footer">출력일: ${new Date().toLocaleDateString('ko-KR')} | https://pipicocucumong.github.io/queer-theater-archive/</p></body></html>`);
             printWindow.document.close();
             printWindow.print();
         }
 
-        // ========== 상세 페이지 - 양분할 레이아웃 ==========
         function showDetail(id) {
             const p = performances.find(x => x.id === id);
             if (!p) return;
 
-            const tagsHtml = (p.tags || []).map(tag => 
-                `<span class="detail-tag" onclick="filterByTag('${tag}')">#${tag}</span>`
-            ).join('');
-
-            // 읽을거리 콘텐츠 합치기
+            const tagsHtml = (p.tags || []).map(tag => `<span class="detail-tag" onclick="filterByTag('${tag}')">#${tag}</span>`).join('');
             let readingsContent = '';
-            if (p.readings) {
-                readingsContent += formatText(p.readings);
-            }
+            if (p.readings) readingsContent += formatText(p.readings);
             if (p.reviews && p.reviews.length) {
-                readingsContent += `<ul class="detail-links">
-                    ${p.reviews.map(r => r.url 
-                        ? `<li><a href="${r.url}" target="_blank">${r.title}</a></li>`
-                        : `<li style="opacity:0.8;">${r.title}</li>`
-                    ).join('')}
-                </ul>`;
+                readingsContent += `<ul class="detail-links">${p.reviews.map(r => r.url ? `<li><a href="${r.url}" target="_blank">${r.title}</a></li>` : `<li style="opacity:0.8;">${r.title}</li>`).join('')}</ul>`;
             }
 
-            const container = document.getElementById('detail-container');
-            container.innerHTML = `
+            document.getElementById('detail-container').innerHTML = `
                 <div class="detail-page">
                     <div class="detail-left">
                         <div class="detail-left-inner">
                             <a href="#archive" class="detail-back" onclick="goToPage('archive'); return false;">← 작품목록</a>
-                            
                             <div class="detail-poster">
-                                ${p.poster 
-                                    ? `<img src="${p.poster}" alt="${p.title}" onerror="this.parentElement.innerHTML='<div class=\\'detail-poster-empty\\'>NO POSTER</div>'">` 
-                                    : '<div class="detail-poster-empty">NO POSTER</div>'}
+                                ${p.poster ? `<img src="${p.poster}" alt="${p.title}" onerror="this.parentElement.innerHTML='<div class=\\'detail-poster-empty\\'>NO POSTER</div>'">` : '<div class="detail-poster-empty">NO POSTER</div>'}
                             </div>
-                            
                             <h1 class="detail-title">${p.title}</h1>
-                            
                             <div class="detail-meta-grid">
                                 ${p.date ? `<div class="detail-meta-item"><div class="detail-meta-label">일시</div><div class="detail-meta-value">${p.date}</div></div>` : ''}
                                 ${p.venue ? `<div class="detail-meta-item"><div class="detail-meta-label">장소</div><div class="detail-meta-value">${p.venue}</div></div>` : ''}
@@ -2151,55 +1929,32 @@
                                 ${p.actors ? `<div class="detail-meta-item"><div class="detail-meta-label">배우</div><div class="detail-meta-value">${p.actors}</div></div>` : ''}
                                 ${p.staff ? `<div class="detail-meta-item"><div class="detail-meta-label">스태프</div><div class="detail-meta-value">${p.staff}</div></div>` : ''}
                             </div>
-                            
-                            <div class="detail-tags">
-                                ${tagsHtml}
-                            </div>
+                            <div class="detail-tags">${tagsHtml}</div>
                         </div>
                     </div>
-                    
                     <div class="detail-right">
-                        <!-- 상단: 공식 소개 (흰색) -->
                         <div class="detail-right-top">
                             <div class="detail-section">
                                 <h2 class="detail-section-title">공식 소개</h2>
-                                ${p.description 
-                                    ? `<div class="detail-text">${formatText(p.description)}</div>
-                                       ${p.source ? `<div class="detail-source"><a href="${p.source}" target="_blank">출처</a></div>` : ''}`
-                                    : '<p class="detail-empty">등록된 소개가 없습니다.</p>'}
+                                ${p.description ? `<div class="detail-text">${formatText(p.description)}</div>${p.source ? `<div class="detail-source"><a href="${p.source}" target="_blank">출처</a></div>` : ''}` : '<p class="detail-empty">등록된 소개가 없습니다.</p>'}
                             </div>
-                            ${p.archiver_comment ? `
-                                <div class="detail-archiver-section">
-                                    <h3 class="detail-section-subtitle">아카이버 한 마디</h3>
-                                    <div class="detail-text">${formatText(p.archiver_comment)}</div>
-                                </div>
-                            ` : ''}
+                            ${p.archiver_comment ? `<div class="detail-archiver-section"><h3 class="detail-section-subtitle">아카이버 한 마디</h3><div class="detail-text">${formatText(p.archiver_comment)}</div></div>` : ''}
                         </div>
-                        
-                        <!-- 하단: 읽을거리 (보라색) -->
                         <div class="detail-right-bottom">
                             <div class="detail-section">
                                 <h2 class="detail-section-title">읽을거리</h2>
-                                ${readingsContent 
-                                    ? `<div class="detail-text">${readingsContent}</div>`
-                                    : '<p class="detail-empty">등록된 읽을거리가 없습니다.</p>'}
+                                ${readingsContent ? `<div class="detail-text">${readingsContent}</div>` : '<p class="detail-empty">등록된 읽을거리가 없습니다.</p>'}
                             </div>
-                            ${p.similar ? `
-                                <div class="detail-section" style="margin-top: 30px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.2);">
-                                    <h3 class="detail-section-subtitle">비슷한 공연</h3>
-                                    <div class="detail-text">${formatText(p.similar)}</div>
-                                </div>
-                            ` : ''}
+                            ${p.similar ? `<div class="detail-section" style="margin-top: 30px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.2);"><h3 class="detail-section-subtitle">비슷한 공연</h3><div class="detail-text">${formatText(p.similar)}</div></div>` : ''}
                         </div>
                     </div>
                 </div>
             `;
-
             goToPage('detail');
             history.replaceState({ page: 'detail', id: id }, '', `#detail/${id}`);
         }
 
-        // ========== 공지(Featured) CMS 연동 ==========
+        // ========== 공지(Featured) ==========
         let noticeArticles = [];
         let noticeCurrentPage = 1;
         const noticePerPage = 10;
@@ -2208,94 +1963,45 @@
             try {
                 const catRes = await fetch(`${WP_API_URL}/categories?slug=notice&_=${Date.now()}`);
                 const categories = await catRes.json();
+                if (categories.length === 0) { document.getElementById('featured-grid').innerHTML = '<div class="notice-empty">공지 카테고리가 없습니다.</div>'; return; }
                 
-                if (categories.length === 0) {
-                    document.getElementById('featured-grid').innerHTML = 
-                        '<div class="notice-empty">공지 카테고리가 없습니다.</div>';
-                    return;
-                }
-                
-                const categoryId = categories[0].id;
-                const res = await fetch(`${WP_API_URL}/posts?categories=${categoryId}&per_page=100&_=${Date.now()}`);
+                const res = await fetch(`${WP_API_URL}/posts?categories=${categories[0].id}&per_page=100&_=${Date.now()}`);
                 const posts = await res.json();
-                
-                if (posts.length === 0) {
-                    document.getElementById('featured-grid').innerHTML = 
-                        '<div class="notice-empty">등록된 공지가 없습니다.</div>';
-                    return;
-                }
+                if (posts.length === 0) { document.getElementById('featured-grid').innerHTML = '<div class="notice-empty">등록된 공지가 없습니다.</div>'; return; }
                 
                 noticeArticles = posts.map(post => ({
-                    id: post.id,
-                    title: post.title.rendered,
+                    id: post.id, title: post.title.rendered,
                     excerpt: post.excerpt.rendered.replace(/<[^>]*>/g, '').trim().slice(0, 80) + '...',
                     content: post.content.rendered,
                     date: new Date(post.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. /g, '.').replace('.', '')
                 }));
-                
                 renderFeaturedGrid();
-            } catch (e) {
-                console.error('공지 로드 실패:', e);
-                document.getElementById('featured-grid').innerHTML = 
-                    '<div class="notice-empty">공지를 불러올 수 없습니다.</div>';
-            }
+            } catch (e) { console.error('공지 로드 실패:', e); document.getElementById('featured-grid').innerHTML = '<div class="notice-empty">공지를 불러올 수 없습니다.</div>'; }
         }
 
         function renderFeaturedGrid() {
             const grid = document.getElementById('featured-grid');
-            if (noticeArticles.length === 0) {
-                grid.innerHTML = '<div class="notice-empty">등록된 공지가 없습니다.</div>';
-                return;
-            }
+            if (noticeArticles.length === 0) { grid.innerHTML = '<div class="notice-empty">등록된 공지가 없습니다.</div>'; return; }
 
             const totalPages = Math.ceil(noticeArticles.length / noticePerPage);
             if (noticeCurrentPage > totalPages) noticeCurrentPage = 1;
-            
             const startIdx = (noticeCurrentPage - 1) * noticePerPage;
             const paginated = noticeArticles.slice(startIdx, startIdx + noticePerPage);
             const totalCount = noticeArticles.length;
 
             let paginationHTML = '';
             if (totalPages > 1) {
-                if (noticeCurrentPage > 1) {
-                    paginationHTML += `<button onclick="goNoticePage(${noticeCurrentPage - 1})">‹</button>`;
-                }
-                for (let i = 1; i <= totalPages; i++) {
-                    paginationHTML += `<button class="${i === noticeCurrentPage ? 'active' : ''}" onclick="goNoticePage(${i})">${i}</button>`;
-                }
-                if (noticeCurrentPage < totalPages) {
-                    paginationHTML += `<button onclick="goNoticePage(${noticeCurrentPage + 1})">›</button>`;
-                }
+                if (noticeCurrentPage > 1) paginationHTML += `<button onclick="goNoticePage(${noticeCurrentPage - 1})">‹</button>`;
+                for (let i = 1; i <= totalPages; i++) paginationHTML += `<button class="${i === noticeCurrentPage ? 'active' : ''}" onclick="goNoticePage(${i})">${i}</button>`;
+                if (noticeCurrentPage < totalPages) paginationHTML += `<button onclick="goNoticePage(${noticeCurrentPage + 1})">›</button>`;
             }
 
-            grid.innerHTML = `
-                <div class="notice-board">
-                    <div class="notice-header">
-                        <span>번호</span>
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                    <div class="notice-list">
-                        ${paginated.map((article, index) => `
-                            <div class="notice-item" onclick="showNoticeArticle(${article.id})">
-                                <span class="notice-item-num">${totalCount - startIdx - index}</span>
-                                <span class="notice-item-title">${article.title}</span>
-                                <span class="notice-item-date">${article.date}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                    ${totalPages > 1 ? `<div class="notice-pagination">${paginationHTML}</div>` : ''}
-                </div>
-            `;
+            grid.innerHTML = `<div class="notice-board"><div class="notice-header"><span>번호</span><span>제목</span><span>날짜</span></div><div class="notice-list">${paginated.map((article, index) => `<div class="notice-item" onclick="showNoticeArticle(${article.id})"><span class="notice-item-num">${totalCount - startIdx - index}</span><span class="notice-item-title">${article.title}</span><span class="notice-item-date">${article.date}</span></div>`).join('')}</div>${totalPages > 1 ? `<div class="notice-pagination">${paginationHTML}</div>` : ''}</div>`;
         }
 
-        function goNoticePage(page) {
-            noticeCurrentPage = page;
-            renderFeaturedGrid();
-            document.getElementById('featured-grid').scrollIntoView({ behavior: 'smooth' });
-        }
+        function goNoticePage(page) { noticeCurrentPage = page; renderFeaturedGrid(); document.getElementById('featured-grid').scrollIntoView({ behavior: 'smooth' }); }
 
-        // ========== 자료(Resources) CMS 연동 ==========
+        // ========== 자료(Resources) ==========
         let resourceArticles = [];
         let resourceCurrentPage = 1;
         const resourcePerPage = 10;
@@ -2304,104 +2010,49 @@
             try {
                 const catRes = await fetch(`${WP_API_URL}/categories?slug=resources&_=${Date.now()}`);
                 const categories = await catRes.json();
+                if (categories.length === 0) { document.getElementById('resources-grid').innerHTML = '<div class="notice-empty">자료 카테고리가 없습니다.</div>'; return; }
                 
-                if (categories.length === 0) {
-                    document.getElementById('resources-grid').innerHTML = 
-                        '<div class="notice-empty">자료 카테고리가 없습니다.</div>';
-                    return;
-                }
-                
-                const categoryId = categories[0].id;
-                const res = await fetch(`${WP_API_URL}/posts?categories=${categoryId}&per_page=100&_=${Date.now()}`);
+                const res = await fetch(`${WP_API_URL}/posts?categories=${categories[0].id}&per_page=100&_=${Date.now()}`);
                 const posts = await res.json();
-                
-                if (posts.length === 0) {
-                    document.getElementById('resources-grid').innerHTML = 
-                        '<div class="notice-empty">등록된 자료가 없습니다.</div>';
-                    return;
-                }
+                if (posts.length === 0) { document.getElementById('resources-grid').innerHTML = '<div class="notice-empty">등록된 자료가 없습니다.</div>'; return; }
                 
                 resourceArticles = posts.map(post => {
                     const acf = post.acf || {};
                     let fileUrl = acf.file_url || acf.file || '';
-                    
                     if (!fileUrl) {
                         const match = post.content.rendered.match(/href="([^"]+\.pdf)"/i);
                         if (match) fileUrl = match[1];
                     }
-                    
                     return {
-                        id: post.id,
-                        title: post.title.rendered,
-                        content: post.content.rendered,
-                        fileUrl: fileUrl,
+                        id: post.id, title: post.title.rendered, content: post.content.rendered, fileUrl: fileUrl,
                         date: new Date(post.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. /g, '.').replace('.', '')
                     };
                 });
-                
                 renderResourcesGrid();
-            } catch (e) {
-                console.error('자료 로드 실패:', e);
-                document.getElementById('resources-grid').innerHTML = 
-                    '<div class="notice-empty">자료를 불러올 수 없습니다.</div>';
-            }
+            } catch (e) { console.error('자료 로드 실패:', e); document.getElementById('resources-grid').innerHTML = '<div class="notice-empty">자료를 불러올 수 없습니다.</div>'; }
         }
 
         function renderResourcesGrid() {
             const grid = document.getElementById('resources-grid');
-            if (resourceArticles.length === 0) {
-                grid.innerHTML = '<div class="notice-empty">등록된 자료가 없습니다.</div>';
-                return;
-            }
+            if (resourceArticles.length === 0) { grid.innerHTML = '<div class="notice-empty">등록된 자료가 없습니다.</div>'; return; }
 
             const totalPages = Math.ceil(resourceArticles.length / resourcePerPage);
             if (resourceCurrentPage > totalPages) resourceCurrentPage = 1;
-            
             const startIdx = (resourceCurrentPage - 1) * resourcePerPage;
             const paginated = resourceArticles.slice(startIdx, startIdx + resourcePerPage);
             const totalCount = resourceArticles.length;
 
             let paginationHTML = '';
             if (totalPages > 1) {
-                if (resourceCurrentPage > 1) {
-                    paginationHTML += `<button onclick="goResourcePage(${resourceCurrentPage - 1})">‹</button>`;
-                }
-                for (let i = 1; i <= totalPages; i++) {
-                    paginationHTML += `<button class="${i === resourceCurrentPage ? 'active' : ''}" onclick="goResourcePage(${i})">${i}</button>`;
-                }
-                if (resourceCurrentPage < totalPages) {
-                    paginationHTML += `<button onclick="goResourcePage(${resourceCurrentPage + 1})">›</button>`;
-                }
+                if (resourceCurrentPage > 1) paginationHTML += `<button onclick="goResourcePage(${resourceCurrentPage - 1})">‹</button>`;
+                for (let i = 1; i <= totalPages; i++) paginationHTML += `<button class="${i === resourceCurrentPage ? 'active' : ''}" onclick="goResourcePage(${i})">${i}</button>`;
+                if (resourceCurrentPage < totalPages) paginationHTML += `<button onclick="goResourcePage(${resourceCurrentPage + 1})">›</button>`;
             }
 
-            grid.innerHTML = `
-                <div class="notice-board">
-                    <div class="notice-header">
-                        <span>번호</span>
-                        <span>제목</span>
-                        <span>다운로드</span>
-                    </div>
-                    <div class="notice-list">
-                        ${paginated.map((article, index) => `
-                            <div class="notice-item">
-                                <span class="notice-item-num">${totalCount - startIdx - index}</span>
-                                <span class="notice-item-title">${article.title}</span>
-                                <span class="notice-item-date">
-                                    ${article.fileUrl ? `<a href="${article.fileUrl}" target="_blank" style="color:#24408E;">📥 다운로드</a>` : '-'}
-                                </span>
-                            </div>
-                        `).join('')}
-                    </div>
-                    ${totalPages > 1 ? `<div class="notice-pagination">${paginationHTML}</div>` : ''}
-                </div>
-            `;
+            grid.innerHTML = `<div class="notice-board"><div class="notice-header"><span>번호</span><span>제목</span><span>다운로드</span></div><div class="notice-list">${paginated.map((article, index) => `<div class="notice-item"><span class="notice-item-num">${totalCount - startIdx - index}</span><span class="notice-item-title">${article.title}</span><span class="notice-item-date">${article.fileUrl ? `<a href="${article.fileUrl}" target="_blank" style="color:#24408E;">📥 다운로드</a>` : '-'}</span></div>`).join('')}</div>${totalPages > 1 ? `<div class="notice-pagination">${paginationHTML}</div>` : ''}</div>`;
         }
 
-        function goResourcePage(page) {
-            resourceCurrentPage = page;
-            renderResourcesGrid();
-            document.getElementById('resources-grid').scrollIntoView({ behavior: 'smooth' });
-        }
+        function goResourcePage(page) { resourceCurrentPage = page; renderResourcesGrid(); document.getElementById('resources-grid').scrollIntoView({ behavior: 'smooth' }); }
 
         function showNoticeArticle(id) {
             const article = noticeArticles.find(a => a.id === id);
@@ -2412,13 +2063,14 @@
             goToPage('article');
         }
 
-        // 소개 페이지 로드
+        // ========== 소개 페이지 로드 ==========
         async function loadAboutPage() {
             try {
-                const res = await fetch(`${WP_API_URL}/pages?slug=소개&_=${Date.now()}`);
-                const pages = await res.json();
-                if (pages.length > 0) {
-                    const content = pages[0].content.rendered;
+                const res = await fetch(`${WP_API_URL}/pages/81?_=${Date.now()}`);
+                const page = await res.json();
+                if (page && page.content) {
+                    let content = page.content.rendered;
+                    content = convertToTimeline(content);
                     document.getElementById('about-content').innerHTML = content;
                 } else {
                     document.getElementById('about-content').innerHTML = '<p>소개 페이지를 찾을 수 없습니다.</p>';
@@ -2427,6 +2079,61 @@
                 console.error('소개 페이지 로드 실패:', e);
                 document.getElementById('about-content').innerHTML = '<p>소개 페이지를 불러올 수 없습니다.</p>';
             }
+        }
+
+        // 연혁 섹션을 타임라인 형식으로 변환
+        function convertToTimeline(html) {
+            const temp = document.createElement('div');
+            temp.innerHTML = html;
+            
+            const paragraphs = Array.from(temp.querySelectorAll('p'));
+            
+            // "연혁"이 포함된 요소 찾기
+            let timelineStartIndex = -1;
+            for (let i = 0; i < paragraphs.length; i++) {
+                const text = paragraphs[i].textContent.trim();
+                if (text === '연혁' || paragraphs[i].innerHTML.includes('<strong>연혁</strong>')) {
+                    timelineStartIndex = i;
+                    break;
+                }
+            }
+            
+            if (timelineStartIndex === -1) return html;
+            
+            const timelineItems = [];
+            const elementsToRemove = [];
+            
+            for (let i = timelineStartIndex + 1; i < paragraphs.length; i++) {
+                const p = paragraphs[i];
+                const text = p.textContent.trim();
+                
+                if (!text) { elementsToRemove.push(p); continue; }
+                
+                // 다음 섹션 제목이 나오면 중단
+                if (p.innerHTML.match(/^<strong>[^<]+<\/strong>$/) && !text.match(/^\d{4}/)) break;
+                
+                // 날짜 패턴 찾기 (YYYY. M 또는 YYYY. MM 형식)
+                const dateMatch = text.match(/^(\d{4}\.\s*\d{1,2})\s*/);
+                if (dateMatch) {
+                    const date = dateMatch[1].trim();
+                    const content = text.replace(dateMatch[0], '').trim();
+                    if (content) timelineItems.push({ date, content });
+                    elementsToRemove.push(p);
+                }
+            }
+            
+            if (timelineItems.length > 0) {
+                let timelineHtml = '<h2 style="color: #7B2D8E; margin-top: 30px; margin-bottom: 15px;">연혁</h2><div class="timeline">';
+                timelineItems.forEach(item => {
+                    timelineHtml += `<div class="timeline-item"><div class="timeline-date">${item.date}</div><div class="timeline-content">${item.content}</div></div>`;
+                });
+                timelineHtml += '</div>';
+                
+                paragraphs[timelineStartIndex].outerHTML = timelineHtml;
+                elementsToRemove.forEach(el => { if (el.parentNode) el.remove(); });
+            }
+            
+            return temp.innerHTML;
         }
 
         // 초기화
@@ -2440,11 +2147,8 @@
             if (hash) {
                 if (hash.startsWith('detail/')) {
                     const id = parseInt(hash.split('/')[1]);
-                    if (id && performances.find(p => p.id === id)) {
-                        showDetail(id);
-                    } else {
-                        goToPage('archive', false);
-                    }
+                    if (id && performances.find(p => p.id === id)) showDetail(id);
+                    else goToPage('archive', false);
                 } else if (hash === 'detail') {
                     goToPage('archive', false);
                 } else if (document.getElementById(hash + '-page')) {
