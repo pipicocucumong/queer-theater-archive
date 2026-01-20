@@ -680,7 +680,7 @@
             padding-top: 30px;
         }
 
-        .detail-tag {
+      .detail-tag {
             padding: 8px 16px;
             border: 1px solid #fff;
             font-size: 14px;
@@ -688,30 +688,12 @@
             transition: all 0.2s;
             background: transparent;
             color: #fff;
-            animation: sparkle 2s ease-in-out infinite;
         }
 
         .detail-tag:hover {
             background: #fff;
             color: var(--orange);
         }
-
-        /* 태그 반짝임 애니메이션 - 더 강하게 */
-        @keyframes sparkle {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.15; }
-        }
-
-        .detail-tag:nth-child(1) { animation-delay: 0s; }
-        .detail-tag:nth-child(2) { animation-delay: 0.25s; }
-        .detail-tag:nth-child(3) { animation-delay: 0.5s; }
-        .detail-tag:nth-child(4) { animation-delay: 0.75s; }
-        .detail-tag:nth-child(5) { animation-delay: 1s; }
-        .detail-tag:nth-child(6) { animation-delay: 1.25s; }
-        .detail-tag:nth-child(7) { animation-delay: 1.5s; }
-        .detail-tag:nth-child(8) { animation-delay: 1.75s; }
-        .detail-tag:nth-child(9) { animation-delay: 2s; }
-        .detail-tag:nth-child(10) { animation-delay: 2.25s; }
 
         /* 오른쪽 패널 - 상하 분할 */
         .detail-right {
@@ -1538,12 +1520,17 @@
                         이메일<br>
                         <span style="opacity: 1;">queertheaterarchive@gmail.com</span>
                     </p>
-                    <p class="home-col-small" style="margin-bottom: 12px; line-height: 1.6;">
-                        X(구: 트위터)<br>
-                        <a href="https://x.com/QueertheaterKr" target="_blank" style="color: inherit; opacity: 1; font-size: 11px;">@QueertheaterKr</a>
+                    
+                   <div style="border-top: 1px solid rgba(255,255,255,0.3); margin: 10px 0;"></div>
+                    <p class="home-col-small" style="margin-bottom: 0; line-height: 1.6;">
+                        X(구: 트위터)
                     </p>
+                    <p class="home-col-small" style="margin-bottom: 12px; margin-top: 5px;">
+                        <a href="https://x.com/QueertheaterKr" target="_blank" style="color: inherit; opacity: 1; font-size: 11px; border: none; padding: 0; min-height: auto;">@QUEERTHEATERKR</a>
+                    </p>
+
                     <p class="home-col-small" style="margin-top: 20px; font-size: 9px; opacity: 0.6;">
-                        © 2025 한국퀴어연극아카이브
+                        © 2025 한국퀴어연극아카이브, 페미씨어터
                     </p>
                 </div>
             </div>
