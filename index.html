@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
     <script>
-
+        /* SNS 공유 링크(?detail=ID)로 들어온 경우,
+           WordPress 데이터를 불러오는 동안 홈 화면이 잠깐 보이는 것을 막는다. */
         (function () {
             try {
                 const params = new URLSearchParams(window.location.search);
@@ -340,23 +341,71 @@
             color: var(--orange);
         }
 
+        .archive-filter-actions {
+            display: grid;
+            grid-template-columns: minmax(0, 1.65fr) minmax(0, 0.85fr);
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .archive-search-button,
         .archive-clear {
+            min-height: 48px;
             padding: 12px 14px;
-            border: 2px solid #fff;
-            background: #fff;
-            color: var(--orange);
             font-family: "Arial Black","Arial","맑은 고딕",system-ui,sans-serif;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.15s;
             text-transform: uppercase;
             letter-spacing: 0.08em;
         }
 
-        .archive-clear:hover {
-            background: transparent;
+        /* 검색은 가장 강한 액션으로 보이게 */
+        .archive-search-button {
+            border: 2px solid #111;
+            background: #111;
             color: #fff;
+        }
+
+        .archive-search-button:hover,
+        .archive-search-button:focus-visible {
+            background: #fff;
+            color: var(--orange);
+            border-color: #fff;
+            outline: none;
+        }
+
+        /* 초기화는 보조 기능으로 한 단계 낮춤 */
+        .archive-clear {
+            border: 1px solid rgba(255,255,255,0.72);
+            background: transparent;
+            color: rgba(255,255,255,0.82);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .archive-clear:hover,
+        .archive-clear:focus-visible {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(255,255,255,0.08);
+            outline: none;
+        }
+
+        @media (max-width: 600px) {
+            .archive-filter-actions {
+                grid-template-columns: minmax(0, 1.7fr) minmax(86px, 0.8fr);
+            }
+
+            .archive-search-button {
+                font-size: 13px;
+            }
+
+            .archive-clear {
+                font-size: 10px;
+            }
         }
 
         .archive-selected-tags {
@@ -2106,6 +2155,58 @@
             }
         }
 
+    
+        /* =====================================================
+           공지 / 자료 — 모바일에서 제목 전체 표시
+           ===================================================== */
+        @media (max-width: 900px) {
+            .notice-item {
+                align-items: start;
+            }
+
+            .notice-item-title {
+                white-space: normal !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+                word-break: keep-all;
+                overflow-wrap: normal;
+                line-break: strict;
+                line-height: 1.48;
+                padding-right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* 공지: 날짜 열을 숨기고 제목에 폭을 충분히 사용 */
+            #featured-grid .notice-item,
+            #featured-grid .notice-header {
+                grid-template-columns: 34px minmax(0, 1fr);
+            }
+
+            /* 자료: 다운로드 열은 유지하되 제목은 여러 줄 사용 */
+            #resources-grid .notice-item,
+            #resources-grid .notice-header {
+                grid-template-columns: 34px minmax(0, 1fr) 68px;
+                column-gap: 6px;
+            }
+
+            .notice-item {
+                padding: 12px 10px;
+            }
+
+            .notice-item-title {
+                font-size: 13px;
+                line-height: 1.5;
+                padding-right: 4px;
+            }
+
+            #resources-grid .notice-item-date {
+                align-self: start;
+                padding-top: 1px;
+                line-height: 1.35;
+            }
+        }
+
     </style>
 </head>
 <body class="is-home">
@@ -2215,8 +2316,18 @@
                         <option value="oldest">과거작순</option>
                         <option value="title">가나다순</option>
                     </select>
-                    <input type="text" id="archive-search" class="archive-input" placeholder="검색..." oninput="applyFilters()" />
-                    <button onclick="clearFilters()" class="archive-clear">초기화</button>
+                    <input
+                        type="text"
+                        id="archive-search"
+                        class="archive-input"
+                        placeholder="작품명, 극단명으로 검색..."
+                        oninput="applyFilters()"
+                        onkeydown="if(event.key === 'Enter') applyFilters();"
+                    />
+                    <div class="archive-filter-actions">
+                        <button type="button" onclick="applyFilters()" class="archive-search-button">검색</button>
+                        <button type="button" onclick="clearFilters()" class="archive-clear">초기화</button>
+                    </div>
                 </div>
 
                 <div id="selected-tags" class="archive-selected-tags"></div>
@@ -2443,6 +2554,12 @@
                 pageHistory.push(name);
                 history.pushState({ page: name }, '', `#${name}`);
             }
+        }
+
+        function getActivePageName() {
+            const active = document.querySelector('.page.active');
+            if (!active || !active.id) return 'archive';
+            return active.id.replace(/-page$/, '');
         }
 
         function goBackToPrevious(fallback = 'archive') {
@@ -2976,9 +3093,34 @@
                 </div>
             `;
 
-            goToPage('detail', addToHistory);
             if (addToHistory) {
-                history.replaceState({ page: 'detail', id: id }, '', `#detail/${id}`);
+                /* 작품 데이터와 관계없이 모든 상세 페이지가 같은 방식으로 뒤로가도록
+                   현재 내부 페이지를 먼저 history에 확정해 둔다.
+                   예: 작품목록 → 상세라면 바로 이전 state는 항상 archive가 된다. */
+                let originPage = getActivePageName();
+
+                /* 이미 detail에서 다른 상세를 여는 특수 상황은 작품목록을 안전한 복귀점으로 사용 */
+                if (!originPage || originPage === 'detail') {
+                    originPage = 'archive';
+                }
+
+                history.replaceState(
+                    { page: originPage },
+                    '',
+                    `#${originPage}`
+                );
+
+                goToPage('detail', false);
+
+                history.pushState(
+                    { page: 'detail', id: id },
+                    '',
+                    `#detail/${id}`
+                );
+            } else {
+                /* 공유 링크/브라우저 popstate처럼 이미 주소가 정해진 진입은
+                   새 history entry를 만들지 않는다. */
+                goToPage('detail', false);
             }
         }
 
