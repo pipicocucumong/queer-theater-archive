@@ -41,7 +41,7 @@
         }
 
         html.detail-route-pending body {
-            visibility: hidden;
+            display: none !important;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1991,7 +1991,9 @@
         .global-nav a:hover, .global-nav button:hover { background:rgba(255,255,255,.12); }
         .global-nav-brand {
             margin-right:auto; padding-left:0 !important;
-            font-weight:800 !important; letter-spacing:-.01em !important;
+            font-weight:800 !important;
+            font-size:12px !important;
+            letter-spacing:-0.035em !important;
         }
 
         .detail-top-actions {
@@ -2107,7 +2109,7 @@
 </head>
 <body class="is-home">
     <nav class="global-nav" id="global-nav" aria-label="전체 메뉴">
-        <a href="#home" class="global-nav-brand" onclick="goToPage('home'); return false;">QUEERTHEATER</a>
+        <a href="#home" class="global-nav-brand" onclick="goToPage('home'); return false;">한국퀴어연극아카이브</a>
         <a href="#about" onclick="goToPage('about'); return false;">소개</a>
         <a href="#featured" onclick="goToPage('featured'); return false;">공지</a>
         <a href="#archive" onclick="goToPage('archive'); return false;">작품목록</a>
@@ -2180,7 +2182,7 @@
                     <p class="home-col-small" style="margin-bottom: 0; line-height: 1.6;">
                         후원계좌
                     </p>
-                    <p class="home-col-small" style="margin-top: 5px; margin-bottom: 12px; line-height: 1.6; opacity: 1;">
+                    <p class="home-col-small" style="margin-top: 5px; margin-bottom: 12px; line-height: 1.6;">
                         카카오뱅크 7942-31-88200 ㄱㅁㅈ
                     </p>
 
