@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <script>
+        (function () {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                if (params.get('detail')) {
+                    document.documentElement.classList.add('detail-route-pending');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>한국 퀴어 연극 아카이브</title>
@@ -26,6 +36,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
+        html.detail-route-pending {
+            background: #fff;
+        }
+
+        html.detail-route-pending body {
+            visibility: hidden;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         /* 접근성: 포커스 스타일 */
@@ -2807,11 +2825,11 @@
         let currentDetailId = null;
         let currentDetailTitle = '';
 
-   function getPerformanceShareUrl() {
-    return currentDetailId
-        ? `https://queertheater.kr/share/${currentDetailId}/`
-        : 'https://queertheater.kr/#archive';
-}
+        function getPerformanceShareUrl() {
+            return currentDetailId
+                ? `https://queertheater.kr/share/${currentDetailId}/`
+                : 'https://queertheater.kr/#archive';
+        }
 
         function togglePerformanceShare(forceOpen) {
             const menu = document.getElementById('performance-share-menu');
@@ -3410,6 +3428,35 @@
             loadNotices();
             loadResources();
             
+            /* SNS 인앱 브라우저에서는 URL fragment(#detail/ID)가
+               리디렉션 과정에서 사라지는 경우가 있어 ?detail=ID도 지원합니다. */
+            const params = new URLSearchParams(window.location.search);
+            const queryDetailId = parseInt(params.get('detail'));
+
+            if (queryDetailId) {
+                if (performances.find(p => p.id === queryDetailId)) {
+                    showDetail(queryDetailId, false);
+
+                    /* 화면이 정상적으로 열린 뒤 기존 내부 주소 형식으로 정리.
+                       페이지 재로딩은 일어나지 않습니다. */
+                    history.replaceState(
+                        { page: 'detail', id: queryDetailId },
+                        '',
+                        `#detail/${queryDetailId}`
+                    );
+
+                    requestAnimationFrame(() => {
+                        document.documentElement.classList.remove('detail-route-pending');
+                    });
+                } else {
+                    goToPage('archive', false);
+                    requestAnimationFrame(() => {
+                        document.documentElement.classList.remove('detail-route-pending');
+                    });
+                }
+                return;
+            }
+
             const hash = window.location.hash.replace('#', '');
             if (hash) {
                 if (hash.startsWith('detail/')) {
