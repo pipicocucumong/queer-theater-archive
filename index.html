@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
     <script>
+
         (function () {
             try {
                 const params = new URLSearchParams(window.location.search);
@@ -2849,8 +2850,6 @@
                 window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank', 'noopener');
             } else if (platform === 'facebook') {
                 window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'noopener');
-            } else if (platform === 'bluesky') {
-                window.open(`https://bsky.app/intent/compose?text=${encodeURIComponent(text + ' ' + url)}`, '_blank', 'noopener');
             }
             togglePerformanceShare(false);
         }
@@ -2907,7 +2906,6 @@
                                     <button type="button" class="detail-share-toggle" onclick="togglePerformanceShare()">SNS 공유 ↗</button>
                                     <div class="detail-share-menu" id="performance-share-menu">
                                         <button type="button" onclick="sharePerformance('x')">X / Twitter</button>
-                                        <button type="button" onclick="sharePerformance('bluesky')">Bluesky</button>
                                         <button type="button" onclick="sharePerformance('facebook')">Facebook</button>
                                         <button type="button" onclick="copyPerformanceLink()">링크 복사</button>
                                         <div class="detail-share-status" id="detail-share-status"></div>
