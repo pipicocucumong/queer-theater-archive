@@ -1469,9 +1469,634 @@
                 font-size: 12px;
             }
         }
+
+
+        /* =====================================================
+           글 상세 — 한국어 조판 보정
+           TIGERSPRUNG 참조: 안정적인 행간/행장 + 어절 단위 줄바꿈
+           ===================================================== */
+        .article-hero {
+            padding: 92px 60px 86px;
+        }
+
+        .article-hero-inner,
+        .article-body-inner {
+            width: min(760px, 100%);
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .article-title {
+            margin: 0 0 22px;
+            font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", sans-serif;
+            font-size: clamp(40px, 4vw, 54px);
+            line-height: 1.18;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            word-spacing: normal;
+            text-align: left;
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+            line-break: strict;
+            white-space: normal;
+            font-kerning: normal;
+            font-feature-settings: "kern" 1;
+            text-wrap: balance;
+        }
+
+        /* 제목은 어절 자체를 줄바꿈 불가 단위로 만든다.
+           줄바꿈은 span 사이의 실제 공백에서만 일어난다. */
+        .article-title .title-word {
+            display: inline-block;
+            white-space: nowrap !important;
+            word-break: normal !important;
+            overflow-wrap: normal !important;
+        }
+
+        .article-meta {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.5;
+            letter-spacing: 0.08em;
+        }
+
+        .article-body {
+            padding: 78px 60px 110px;
+        }
+
+        .article-body-inner {
+            font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", sans-serif;
+            font-size: 20px;
+            line-height: 1.85;
+            letter-spacing: -0.01em;
+            word-spacing: normal;
+            text-align: left;
+            font-kerning: normal;
+            font-feature-settings: "kern" 1;
+        }
+
+        /* 본문 행장은 660px로 제한하되 제목과 같은 왼쪽 기준선을 쓴다. */
+        .article-body-inner > p,
+        .article-body-inner > h1,
+        .article-body-inner > h2,
+        .article-body-inner > h3,
+        .article-body-inner > h4,
+        .article-body-inner > h5,
+        .article-body-inner > h6,
+        .article-body-inner > ul,
+        .article-body-inner > ol,
+        .article-body-inner > blockquote,
+        .article-body-inner > .wp-block-group:not(.alignwide):not(.alignfull) {
+            width: min(660px, 100%);
+            max-width: 660px;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .article-body-inner p,
+        .article-body-inner li,
+        .article-body-inner blockquote,
+        .article-body-inner h1,
+        .article-body-inner h2,
+        .article-body-inner h3,
+        .article-body-inner h4,
+        .article-body-inner h5,
+        .article-body-inner h6 {
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+            line-break: strict;
+            white-space: normal;
+            text-wrap: pretty;
+        }
+
+        /* 긴 URL만 예외적으로 컨테이너를 넘지 않도록 허용 */
+        .article-body-inner a {
+            overflow-wrap: anywhere;
+        }
+
+        .article-body-inner p {
+            margin: 0 0 1.38em;
+        }
+
+        .article-body-inner p:empty {
+            display: none;
+        }
+
+        /* 중간 단락 헤더 — 짧은 라벨이 아니라 하나의 헤드라인 덩어리처럼 */
+        .article-body-inner h1,
+        .article-body-inner h2 {
+            margin: 3.25em 0 1.05em;
+            padding-top: 0.42em;
+            border-top: 3px solid currentColor;
+
+            font-size: clamp(28px, 2.35vw, 34px);
+            line-height: 1.18;
+            font-weight: 800;
+            letter-spacing: -0.032em;
+            color: #000;
+
+            text-align: left;
+            text-wrap: balance;
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+        }
+
+        /* 한 단계 아래 소제목은 본문 흐름을 방해하지 않게 */
+        .article-body-inner h3,
+        .article-body-inner h4 {
+            margin: 2.45em 0 0.85em;
+            font-size: 20px;
+            line-height: 1.38;
+            font-weight: 700;
+            letter-spacing: -0.018em;
+            color: #000;
+        }
+
+        .article-body-inner > h1:first-child,
+        .article-body-inner > h2:first-child,
+        .article-body-inner > h3:first-child {
+            margin-top: 0;
+        }
+
+        .article-body-inner strong {
+            font-weight: 700;
+        }
+
+        .article-body-inner ul,
+        .article-body-inner ol {
+            padding-left: 1.25em;
+            margin-bottom: 1.38em;
+        }
+
+        .article-body-inner li + li {
+            margin-top: 0.35em;
+        }
+
+        .article-body-inner blockquote {
+            margin-top: 1.5em;
+            margin-bottom: 1.6em;
+            padding-left: 1.1em;
+            border-left: 2px solid currentColor;
+        }
+
+        @media (max-width: 900px) {
+            .article-hero {
+                padding: 70px 30px 66px;
+            }
+
+            .article-body {
+                padding: 56px 30px 84px;
+            }
+
+            .article-title {
+                font-size: clamp(34px, 7vw, 46px);
+                line-height: 1.2;
+                letter-spacing: -0.022em;
+            }
+
+            .article-body-inner {
+                font-size: 18px;
+                line-height: 1.86;
+                letter-spacing: -0.006em;
+            }
+
+            .article-body-inner h1,
+            .article-body-inner h2 {
+                margin-top: 2.8em;
+                padding-top: 0.4em;
+                font-size: 28px;
+                line-height: 1.2;
+                letter-spacing: -0.028em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-hero {
+                padding: 58px 20px 54px;
+            }
+
+            .article-body {
+                padding: 46px 20px 72px;
+            }
+
+            .article-title {
+                font-size: 31px;
+                line-height: 1.2;
+                letter-spacing: -0.022em;
+            }
+
+            .article-body-inner {
+                font-size: 17px;
+                line-height: 1.86;
+            }
+
+            .article-body-inner h1,
+            .article-body-inner h2 {
+                margin-top: 2.65em;
+                padding-top: 0.38em;
+                border-top-width: 2px;
+                font-size: 25px;
+                line-height: 1.22;
+                letter-spacing: -0.026em;
+            }
+        }
+
+
+        /* =====================================================
+           글 상세 — 섹션 헤드라인 위계
+           1) 기사 제목: 가장 큼
+           2) [작품소개] / [창작진 소개] / [대화기록]: 같은 위계
+           3) 대화기록 내부 소제목: 한 단계 낮음
+           ===================================================== */
+
+        /* [작품소개] / [창작진 소개] / [대화기록]은 같은 위계의 섹션 라벨 */
+        .article-body-inner .article-section-heading {
+            width: min(660px, 100%);
+            max-width: 660px;
+            margin: 3.7em 0 0;
+            padding: 0.62em 0 0;
+            border: 0;
+            border-top: 2px solid #111;
+            color: #111;
+            font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", sans-serif;
+            font-size: clamp(27px, 2.15vw, 31px);
+            line-height: 1.16;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            text-align: left;
+            text-wrap: balance;
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+        }
+
+        /* 첫 섹션은 본문 시작 직후이므로 위 여백만 줄인다 */
+        .article-body-inner .article-section-heading:first-child {
+            margin-top: 0;
+        }
+
+        /* 괄호는 색을 쓰지 않고 크기 차이만으로 라벨의 표지 역할을 한다. */
+        .article-body-inner .section-bracket {
+            display: inline-block;
+            color: currentColor;
+            font-size: 1.26em;
+            line-height: 0.74;
+            font-weight: 900;
+            letter-spacing: -0.07em;
+            vertical-align: -0.045em;
+        }
+
+        .article-body-inner .section-bracket--open {
+            margin-right: 0.045em;
+        }
+
+        .article-body-inner .section-bracket--close {
+            margin-left: 0.045em;
+        }
+
+        .article-body-inner .section-label {
+            color: currentColor;
+        }
+
+        /* 섹션 라벨 바로 아래 작품명/인물명 등은 같은 덩어리로 묶는다. */
+        .article-body-inner .section-lead-heading {
+            width: min(660px, 100%);
+            max-width: 660px;
+            margin: 0.32em 0 1.5em;
+            padding: 0;
+            border: 0 !important;
+            color: #111;
+            font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", sans-serif;
+            font-size: clamp(26px, 2vw, 31px);
+            line-height: 1.22;
+            font-weight: 750;
+            letter-spacing: -0.026em;
+            text-align: left;
+            text-wrap: balance;
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+        }
+
+        /* 라벨과 리드 헤드라인 사이에 다른 HR이나 여백이 끼어들지 않게 */
+        .article-body-inner .article-section-heading + .section-lead-heading {
+            margin-top: 0.32em;
+        }
+
+        /* 대화기록 안의 '페미니즘 연극제와의 연결' 같은 소제목 */
+        .article-body-inner .dialogue-subheading {
+            position: relative;
+            width: min(660px, 100%);
+            margin: 2.7em 0 1em;
+            padding: 0.15em 0 0.18em 0.82em;
+            border: 0;
+            color: #111;
+            font-size: clamp(20px, 1.65vw, 23px);
+            line-height: 1.38;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-align: left;
+            text-wrap: pretty;
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+        }
+
+        /* 큰 섹션 헤드라인의 hr과 경쟁하지 않도록 짧은 보라색 표지만 사용 */
+        .article-body-inner .dialogue-subheading::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.18em;
+            width: 4px;
+            height: 1.05em;
+            background: var(--purple);
+        }
+
+        @media (max-width: 900px) {
+            .article-body-inner .article-section-heading {
+                margin-top: 3.15em;
+                font-size: 27px;
+            }
+
+            .article-body-inner .section-lead-heading {
+                margin-top: 0.3em;
+                font-size: 27px;
+            }
+
+            .article-body-inner .dialogue-subheading {
+                margin-top: 2.35em;
+                font-size: 21px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-body-inner .article-section-heading {
+                margin-top: 2.8em;
+                padding-top: 0.52em;
+                border-top-width: 2px;
+                font-size: 24px;
+                line-height: 1.18;
+            }
+
+            .article-body-inner .section-bracket {
+                font-size: 1.24em;
+            }
+
+            .article-body-inner .section-lead-heading {
+                margin-top: 0.28em;
+                margin-bottom: 1.35em;
+                font-size: 24px;
+                line-height: 1.24;
+            }
+
+            .article-body-inner .dialogue-subheading {
+                margin-top: 2.15em;
+                padding-left: 0.76em;
+                font-size: 19px;
+                line-height: 1.42;
+            }
+        }
+
+    
+        /* =====================================================
+           작품소개 / 창작진소개 블록 간격 최종 보정
+           ===================================================== */
+
+        /* [작품소개]와 작품명은 한 덩어리.
+           작품명 아래의 일반 정보는 바로 이어 읽히도록 간격을 좁힌다. */
+        .article-body-inner .section-heading--work + .section-lead-heading--work {
+            margin-top: 1.15em;
+        }
+
+        .article-body-inner .section-lead-heading--work {
+            margin-bottom: 0.52em;
+        }
+
+        .article-body-inner .section-lead-heading--work + p {
+            margin-top: 0 !important;
+        }
+
+        /* 창작진 이름은 [창작진 소개]보다 한 단계 작은 동일 위계로 통일 */
+        .article-body-inner .section-lead-heading--creator,
+        .article-body-inner .creator-person-heading {
+            width: min(660px, 100%);
+            max-width: 660px;
+            padding: 0;
+            border: 0 !important;
+            color: #111;
+            font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", sans-serif;
+            font-size: clamp(21px, 1.6vw, 24px);
+            line-height: 1.34;
+            font-weight: 700;
+            letter-spacing: -0.018em;
+            text-align: left;
+            text-wrap: pretty;
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+        }
+
+        /* [창작진 소개]와 첫 인물명 사이도 섹션 전환이 느껴지도록 띄운다. */
+        .article-body-inner .section-heading--creators + .creator-person-heading--first,
+        .article-body-inner .section-heading--creators + .section-lead-heading--creator {
+            margin-top: 1.15em;
+        }
+
+        .article-body-inner .creator-person-heading--first {
+            margin-bottom: 0.58em;
+        }
+
+        /* 두 번째 인물부터는 앞 인물의 설명과 확실히 분리한다. */
+        .article-body-inner .creator-person-heading:not(.creator-person-heading--first) {
+            margin-top: 2.45em;
+            margin-bottom: 0.58em;
+        }
+
+        .article-body-inner .creator-person-heading + p {
+            margin-top: 0 !important;
+        }
+
+        /* 대화기록은 별도의 리드 헤드라인을 만들지 않고,
+           바로 이어지는 제목은 모두 내부 소제목 위계로 둔다. */
+        .article-body-inner .section-heading--dialogue + .dialogue-subheading {
+            margin-top: 1.65em;
+        }
+
+        @media (max-width: 900px) {
+            .article-body-inner .section-lead-heading--work {
+                margin-bottom: 0.48em;
+            }
+
+            .article-body-inner .creator-person-heading:not(.creator-person-heading--first) {
+                margin-top: 2.15em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-body-inner .section-heading--work + .section-lead-heading--work {
+                margin-top: 0.9em;
+            }
+
+            .article-body-inner .section-lead-heading--work {
+                margin-bottom: 0.42em;
+            }
+
+            .article-body-inner .section-heading--creators + .creator-person-heading--first,
+            .article-body-inner .section-heading--creators + .section-lead-heading--creator {
+                margin-top: 0.9em;
+            }
+
+            .article-body-inner .creator-person-heading:not(.creator-person-heading--first) {
+                margin-top: 1.9em;
+            }
+        }
+
+    
+        /* ===== 전역 내비게이션 / 공유 / 고정 / 모바일 줄바꿈 ===== */
+        .global-nav {
+            display:none; position:sticky; top:0; z-index:3000;
+            width:100%; min-height:52px; padding:0 18px;
+            align-items:center; gap:4px; overflow-x:auto;
+            background:#111; color:#fff;
+            border-bottom:1px solid rgba(255,255,255,.18);
+            scrollbar-width:none; -webkit-overflow-scrolling:touch;
+        }
+        .global-nav::-webkit-scrollbar { display:none; }
+        body:not(.is-home) .global-nav { display:flex; }
+
+        .global-nav a, .global-nav button {
+            flex:0 0 auto; min-height:44px; padding:0 11px;
+            display:inline-flex; align-items:center; justify-content:center;
+            border:0; background:transparent; color:#fff;
+            font:inherit; font-size:12px; font-weight:600;
+            letter-spacing:.045em; text-decoration:none;
+            white-space:nowrap; cursor:pointer;
+        }
+        .global-nav a:hover, .global-nav button:hover { background:rgba(255,255,255,.12); }
+        .global-nav-brand {
+            margin-right:auto; padding-left:0 !important;
+            font-weight:800 !important; letter-spacing:-.01em !important;
+        }
+
+        .detail-top-actions {
+            display:flex; align-items:flex-start; justify-content:space-between;
+            gap:12px; margin-bottom:34px;
+        }
+        .detail-top-actions .detail-back { margin-bottom:0; }
+        .detail-share { position:relative; flex:0 0 auto; }
+        .detail-share-toggle {
+            min-height:32px; padding:5px 0 5px 10px;
+            border:0; background:transparent; color:#fff;
+            font-family:inherit; font-size:12px; letter-spacing:.08em; cursor:pointer;
+        }
+        .detail-share-menu {
+            display:none; position:absolute; top:calc(100% + 6px); right:0;
+            z-index:20; width:150px; padding:7px;
+            background:#fff; color:#111; border:1px solid rgba(0,0,0,.18);
+            box-shadow:0 8px 24px rgba(0,0,0,.18);
+        }
+        .detail-share-menu.open { display:block; }
+        .detail-share-menu a, .detail-share-menu button {
+            width:100%; min-height:34px; padding:7px 8px;
+            display:flex; align-items:center; border:0;
+            background:transparent; color:#111; font-family:inherit;
+            font-size:12px; text-decoration:none; text-align:left; cursor:pointer;
+        }
+        .detail-share-menu a:hover, .detail-share-menu button:hover { background:#f0f0f0; }
+        .detail-share-status { display:none; padding:6px 8px 4px; font-size:11px; opacity:.65; }
+        .detail-share-status.show { display:block; }
+
+        .detail-meta-value {
+            word-break:keep-all; overflow-wrap:normal;
+            line-break:strict; text-wrap:pretty;
+        }
+
+        .notice-item.is-pinned { font-weight:600; }
+        .notice-item.is-pinned .notice-item-num {
+            font-size:11px; font-weight:800; letter-spacing:.03em;
+        }
+
+        @media (max-width:900px) {
+            .global-nav { min-height:48px; padding:0 10px; }
+            .global-nav a, .global-nav button { padding:0 9px; font-size:11px; }
+            .global-nav-brand { margin-right:4px; }
+            .detail-top-actions { margin-bottom:26px; }
+        }
+        @media (max-width:480px) {
+            .global-nav { gap:0; }
+            .detail-share-menu { width:142px; }
+        }
+
+    
+        /* ===== 자료 게시물: 본문 + 첨부파일 ===== */
+        .article-attachment {
+            margin: 0 0 2.6em;
+            padding: 0 0 1.35em;
+            border-bottom: 1px solid #111;
+        }
+
+        .article-attachment[hidden] {
+            display: none !important;
+        }
+
+        .article-attachment-label {
+            margin: 0 0 0.65em;
+            font-size: 13px;
+            line-height: 1.5;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+        }
+
+        .article-download-link {
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            padding: 9px 14px;
+            border: 1px solid #111;
+            color: #111;
+            background: #fff;
+            font-size: 15px;
+            line-height: 1.4;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .article-download-link:hover {
+            background: #111;
+            color: #fff;
+        }
+
+        #resources-grid .notice-item {
+            cursor: pointer;
+        }
+
+        #resources-grid .resource-download-direct {
+            color: #24408E;
+            text-decoration: underline;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .article-attachment {
+                margin-bottom: 2em;
+            }
+
+            .article-download-link {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
     </style>
 </head>
-<body>
+<body class="is-home">
+    <nav class="global-nav" id="global-nav" aria-label="전체 메뉴">
+        <a href="#home" class="global-nav-brand" onclick="goToPage('home'); return false;">QUEERTHEATER</a>
+        <a href="#about" onclick="goToPage('about'); return false;">소개</a>
+        <a href="#featured" onclick="goToPage('featured'); return false;">공지</a>
+        <a href="#archive" onclick="goToPage('archive'); return false;">작품목록</a>
+        <a href="#resources" onclick="goToPage('resources'); return false;">자료</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfZO86fkhsnNi3vAnQp8jyZyjWQaIm9np3QWkkT8WnWxlTYOw/viewform" target="_blank" rel="noopener">제보 ↗</a>
+        <button type="button" onclick="showRandomPerformance();">랜덤</button>
+    </nav>
     <!-- ===== 홈 - 6컬럼 무지개 ===== -->
     <div id="home-page" class="page active">
         <div class="home-rainbow">
@@ -1531,6 +2156,14 @@
                     </p>
                     <p class="home-col-small" style="margin-bottom: 12px; margin-top: 5px;">
                         <a href="https://x.com/QueertheaterKr" target="_blank" style="color: inherit; opacity: 1; font-size: 11px; border: none; padding: 0; min-height: auto;">@QUEERTHEATERKR</a>
+                    </p>
+
+                    <div style="border-top: 1px solid rgba(255,255,255,0.3); margin: 14px 0 12px;"></div>
+                    <p class="home-col-small" style="margin-bottom: 0; line-height: 1.6;">
+                        후원계좌
+                    </p>
+                    <p class="home-col-small" style="margin-top: 5px; margin-bottom: 12px; line-height: 1.6; opacity: 1;">
+                        카카오뱅크 7942-31-88200 ㄱㅁㅈ
                     </p>
 
                     <p class="home-col-small" style="margin-top: 20px; font-size: 9px; opacity: 0.6;">
@@ -1646,7 +2279,7 @@
     <div id="article-page" class="page">
         <div class="article-page">
             <header class="article-header">
-                <a href="#" onclick="goToPage('featured'); return false;" class="detail-back">← FEATURED</a>
+                <a href="#" id="article-back" onclick="goToPage('featured'); return false;" class="detail-back">← 공지</a>
             </header>
             <div class="article-hero">
                 <div class="article-hero-inner">
@@ -1655,7 +2288,10 @@
                 </div>
             </div>
             <div class="article-body">
-                <div class="article-body-inner" id="article-body"></div>
+                <div class="article-body-inner">
+                    <div class="article-attachment" id="article-attachment" hidden></div>
+                    <div id="article-body"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -1775,20 +2411,31 @@
 
         function goToPage(name, addToHistory = true) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(name + '-page').classList.add('active');
+            const target = document.getElementById(name + '-page');
+            if (!target) return;
+            target.classList.add('active');
+            document.body.classList.toggle('is-home', name === 'home');
             if (name === 'archive') renderArchive();
             window.scrollTo(0, 0);
-            
+
             if (addToHistory && pageHistory[pageHistory.length - 1] !== name) {
                 pageHistory.push(name);
                 history.pushState({ page: name }, '', `#${name}`);
             }
         }
 
+        function goBackToPrevious(fallback = 'archive') {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                goToPage(fallback);
+            }
+        }
+
         window.addEventListener('popstate', (e) => {
             if (e.state && e.state.page) {
                 if (e.state.page === 'detail' && e.state.id) {
-                    showDetail(e.state.id);
+                    showDetail(e.state.id, false);
                 } else {
                     goToPage(e.state.page, false);
                 }
@@ -1796,7 +2443,7 @@
                 const hash = window.location.hash.replace('#', '');
                 if (hash.startsWith('detail/')) {
                     const id = parseInt(hash.split('/')[1]);
-                    if (id) showDetail(id);
+                    if (id) showDetail(id, false);
                 } else if (hash && document.getElementById(hash + '-page')) {
                     goToPage(hash, false);
                 } else {
@@ -2111,10 +2758,105 @@
             printWindow.print();
         }
 
+
+        function formatWpDate(dateString) {
+            const d = new Date(dateString);
+            if (Number.isNaN(d.getTime())) return '';
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${y}.${m}.${day}.`;
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function formatMetaValue(value) {
+            return escapeHtml(value)
+                .replace(/·/g, '·<wbr>')
+                .replace(/,/g, ',<wbr>')
+                .replace(/\//g, '/<wbr>');
+        }
+
+        function addKoreanBreakOpportunities(root) {
+            if (!root) return;
+            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    const parent = node.parentElement;
+                    if (!parent || parent.closest('script, style, textarea, code, pre')) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    return /[·•/]/.test(node.nodeValue || '')
+                        ? NodeFilter.FILTER_ACCEPT
+                        : NodeFilter.FILTER_REJECT;
+                }
+            });
+            const nodes = [];
+            while (walker.nextNode()) nodes.push(walker.currentNode);
+            nodes.forEach(node => {
+                node.nodeValue = (node.nodeValue || '').replace(/([·•/])/g, '$1\u200B');
+            });
+        }
+
+        let currentDetailId = null;
+        let currentDetailTitle = '';
+
+        function getPerformanceShareUrl() {
+            return currentDetailId
+                ? `https://queertheater.kr/#detail/${currentDetailId}`
+                : 'https://queertheater.kr/#archive';
+        }
+
+        function togglePerformanceShare(forceOpen) {
+            const menu = document.getElementById('performance-share-menu');
+            if (!menu) return;
+            const open = typeof forceOpen === 'boolean'
+                ? forceOpen : !menu.classList.contains('open');
+            menu.classList.toggle('open', open);
+        }
+
+        function sharePerformance(platform) {
+            const url = getPerformanceShareUrl();
+            const text = currentDetailTitle || '한국 퀴어 연극 아카이브';
+
+            if (platform === 'x') {
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank', 'noopener');
+            } else if (platform === 'facebook') {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'noopener');
+            } else if (platform === 'bluesky') {
+                window.open(`https://bsky.app/intent/compose?text=${encodeURIComponent(text + ' ' + url)}`, '_blank', 'noopener');
+            }
+            togglePerformanceShare(false);
+        }
+
+        async function copyPerformanceLink() {
+            const url = getPerformanceShareUrl();
+            const status = document.getElementById('detail-share-status');
+            try {
+                await navigator.clipboard.writeText(url);
+                if (status) {
+                    status.textContent = '링크를 복사했습니다.';
+                    status.classList.add('show');
+                    setTimeout(() => status.classList.remove('show'), 1800);
+                }
+            } catch (e) {
+                window.prompt('아래 주소를 복사해 주세요.', url);
+            }
+        }
+
         // ========== 상세 페이지 - 양분할 레이아웃 ==========
-        function showDetail(id) {
+        function showDetail(id, addToHistory = true) {
             const p = performances.find(x => x.id === id);
             if (!p) return;
+
+            currentDetailId = p.id;
+            currentDetailTitle = p.title;
 
             const tagsHtml = (p.tags || []).map(tag => 
                 `<span class="detail-tag" onclick="filterByTag('${tag}')">#${tag}</span>`
@@ -2139,8 +2881,20 @@
                 <div class="detail-page">
                     <div class="detail-left">
                         <div class="detail-left-inner">
-                            <a href="#archive" class="detail-back" onclick="goToPage('archive'); return false;">← 작품목록</a>
-                            
+                            <div class="detail-top-actions">
+                                <a href="#" class="detail-back" onclick="goBackToPrevious('archive'); return false;">← 이전</a>
+                                <div class="detail-share">
+                                    <button type="button" class="detail-share-toggle" onclick="togglePerformanceShare()">SNS 공유 ↗</button>
+                                    <div class="detail-share-menu" id="performance-share-menu">
+                                        <button type="button" onclick="sharePerformance('x')">X / Twitter</button>
+                                        <button type="button" onclick="sharePerformance('bluesky')">Bluesky</button>
+                                        <button type="button" onclick="sharePerformance('facebook')">Facebook</button>
+                                        <button type="button" onclick="copyPerformanceLink()">링크 복사</button>
+                                        <div class="detail-share-status" id="detail-share-status"></div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="detail-poster">
                                 ${p.poster 
                                     ? `<img src="${p.poster}" alt="${p.title}" onerror="this.parentElement.innerHTML='<div class=\\'detail-poster-empty\\'>NO POSTER</div>'">` 
@@ -2150,15 +2904,15 @@
                             <h1 class="detail-title">${p.title}</h1>
                             
                             <div class="detail-meta-grid">
-                                ${p.date ? `<div class="detail-meta-item"><div class="detail-meta-label">일시</div><div class="detail-meta-value">${p.date}</div></div>` : ''}
-                                ${p.venue ? `<div class="detail-meta-item"><div class="detail-meta-label">장소</div><div class="detail-meta-value">${p.venue}</div></div>` : ''}
-                                ${p.production ? `<div class="detail-meta-item"><div class="detail-meta-label">제작</div><div class="detail-meta-value">${p.production}</div></div>` : ''}
-                                ${p.host ? `<div class="detail-meta-item"><div class="detail-meta-label">주최</div><div class="detail-meta-value">${p.host}</div></div>` : ''}
-                                ${p.planning ? `<div class="detail-meta-item"><div class="detail-meta-label">기획</div><div class="detail-meta-value">${p.planning}</div></div>` : ''}
-                                ${p.organizer ? `<div class="detail-meta-item"><div class="detail-meta-label">주관</div><div class="detail-meta-value">${p.organizer}</div></div>` : ''}
-                                ${p.director ? `<div class="detail-meta-item"><div class="detail-meta-label">참고</div><div class="detail-meta-value">${p.director}</div></div>` : ''}
-                                ${p.actors ? `<div class="detail-meta-item"><div class="detail-meta-label">배우</div><div class="detail-meta-value">${p.actors}</div></div>` : ''}
-                                ${p.staff ? `<div class="detail-meta-item"><div class="detail-meta-label">스태프</div><div class="detail-meta-value">${p.staff}</div></div>` : ''}
+                                ${p.date ? `<div class="detail-meta-item"><div class="detail-meta-label">일시</div><div class="detail-meta-value">${formatMetaValue(p.date)}</div></div>` : ''}
+                                ${p.venue ? `<div class="detail-meta-item"><div class="detail-meta-label">장소</div><div class="detail-meta-value">${formatMetaValue(p.venue)}</div></div>` : ''}
+                                ${p.production ? `<div class="detail-meta-item"><div class="detail-meta-label">제작</div><div class="detail-meta-value">${formatMetaValue(p.production)}</div></div>` : ''}
+                                ${p.host ? `<div class="detail-meta-item"><div class="detail-meta-label">주최</div><div class="detail-meta-value">${formatMetaValue(p.host)}</div></div>` : ''}
+                                ${p.planning ? `<div class="detail-meta-item"><div class="detail-meta-label">기획</div><div class="detail-meta-value">${formatMetaValue(p.planning)}</div></div>` : ''}
+                                ${p.organizer ? `<div class="detail-meta-item"><div class="detail-meta-label">주관</div><div class="detail-meta-value">${formatMetaValue(p.organizer)}</div></div>` : ''}
+                                ${p.director ? `<div class="detail-meta-item"><div class="detail-meta-label">참고</div><div class="detail-meta-value">${formatMetaValue(p.director)}</div></div>` : ''}
+                                ${p.actors ? `<div class="detail-meta-item"><div class="detail-meta-label">배우</div><div class="detail-meta-value">${formatMetaValue(p.actors)}</div></div>` : ''}
+                                ${p.staff ? `<div class="detail-meta-item"><div class="detail-meta-label">스태프</div><div class="detail-meta-value">${formatMetaValue(p.staff)}</div></div>` : ''}
                             </div>
                             
                             <div class="detail-tags">
@@ -2204,8 +2958,10 @@
                 </div>
             `;
 
-            goToPage('detail');
-            history.replaceState({ page: 'detail', id: id }, '', `#detail/${id}`);
+            goToPage('detail', addToHistory);
+            if (addToHistory) {
+                history.replaceState({ page: 'detail', id: id }, '', `#detail/${id}`);
+            }
         }
 
         // ========== 공지(Featured) CMS 연동 ==========
@@ -2239,8 +2995,11 @@
                     title: post.title.rendered,
                     excerpt: post.excerpt.rendered.replace(/<[^>]*>/g, '').trim().slice(0, 80) + '...',
                     content: post.content.rendered,
-                    date: new Date(post.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. /g, '.').replace('.', '')
+                    date: formatWpDate(post.date),
+                    sticky: post.sticky === true
                 }));
+
+                noticeArticles.sort((a, b) => Number(b.sticky) - Number(a.sticky));
                 
                 renderFeaturedGrid();
             } catch (e) {
@@ -2286,8 +3045,8 @@
                     </div>
                     <div class="notice-list">
                         ${paginated.map((article, index) => `
-                            <div class="notice-item" onclick="showNoticeArticle(${article.id})">
-                                <span class="notice-item-num">${totalCount - startIdx - index}</span>
+                            <div class="notice-item ${article.sticky ? 'is-pinned' : ''}" onclick="showNoticeArticle(${article.id})">
+                                <span class="notice-item-num">${article.sticky ? '고정' : (totalCount - startIdx - index)}</span>
                                 <span class="notice-item-title">${article.title}</span>
                                 <span class="notice-item-date">${article.date}</span>
                             </div>
@@ -2332,21 +3091,31 @@
                 
                 resourceArticles = posts.map(post => {
                     const acf = post.acf || {};
-                    let fileUrl = acf.file_url || acf.file || '';
-                    
+                    const rawFile = acf.file_url || acf.file || '';
+                    let fileUrl = '';
+
+                    if (rawFile && typeof rawFile === 'object') {
+                        fileUrl = rawFile.url || '';
+                    } else if (typeof rawFile === 'string') {
+                        fileUrl = rawFile;
+                    }
+
                     if (!fileUrl) {
-                        const match = post.content.rendered.match(/href="([^"]+\.pdf)"/i);
+                        const match = post.content.rendered.match(/href="([^"]+\.(?:pdf|zip|hwp|hwpx|doc|docx|xls|xlsx|ppt|pptx))"/i);
                         if (match) fileUrl = match[1];
                     }
-                    
+
                     return {
                         id: post.id,
                         title: post.title.rendered,
                         content: post.content.rendered,
                         fileUrl: fileUrl,
-                        date: new Date(post.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. /g, '.').replace('.', '')
+                        date: formatWpDate(post.date),
+                        sticky: post.sticky === true
                     };
                 });
+
+                resourceArticles.sort((a, b) => Number(b.sticky) - Number(a.sticky));
                 
                 renderResourcesGrid();
             } catch (e) {
@@ -2392,11 +3161,13 @@
                     </div>
                     <div class="notice-list">
                         ${paginated.map((article, index) => `
-                            <div class="notice-item">
-                                <span class="notice-item-num">${totalCount - startIdx - index}</span>
+                            <div class="notice-item ${article.sticky ? 'is-pinned' : ''}" onclick="showResourceArticle(${article.id})">
+                                <span class="notice-item-num">${article.sticky ? '고정' : (totalCount - startIdx - index)}</span>
                                 <span class="notice-item-title">${article.title}</span>
                                 <span class="notice-item-date">
-                                    ${article.fileUrl ? `<a href="${article.fileUrl}" target="_blank" style="color:#24408E;">📥 다운로드</a>` : '-'}
+                                    ${article.fileUrl
+                                        ? `<a href="${article.fileUrl}" class="resource-download-direct" target="_blank" rel="noopener" onclick="event.stopPropagation();">다운로드 ↗</a>`
+                                        : '글 보기'}
                                 </span>
                             </div>
                         `).join('')}
@@ -2412,12 +3183,206 @@
             document.getElementById('resources-grid').scrollIntoView({ behavior: 'smooth' });
         }
 
+        function setArticleTitleWords(title) {
+            const titleEl = document.getElementById('article-title');
+            if (!titleEl) return;
+
+            // WordPress 제목에 포함될 수 있는 HTML entity를 먼저 실제 문자로 변환
+            const decoder = document.createElement('textarea');
+            decoder.innerHTML = String(title || '');
+            const cleanTitle = decoder.value.trim();
+
+            titleEl.replaceChildren();
+            const words = cleanTitle.split(/\s+/).filter(Boolean);
+
+            words.forEach((word, index) => {
+                const span = document.createElement('span');
+                span.className = 'title-word';
+                span.textContent = word;
+                titleEl.appendChild(span);
+
+                // 줄바꿈은 이 공백 위치에서만 가능
+                if (index < words.length - 1) {
+                    titleEl.appendChild(document.createTextNode(' '));
+                }
+            });
+        }
+
+        function polishArticleBodyTypography() {
+            const body = document.getElementById('article-body');
+            if (!body) return;
+
+            // 워드프레스 편집기에서 생긴 빈 문단은 조판 리듬을 깨므로 제거
+            body.querySelectorAll('p').forEach(p => {
+                const hasMedia = p.querySelector('img, video, audio, iframe, svg');
+                if (!hasMedia && p.textContent.replace(/\u00a0/g, ' ').trim() === '') {
+                    p.remove();
+                }
+            });
+
+            // 섹션 제목의 실제 문구를 읽어 시각 위계를 부여한다.
+            // 워드프레스에서 h2/h3 레벨이 달라져도 문구 기준으로 안정적으로 동작한다.
+            const headings = Array.from(body.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+            let currentSection = '';
+
+            const normalizeHeading = (value) => String(value || '')
+                .replace(/\u00a0/g, ' ')
+                .replace(/[\[\]［］]/g, '')
+                .replace(/\s+/g, '')
+                .trim();
+
+            const wrapBracketHeading = (heading, labelText) => {
+                heading.textContent = '';
+
+                const open = document.createElement('span');
+                open.className = 'section-bracket section-bracket--open';
+                open.textContent = '[';
+
+                const label = document.createElement('span');
+                label.className = 'section-label';
+                label.textContent = labelText;
+
+                const close = document.createElement('span');
+                close.className = 'section-bracket section-bracket--close';
+                close.textContent = ']';
+
+                heading.append(open, label, close);
+            };
+
+            const markFollowingLeadHeading = (heading, type) => {
+                let next = heading.nextElementSibling;
+                while (next && next.matches('p:empty')) next = next.nextElementSibling;
+                if (next && /^H[1-6]$/.test(next.tagName)) {
+                    next.classList.add('section-lead-heading');
+                    if (type === 'work') {
+                        next.classList.add('section-lead-heading--work');
+                    }
+                    if (type === 'creator') {
+                        next.classList.add('section-lead-heading--creator', 'creator-person-heading', 'creator-person-heading--first');
+                    }
+                }
+            };
+
+            headings.forEach(heading => {
+                heading.classList.remove(
+                    'article-section-heading',
+                    'section-heading--work',
+                    'section-heading--creators',
+                    'section-heading--dialogue',
+                    'dialogue-subheading'
+                );
+
+                const originalText = String(heading.textContent || '').trim();
+                const label = normalizeHeading(originalText);
+
+                if (label === '작품소개') {
+                    currentSection = 'work';
+                    heading.classList.add('article-section-heading', 'section-heading--work');
+                    wrapBracketHeading(heading, '작품소개');
+                    markFollowingLeadHeading(heading, 'work');
+                    return;
+                }
+
+                if (label === '창작진소개' || label === '창작진') {
+                    currentSection = 'creators';
+                    heading.classList.add('article-section-heading', 'section-heading--creators');
+                    wrapBracketHeading(heading, label === '창작진' ? '창작진' : '창작진 소개');
+                    markFollowingLeadHeading(heading, 'creator');
+                    return;
+                }
+
+                if (label === '대화기록' || label === '대화') {
+                    currentSection = 'dialogue';
+                    heading.classList.add('article-section-heading', 'section-heading--dialogue');
+                    wrapBracketHeading(heading, label === '대화' ? '대화' : '대화기록');
+                    return;
+                }
+
+                /* 창작진 소개 안의 인물 이름은 독립된 인물 블록의 시작점으로 처리 */
+                if (currentSection === 'creators') {
+                    heading.classList.add('creator-person-heading');
+                    if (heading.classList.contains('section-lead-heading--creator')) {
+                        heading.classList.add('creator-person-heading--first');
+                    }
+                    return;
+                }
+
+                /* 대화기록 이후의 다른 제목은 한 단계 낮은 내부 헤드라인 */
+                if (currentSection === 'dialogue') {
+                    heading.classList.add('dialogue-subheading');
+                }
+            });
+        }
+
+        function setArticleContext(type, fileUrl = '') {
+            const back = document.getElementById('article-back');
+            const attachment = document.getElementById('article-attachment');
+
+            if (type === 'resource') {
+                if (back) {
+                    back.textContent = '← 자료';
+                    back.onclick = function () {
+                        goToPage('resources');
+                        return false;
+                    };
+                }
+
+                if (attachment) {
+                    if (fileUrl) {
+                        attachment.hidden = false;
+                        attachment.innerHTML = `
+                            <p class="article-attachment-label">첨부파일</p>
+                            <a href="${fileUrl}" class="article-download-link" target="_blank" rel="noopener">
+                                자료 다운로드 ↗
+                            </a>
+                        `;
+                    } else {
+                        attachment.hidden = true;
+                        attachment.innerHTML = '';
+                    }
+                }
+            } else {
+                if (back) {
+                    back.textContent = '← 공지';
+                    back.onclick = function () {
+                        goToPage('featured');
+                        return false;
+                    };
+                }
+
+                if (attachment) {
+                    attachment.hidden = true;
+                    attachment.innerHTML = '';
+                }
+            }
+        }
+
+        function showResourceArticle(id) {
+            const article = resourceArticles.find(a => a.id === id);
+            if (!article) return;
+
+            setArticleContext('resource', article.fileUrl);
+            setArticleTitleWords(article.title);
+            document.getElementById('article-meta').textContent = article.date;
+            document.getElementById('article-body').innerHTML =
+                article.content && article.content.trim()
+                    ? article.content
+                    : '<p>이 자료에는 별도의 게시물 내용이 없습니다.</p>';
+
+            polishArticleBodyTypography();
+            addKoreanBreakOpportunities(document.getElementById('article-body'));
+            goToPage('article');
+        }
+
         function showNoticeArticle(id) {
             const article = noticeArticles.find(a => a.id === id);
             if (!article) return;
-            document.getElementById('article-title').textContent = article.title;
+            setArticleContext('notice');
+            setArticleTitleWords(article.title);
             document.getElementById('article-meta').textContent = article.date;
             document.getElementById('article-body').innerHTML = article.content;
+            polishArticleBodyTypography();
+            addKoreanBreakOpportunities(document.getElementById('article-body'));
             goToPage('article');
         }
 
@@ -2450,7 +3415,7 @@
                 if (hash.startsWith('detail/')) {
                     const id = parseInt(hash.split('/')[1]);
                     if (id && performances.find(p => p.id === id)) {
-                        showDetail(id);
+                        showDetail(id, false);
                     } else {
                         goToPage('archive', false);
                     }
