@@ -96,7 +96,9 @@ def render_page(item: dict) -> str:
     description = description_for(acf)
 
     share_url = f"{SITE_URL}/share/{performance_id}/"
-    detail_url = f"{SITE_URL}/#detail/{performance_id}"
+    # 모바일 SNS 인앱 브라우저가 fragment(#...)를 리디렉션 중
+    # 버리는 경우가 있어 공유 페이지에서는 query parameter로 진입합니다.
+    detail_url = f"{SITE_URL}/?detail={performance_id}"
 
     title_attr = html.escape(title, quote=True)
     desc_attr = html.escape(description, quote=True)
@@ -144,11 +146,9 @@ def render_page(item: dict) -> str:
   </style>
 
   <script>
-    // SNS crawler는 위의 정적 OG 태그를 읽고,
-    // 사람의 브라우저만 실제 작품 상세 화면으로 이동합니다.
-    window.addEventListener('DOMContentLoaded', function () {{
-      window.location.replace({json.dumps(detail_url, ensure_ascii=False)});
-    }});
+    // SNS crawler는 위의 정적 OG 태그를 읽습니다.
+    // 사람의 브라우저는 body가 그려지기 전에 바로 작품 상세로 이동합니다.
+    window.location.replace({json.dumps(detail_url, ensure_ascii=False)});
   </script>
 </head>
 <body>
